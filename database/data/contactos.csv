@@ -1,0 +1,366 @@
+"codigo","nro_int","tipo","contacto","email","tel","domicilio","nro","dep_piso","CP","localidad","provincia_id","pais","feccre","usucre","fecultmod","usuultmod"
+"1","1","C","Anabela  MUÑOZ","amunoz@acsur.com.ar",,,,,,,"1",,,"1","2012-09-25 14:58:31","1"
+"3","1","C","GERARDO","gerardo@agrolajitassa.com.ar",,,,,,,"24",,,,,
+"4","1","C","LORENA","lorena.sanz@akzonobel.com",,,,,,,"2",,,,,
+"6","1","C","MARIA DE LA PAZ","MariadelaPaz.Etchichury@akzonobel.com.ar",,,,,,,"2",,,,,
+"7","1","C","PATRICIA","patricia.marciel@internationalpaint.com",,,,,,,"2",,,,,
+"9","1","C","A","iwalker@frutasescartin.com.ar","CELU 02625 15 662-024",,,,,,"13",,,,,
+"9","2","C","B","exportaciones@frutasescartin.com.ar",,,,,,,"13",,,,,
+"9","3","C","C","alberto@bowenet.info",,,,,,,"13",,,,,
+"11","1","C","A","frutasatuel@poraire.net","Celu 02625 15 570-783",,,,,,"13",,,,,
+"13","1","C","DARIO","info@apicolavillaelisa.com.ar","03447 - 15456851  DE DARÍO",,,,,,"8",,,,,
+"16","1","C","A","gemach@speedy.com.ar",,,,,,,"18",,,,,
+"17","1","C","A","altoverde1@arnet.com.ar",,,,,,,"18",,,"1","2011-10-07 17:49:14","1"
+"17","2","C","B","cnale2003@hotmail.com",,,,,,,"18",,,,,
+"18","1","C","A","tucumabaltazar@xflymail.com.ar",,,,,,,"18",,,,,
+"21","1","C","A","administracion@fiplex.com",,,,,,,"6",,,,,
+"21","2","C","B","enrique.larrauri@fiplex.com",,,,,,,"6",,,,,
+"22","1","C","A","pereyrama@bfar.com.ar","Int. 271 Mathias / int 261 Ricardo",,,,,,"2",,,,,
+"22","2","C","B","SoriaL@bfar.com.ar","4239-3136",,,,,,"2",,,"1","2013-01-22 14:17:17","1"
+"25","1","C","A","bentonitasantagema@yahoo.com.ar",,,,,,,"18",,,,,
+"26","1","C","A","citricolachajari@citricolachajari.com.ar",,,,,,,"8",,,,,
+"26","2","C","B","hugotarditi@citricolachajari.com.ar",,,,,,,"8",,,,,
+"27","1","C","A","hugotarditi@citricolachajari.com.ar",,,,,,,"8",,,,,
+"27","2","C","B","citricolachajari@citricolachajari.com.ar",,,,,,,"8",,,,,
+"28","1","C","A","rgomila@gomilagroup.com.ar",,,,,,,"2",,,,,
+"29","1","C","A","administracion@conexport.com.ar","Fernando PEDROZO 0264 15 472-3059 // 0264 15 505-76333",,,,,,"18",,,,,
+"30","1","C","A","sdibella@maverickmotor.com",,,,,,,"18",,,,,
+"31","1","C","A","sdemarchi@ajosrioclaro.com.ar","02622 489-015 / 489-047",,,,,,"13",,,,,
+"31","2","C","B","contacto@bodegademarchi.com.ar",,,,,,,"13",,,,,
+"33","1","C","A","sectorcomercial@calobera.com.ar","03755 42 1097",,,,,,"14",,,,,
+"22","3","C","Paez Gabriel - Dto. Tesoreria","Paez@bfar.com.ar","4239-3100   Ext 3345",,,,,,"0",,"2013-03-19 12:37:10","1","2013-10-15 09:45:53","1"
+"34","1","C","A","coopsanfrancisco@ispjuanpujol.com.ar","03775 15 414-483 (Silvia) 03775 15 639-485",,,,,,"7",,,,,
+"35","1","C","A","info@apicolavillaelisa.com.ar","03447 - 15456851  DE DARÍO",,,,,,"8",,,,,
+"37","1","C","A","gretel@arrozvillaelisa.com.ar",,,,,,,"8",,,,,
+"37","2","C","B","hector@arrozvillaelisa.com.ar",,,,,,,"8",,,,,
+"37","3","C","C","ruben@arrozvillaelisa.com.ar",,,,,,,"8",,,,,
+"37","4","C","D","grevillon@hotmail.com",,,,,,,"8",,,,,
+"37","5","C","E","silvinairispalacio@hotmail.com",,,,,,,"8",,,,,
+"38","1","C","Sr. Francisco E. ALCARAZ","coovital@vinosgeneralalvear.com.ar",,,,,,,"13",,,,,
+"39","1","C","GABRIELA GAUNA - MARCELA NUÑEZ - JULIA KRUGER  int 1101 Pago a Proveedores","gabrielagauna@colasa.com","03496-428847 Int 1142  03496 428906  -Interno 1121",,,,,,"21",,,"1","2013-04-18 13:58:35","1"
+"39","2","C","Srta. Mirta FRESCHI","mirtafreschi@corlasa.com","03496- 15 650049  INT 1142",,,,,,"21",,,"1","2013-01-22 09:29:01","1"
+"41","1","C","A","alevera_5@hotmail.com","0264 15-4070548",,,,,,"18",,,,,
+"42","1","C","Srta. Fiorella","fiorella@dlmargentina.com.ar",,,,,,,"1",,,"1","2011-11-10 13:58:07","1"
+"43","1","C","Srta Gabriela CLARIBEL","GabrielaClaribel@hotmail.com","celu 03755 15 650389 Alberto",,,,,,"14",,,,,
+"44","1","C",,"don.bernardino@speedy.com.ar",,,,,,,"18",,,,,
+"46","1","C","A","myriamd@austral-lya.com.ar",,,,,,,"1",,,,,
+"47","1","C","Cr. Fernando AGUERO 0264 422-5632"," faguero@speedy.com.ar",,,,,,,"18",,,,,
+"47","2","C",,"juanejarque@speedy.com.ar",,,,,,,"18",,,,,
+"49","1","C",,"gustavo@pespasa.com.ar",,,,,,,"1",,,,,
+"50","1","C","A","silvia.bocci@ar.enersystem.com",,,,,,,"2",,,,,
+"50","2","C","B","juan.fogola@ar.enersystem.com",,,,,,,"2",,,,,
+"50","3","C","C","Vanesa.Carruthers@ar.enersystem.com",,,,,,,"2",,,,,
+"51","1","C","A","sdemarchi@ajosrioclaro.com.ar",,,,,,,"13",,,,,
+"51","2","C","B","contacto@bodegademarchi.com.ar",,,,,,,"13",,,,,
+"53","1","C","A","palma@ochoteco.com.ar",,,,,,,"2",,,,,
+"54","1","C","A","rorlando@estanciaselglobo.com",,,,,,,"1",,,,,
+"57","1","C","GUSTAVO","gustavo@pespasa.com.ar",,,,,,,"1",,,,,
+"59","1","C","A","claudiaf@citrusfama.com.ar",,,,,,,"8",,,,,
+"59","2","C","B","carinam@citrusfama.com.ar",,,,,,,"8",,,,,
+"63","1","C","A","iwalker@frutasescartin.com.ar","CELU 02625 15 662-024",,,,,,"13",,,,,
+"63","2","C","B","exportaciones@frutasescartin.com.ar",,,,,,,"13",,,,,
+"63","3","C","C","alberto@bowenet.info",,,,,,,"13",,,,,
+"66","1","C","A","jopringles@infovia.com.ar",,,,,,,"18",,,,,
+"68","1","C","Sr. Javier FRANCO","jfranco@hdcsa.com.ar","comexth@gmail.com",,,,,,"21",,,"1","2014-04-29 11:19:15","1"
+"69","1","C","A","cafleck@arnet.com.ar",,,,,,,"14",,,,,
+"71","1","C","A","lorenzomas@grupocarrascosa.com.ar",,,,,,,"18",,,,,
+"72","1","C","Srt. Verónica DEGARBO","vdegarbo.hma@hyundai.com.ar",,,,,,,"2",,,,,
+"74","1","C","A","jorge.bacchiani@rotorpump.com",,,,,,,"2",,,,,
+"75","1","C","A","gmolina@jpsrl.com;rtombeur@jpsrl.com",,,,,,,"2",,,,,
+"76","1","C","A","gmolina@jpsrl.com",,,,,,,"2",,,,,
+"76","2","C","B","rtombeur@jpsrl.com",,,,,,,"2",,,,,
+"76","3","C","C","cbrinusio@jpsrl.com",,,,,,,"2",,,,,
+"79","1","C","A","sdemarchi@ajosrioclaro.com.ar",,,,,,,"13",,,,,
+"79","2","C","B","contacto@bodegademarchi.com.ar",,,,,,,"13",,,,,
+"80","1","C","DANIEL","administracion@frutalosnogales.com.ar",,,,,,,"13",,,"1","2011-06-29 11:21:52","1"
+"81","1","C","A","atruffa@felfort.com.ar",,,,,,,"1",,,,,
+"82","1","C","A","gerencia@victoriamaderas.com.ar",,,,,,,"14",,,,,
+"83","1","C","A","compras@latinotca.com.ar",,,,,,,"1",,,,,
+"83","2","C","Cristela Kelez - Latino TCA","ckelez@latinotca.com.ar","5235-8760",,,,,,"1",,,"1","2012-04-13 10:34:42","1"
+"84","1","C","A","colettamauricio@gmail.com",,,,,,,"13",,,,,
+"85","1","C","A","angela@lomasdelsol.com.ar",,,,,,,"18",,,,,
+"85","2","C","B","mariaeugenia@lomasdelsol.com.ar",,,,,,,"18",,,,,
+"88","1","C","A","rsmssa@marcosschmukler.com.ar",,,,,,,"8",,,,,
+"88","2","C","B","rsmssa@concordia.com.ar",,,,,,,"8",,,,,
+"88","3","C","C","larralde@marcosschmukler.com.ar",,,,,,,"8",,,,,
+"90","1","C","A","miele@arnet.com.ar",,,,,,,"16",,,,,
+"91","1","C","A","mielesentrerrianas@interya.net.ar",,,,,,,"8",,,,,
+"92","1","C","Fabiana Abal   Mar-Mie-Jue de 14 a 17hs","glarker@milkaut.com.ar","TE 011 48977452","Billinghurst","1833","4to piso",,"Palermo","21",,,"1","2013-02-22 15:22:58","1"
+"93","1","C","Sr. Adrián VILLEGAS","adrianvillegas@logisticadifabio.com","Cel 2627-533003  Atilio Difabio  // Cel.2604-409900 Adrian Villegas Cont.",,,,,,"13",,,"1","2012-08-03 14:13:21","1"
+"93","2","C","B","adrianvillegas@yahoo.com.ar",,,,,,,"13",,,,,
+"94","1","C","A","veronica@missionline.com.ar",,,,,,,"2",,,,,
+"98","1","C","A","saraines@naimanfoods.com.ar",,,,,,,"8",,,,,
+"100","1","C","A","info@naturalstones.com.ar",,,,,,,"18",,,,,
+"100","2","C","B","orojuan_1@hotmail.com",,,,,,,"18",,,,,
+"269","1","C","Sr. Alejandro Bertotto","abertotto@acerbrag.com","4006-7141","Ruta Panamericana km 49,5","S/N","EdificioBureau Piso3","CP 1629","Pilar","2",,"2011-02-18 14:00:48","1",,
+"267","1","C","Sta Yesica Leguizamon","yesica.leguizamon@agwarrants.com","4331-5883","Av. Alicia Moreau de Justo","1120","Oficina 402","CP C1107 AAX","C.A.B.A.","1",,"2011-02-18 14:02:52","1","2011-12-21 10:23:18","1"
+"399","1","C","JULIETA POGGI",,,"Uruguay","2800",,"CP: B1643EKQ","San Fernando","2",,"2011-02-18 14:05:06","1",,
+"259","1","C","Sr. Daniel Storti","storti@alpargatas.com.ar","4124-2444","FELIX DE AZARA","841",,"CP C 1267 ABQ","C.A.B.A","1",,"2011-02-18 14:08:18","1",,
+"259","2","C","Sta.Gabriela Platone","platone@alpargartas.com.ar","4124-2606","FELIX DE AZARA","841",,"CP C 1267 ABQ","C.A.B.A","1",,"2011-02-18 14:14:43","1",,
+"259","3","C","Sr.Jorge Membrana","menbrana@alpargatas.com.ar","4124-2421","FELIX DE AZARA","841",,"CP C 1267 ABQ","C.A.B.A.","1",,"2011-02-18 14:16:02","1",,
+"259","4","C","Sr.Fernando Giansante","giansante@alpargatas.com.ar","4124-2403","FELIX DE AZARA","841",,"CP C 1267 ABQ","C.A.B.A.","1",,"2011-02-18 14:37:22","1",,
+"197","1","C","Sr. Diego GIACONE","diego.giacone@tbamerica.com","03489 412-000  INT 2006","RUTA 9","Km 80",,"CP: 2804","Camino a Capilla de Señor - CAMPANA","2",,"2011-02-23 17:33:20","1","2012-09-11 11:58:45","1"
+"427","1","C","Gabriel Berberian","gabrielb@bestsox.com.ar","4555 6668","CHARLONE","1446",,"C1427BYD","C.A.B.A.","1",,"2011-03-02 10:07:28","1",,
+"157","1","C","ROBERTO CANDOTTI",,"03758  470-501",,,,,,"0",,"2011-03-02 16:38:29","1",,
+"123","1","C","JIMENA MARCHESI","JimenaMarchesi@ar.SpiraxSarco.com","INT 1315  PAGO PROVEEDORES",,,,,,"0",,"2011-03-15 10:51:39","1","2012-03-21 10:18:51","1"
+"376","1","C","Sra. Cra. Ana Ma. AVIAZZI - Sr. Rodolfo GONZALEZ","rodofogonzalez@rafalim.com","4331-6001 al 04","Av. Julio A. Roca","516","6to. piso","CP: C1067ABN","C.A.B.A.","1",,"2011-03-15 11:19:49","1","2011-08-11 12:34:53","1"
+"376","2","C","SECRETARIA",,"03492 438-842 - 438-839 Paola",,,,,,"0",,"2011-03-15 11:22:33","1",,
+"433","1","C","Sr. Dr. Héctor J. BARBEITO","hbarbeito@speedy.com.ar",,,,,,,"0",,"2011-03-22 16:15:02","1",,
+"434","1","C","Sr. Luis M. MAESSBALCK","l.maesschalck@tiba.com","4106-8400  INT 401","SAENZ VALIENTE","2420",,"CP: B1640GNX","MARTINEZ","2",,"2011-04-25 10:19:15","1",,
+"434","2","C","Srta.. Maria Candelaria TONELLI","Candelaria Tonelli <ctonelli@encompass.tv>","4106-8400 (INT 412)","SAENZ VALIENTE","2420",,"CP: B1640GNX","MARTINEZ","2",,"2011-04-25 10:22:08","1","2016-12-07 10:10:04","1"
+"437","1","C","Srta. Nancy FARIAS","farias@werthein.com.ar","4706-8300","Av. Congreso","1685","1er. PISO","CP: C1428BUC","C.A.B.A.","1",,"2011-05-11 10:07:50","1","2013-05-15 17:05:54","1"
+"437","2","C","GREGORIO, NUMO Y NOEL WERTHEIN SA","maggi@werthein.com.ar","4706-8326","AVDA CONGRESO","1685","1er. PISO","CP: C1428BUC","C.A.B.A","1",,"2011-05-11 10:10:09","1",,
+"377","1","C","SRTA. PATRICIA SALADINO","patricia.saladino@csav.com","5355-5789","Carlos Pellegrini","1363","Piso 4°","CP C1011AAA","C.A.B.A.","1",,"2011-05-18 12:18:11","1",,
+"377","2","C","SR. DANIEL SOLDAVINI","daniel.soldavini@csav.com","5355-5743","Carlos Pellegrini","1363","Piso 4°","CP C1011AAA","C.A.B.A.","1",,"2011-05-18 15:53:43","1",,
+"168","1","C","Sr. Gabriel Tomas","gtomas@japanparts-group.com","4727-4198","Colectora Este, Ruta Panamericana","Km. 26,351",,"B1611GEC","Don Torcuato","2",,"2011-05-19 17:40:01","1",,
+"329","1","C","mariela.romero@tabacal.com.ar","SRTA. MARIELA ROMERO","5167-2114","Av. Leandro N Alem","986","Piso 9ª","CP: C1001AAR","C.A.B.A.","1",,"2011-05-19 17:42:42","1",,
+"334","1","C","SRTA. MARIELA CARRIZO","mariela.carrizo@kidde.com.ar","4309-9541","Pedro de Lujan","2902",,"CP: C1294ACL","C.A.B.A.","1",,"2011-05-19 17:46:59","1",,
+"334","2","C","SR. JORGE THEODOROU","jorge.theodorou@kidde.com.ar","4309-9528","Pedro de Lujan","2902",,"CP: C1294ACL","C.A.B.A.","1",,"2011-05-19 17:49:19","1",,
+"340","1","C","MARCELA AGUIRRE","marcela.aguirre@martelliabogados.com","4132-4111","Sarmiento","1230","Piso 9 y 10","CP: C1041AAZ","C.A.B.A.","1",,"2011-05-19 17:53:14","1",,
+"241","1","C","Srta. Alejandra BARRIOA","abarrios2@kleinvie.com.ar","03833 432-586    431-587","Esquiu","591","Piso 4º","CP: K4700BIK","San Fdo. del Valle de Catamarca","3",,"2011-05-23 14:03:56","1",,
+"197","2","C","Sr. Sebastián RIGONI","sebastian.rigoni@tbamerica.com",,,,,,,"0",,"2011-05-24 10:35:18","1",,
+"39","3","C","Sr. Guillermo GIUZO","ggiuzio@corlasa.com","03496 15 658758",,,,,"ESPERANZA","21",,"2011-06-14 12:23:49","1","2011-07-08 12:35:24","1"
+"271","1","C","Sta. Sol Von Hunefeld","svonhunefeld@altoparana.com","5556-6000 (Int 237)","Gobernador Vergara","403","Piso 3°","CP: B1638AEC","C.A.B.A.","1",,"2011-06-15 16:27:30","1",,
+"271","2","C","Sr.Federico Espinosa","fespinosa@altoparana.com","5556-6000 (Int 245)","Gobernador Vergara","403","Piso 3°","CP: B1638AEC","C.A.B.A.","1",,"2011-06-15 16:29:01","1",,
+"393","1","C","SRTA. NATALIA COLACILLI",,"4848-5555","Calle 117","6274",,"CP: 1657","Villa Loma Hermosa - San Martin","2",,"2011-06-15 16:32:27","1",,
+"266","1","C","Sr. Eduardo M.Balaniuk","ebalaniuk@arcor.com","4310-9767","Maipú","1210","Piso 3","CP: C1006ACT","C.A.B.A.","1",,"2011-06-15 16:35:03","1",,
+"394","1","C","SRTA. IRIS LUCIA SPINETTA",,,"Jose Evaristo Uriburu","663","2°Piso","CP: C1027AAM","C.A.B.A.","1",,"2011-06-15 16:37:55","1",,
+"290","1","C","Sr. Marcelo FANTI","marcelo_fanti@bactssa.com.ar","4510-9898","Calle Nro. 8 y Av. Edison Terminal 5","S/N",,"CP: C1104BCA","C.A.B.A.","1",,"2011-06-15 16:41:47","1",,
+"290","2","C","Srta. Pamela EGUIAZABAL","pamela_eguiazabal@bactssa.com.ar","4510-9960","Calle Nro. 8 y Av. Edison Terminal 5 Puerto Nuevo","S/N",,"CP: C1104BCA","C.A..B.A.","1",,"2011-06-15 16:43:09","1",,
+"274","1","C","Sr. Alfredo Velázquez","alfredo.velazquez@basf.com","4317-9749","Tucuman","1",,"CP: C 1049 AAA","C.A.B.A.","1",,"2011-06-15 16:45:10","1",,
+"274","2","C","Sr. Fernando Lares","fernando.lares@basf.com","4317-9758","Tucuman","1",,"CP: C1049AAA","C.A.B.A.","1",,"2011-06-15 16:46:30","1",,
+"419","1","C","Sr. Enrique S. MANTILLA","contacto@cera.org.ar","4394-4482","Avda. Pte. Roque Sáenz Peña","740","1º Piso","CP: C1035AAP","C.A.B.A.","1",,"2011-06-15 16:48:48","1",,
+"280","1","C","Sr. Francisco Quaranta","francisco_quaranta@carraro.com","4489-7250","Valentín Gómez","577",,"CP: B1706FMI","Haedo","2",,"2011-06-15 16:50:36","1",,
+"401","1","C","MARIA INES ECHEITA",,,"Av. Del Libertador","238",,"CP: B1638BED","Vicente Lopez","2",,"2011-06-15 16:51:41","1",,
+"284","1","C","Sr. Roberto  Lorenzatto","roberto.lorenzatto@esab.com.ar","4754-7030","Calle18","4079",,"CP: B1672AWG","Villa Lynch","2",,"2011-06-15 16:55:10","1",,
+"286","1","C","Sta. Marcela Diaz","marcela.i.diaz@diageo.com","5776-2934","Bouchard","680","Piso 7ª","CP: C1106ABJ","C.A.B.A.","1",,"2011-06-15 16:57:17","1",,
+"293","1","C","Sr. José SASSOT","jsassot@eltejar.com.ar","(0234) 4450375","Avda. San Martín","2949",,"CP: B7260EQK","Saladillo","2",,"2011-06-15 17:01:44","1",,
+"293","2","C","Srta. Stella  MARIS DANGELO","stella_dangelo@eltejar.com","(0234) 4450375","Avda. San Martín","2949",,"CP: B7260EQK","Saladillo","2",,"2011-06-15 17:03:17","1",,
+"293","3","C","Srta. Carolina BERUATO","cberuatto@eltejar.com.ar","4809-3210","Av. Pueyrredon","2466","Piso 1ª","CP: C1119ACU","C.A.B.A.","1",,"2011-06-15 17:04:43","1",,
+"409","1","C","SR. DIEGO COUTO",,,"FLORIDA","343","3er.Piso","CP: C1005AAG","C.A.B.A.","1",,"2011-06-15 17:09:31","1",,
+"409","2","C","SRTA. MARIA V. CORREA - SRTA. MARIA P. HALZUET - SRTA. ANALIA MOLINA",,,"FLORIDA","343","3er.Piso","CP: C1005AAG","C.A.B.A.","1",,"2011-06-15 17:10:43","1",,
+"302","1","C","Sr. César FALLACARA","cesar.fallacara@ferrero.com","4014-4426","Olga Cossentini","260 - 263","1º PISO","CP: C1107CCE","Edificio Yacht IV - Dique IV Puerto Madero","1",,"2011-06-15 17:13:15","1",,
+"380","1","C","SR. JUAN PABLO BIDONE","juan.pablo.bidone@firstdata.com.ar","4340-9906","Perú","143",,"CP: C1067AAC","C.A.B.A.","1",,"2011-06-15 17:15:16","1",,
+"322","1","C","SRTA. MAGDALENA CECILIA MORENO","mmoreno@gasnaturalban.com.ar","4309-2816","Isabel La Católica","939","Piso 1ª","CP: C1268ACS","C.A.B.A.","1",,"2011-06-16 14:12:20","1",,
+"313","1","C","Srta. Laura RUTA","laura.ruta@ar.geodiswilson.com","5129-1091","Bolívar","391","Piso 2ª","CP: C1066AAG","C.A.B.A.","1",,"2011-06-16 14:14:07","1",,
+"304","1","C","Srta. Ma. del Carmen GESTOSO","mc.gestoso@griensu.com","4342-8819","Julio A Roca","636","Pisos 10/11/12","CP: C1067ABO","C.A.B.A.","1",,"2011-06-16 14:18:27","1",,
+"382","1","C","SR. MARCOS REYNOLDS","mreynolds@argenhonda.com.ar","4000-4578","Av. Lope de Vega","2799",,"CP: C1417COL","C.A.B.A.","1",,"2011-06-16 14:21:14","1",,
+"382","2","C","Sr Gustavo FRANCISCO","gfrancisco@argenhonda.com.ar","4000-4578","Av. Lope de Vega","2799",,"CP: C1417COL","C.A.B.A.","1",,"2011-06-16 14:22:51","1",,
+"457","1","C","Lic. Laura Marun","lmarun@cacex.org.ar",,,,,,,"0",,"2011-09-19 11:52:19","1","2011-09-28 14:28:18","1"
+"460","1","C","Sr. Luis MENDEZ","mariobustoscarra@ccecuyo.com.ar",,,,,,,"0",,"2011-09-21 13:45:46","1","2017-06-27 15:07:48","1"
+"349","1","C","OSVALDO COSENTINO","osvaldo.cosentino@ar.pwc.com","4850-0000","Bouchard","557",,"CP: C1106ABG","C.A.B.A.","1",,"2011-06-16 14:29:19","1",,
+"349","2","C","ERIKA GARZONI","erika.x.garzoni@ar.pwc.com","4850-6951","Bouchard","557",,"CP: C1106ABG","C.A.B.A.","1",,"2011-06-16 14:30:38","1",,
+"385","1","C","SR. LUCIANO LA VIA","luciano.lavia@mpsa.com","4734-3228   15 5493-0375","Pte. Peron","1001",,"C.P.: B1683BXN","Villa Bosch","2",,"2011-06-16 14:35:46","1","2011-08-29 10:41:40","1"
+"385","2","C","SR. RICARDO H. ROSSI","ricardoh@mpsa.com","4734-3236","Pte Peron","1001",,"C.P.: B1683BXN","Villa Bosch","2",,"2011-06-16 14:37:16","1",,
+"385","3","C","SR. ROBERTO R. RODRIGUEZ","roberto.rodriguez@mpsa.com","4734-3217","Pte Peron","1001",,"C.P.: B1683BXN","Villa Bosch","2",,"2011-06-16 14:38:41","1",,
+"385","4","C","SRTA. SILVINA KRINGS","silvina.krings@mpsa.com","4734-3000 (int 4037)","Pte Peron","1001",,"C.P.: B1683BXN","Villa Bosch","2",,"2011-06-16 14:40:06","1",,
+"385","5","C","SRTA. JULIETA SEGURA","julieta.segura@mpsa.com","4734-3232","Pte Peron","1001",,"CP: B1683BXN","Villa Bosch","2",,"2011-06-22 16:18:20","1",,
+"357","1","C","SR. GERMAN PIZZO","gpizzo@reebok.com.ar","6772-2517","Los Patos","2151",,"CP: C1283ABI","C.A.B.A.","1",,"2011-06-22 16:20:02","1",,
+"356","1","C","SR. RUBEN TROYON","ruben.troyon@renault.com","4778-2255","Fray Justo S de Oro","1744",,"CP: C1414CBB","C.A.B.A.","1",,"2011-06-22 16:22:12","1",,
+"360","1","C","SR. CRISTIAN SOSA","cgsosa@roch.com.ar","4315-7624 (INT 149)","Av. Eduardo Madero","1020","Piso 21","CP: C1106ACX","C.A.B.A.","1",,"2011-06-22 16:24:07","1",,
+"362","1","C","LESLIE ROBERTS","leslie.roberts@santma.com","4018-2107","C.M. Della Paolera","299","Piso 15ª","CP: C1001ADA","C.A.B.A.","1",,"2011-06-22 16:25:57","1",,
+"362","2","C","SR. LEANDRO C.D. PELLECCHIA","leandro.pellecchia@santama.com","4018-4490","C.M. Della Paolera","299","Piso 15ª","CP: C1001ADA","C.A.B.A.","1",,"2011-06-22 16:27:21","1",,
+"371","1","C","SR. MAXIMILIANO VIVACQUA","mvivacqua@makro.com.ar","4756-0081/ 89","Ricardo Gutierrez","3647",,"CP: B1605EHC","MUNRO","2",,"2011-06-22 16:29:48","1",,
+"371","2","C","SRTA. MARIA LAURA LAPADULLA","llapadula@makro.com.ar","4756-0081/ 89","Ricardo Gutierrez","3647",,"CP: B1605EHC","MUNRO","2",,"2011-06-22 16:31:13","1",,
+"371","3","C","SRTA. VERONICA F. CABALLERO","vcaballero@makro.com.ar","4721-8923  int 473   ESTELA","Ricardo Gutierrez","3647",,"CP: B1605EHC","MUNRO","2",,"2011-06-22 16:32:22","1","2017-07-10 13:00:18","1"
+"366","1","C","SRTA. MARIANA FIGARI","mariana.figari@syngenta.com","4837-6569","Av. del Libertador","1855",,"CP: B1638BGE","Vicente López","2",,"2011-06-22 16:33:50","1",,
+"319","1","C","SR. EDGARDO ROUVIER","erouvier@vesuvio.com.ar","5776-5617","Gurruchaga","830",,"CP: C1414HR","C.A.B.A.","1",,"2011-06-22 16:36:48","1",,
+"319","2","C","SR. DANIEL GENTILLI",,"5776-5625","Gurruchaga","830",,"CP: C1414HR","C.A.B.A.","1",,"2011-06-22 16:38:03","1",,
+"319","3","C","SR. ARIEL NUDELMAN",,"5776-5613","Gurruchaga","830",,"CP: C1414HR","C.A.B.A.","1",,"2011-06-22 16:39:05","1",,
+"300","1","C","Sr. Dario Bursztein","darioezequiel.bursztein@xerox.com","4703-7935","Córdoba","3341","Piso 2°","CP: B1640GWO","Martinez","2",,"2011-06-22 16:41:14","1",,
+"300","2","C","Sta. Ana Clara Chedrese","anaclara.chederese@xerox.com","4703-7931","Córdoba","3341","Piso 2°","CP: B1640GWO","Martinez","2",,"2011-06-22 16:44:27","1",,
+"440","1","C","Sra. Cra. Teresa Perrone","teresaperrone@ppnasociados.com.ar","4375-1448 4373-2834","Corrientes","1393","Piso  5º J","CP: C1043ABA","C.A.B.A.","1",,"2011-06-23 17:35:50","1",,
+"189","1","C","Sr. Carlos LARDONE","lucas_lardone@hotmail.com","02627-15 338360 o 15 681264","Tirasso","5909",,"M5600CEM","SAN RAFAEL","13",,"2011-06-24 11:08:44","1","2013-04-22 11:47:29","1"
+"441","1","C","Sr. Carlos LARDONE","clardone@hotmail.com","02604 -15 338360 o 15 681264","Tirasso","5909",,"CP: M5600CEM","SAN RAFAEL","13",,"2011-06-24 11:43:09","1","2013-02-27 11:02:59","1"
+"426","1","C","Sr. Guillermo ZEUG","GZ@agropatagonico.com","4201-7380","BERUTI","352",,"(B1870CAJ)","Avellaneda","2",,"2011-06-28 12:00:43","1",,
+"150","1","C","Lic.  Anabel N. Cuquejo",,"02622-15-662-626","Carril Urquiza","795",,"CP: 5561","Tupungato","13",,"2011-06-29 16:51:23","1","2012-05-03 08:58:36","1"
+"147","1","C","PAGO PROVEEDORES - Maira Gallardo","cuentasapagar@yamana.com","0264 429-9700/01 Int. 711 Maira 705 Natalia NIETO","Gral. Paz (entre Salta y Santiago del Estero)","558 Oeste",,"5400","San Juan - Capital","18",,"2011-08-02 10:45:32","1","2012-04-16 11:49:32","1"
+"193","1","C","Sr. Gonzalo DELFLER -  Sector Compras","gonzalo.derfler@grupomotta.com","0343 4876044","RAMIREZ Y BELGRANO","S/Nro.","Est. Gral. Racedo","CP: E3114XAB","Departamento Diamante","8",,"2011-08-09 09:33:52","1","2011-08-10 17:37:31","1"
+"193","2","C","Sr. Rogrigo MINGUILLON  Sr. Emiliano CALGARO","comex.rm@grupomotta.com","0343 487-6044  comex.ec@grupomotta.com",,,,,,"0",,"2011-08-16 10:59:31","1","2017-06-23 14:36:59","1"
+"193","3","C","SR. NESTOR o DIEGO - PAGO PROVEEDORES",,"4312-1442","CORRIENTES","127","6º PISO",,"C.A.B.A.","0",,"2011-08-18 11:28:21","1",,
+"434","3","C","Dolores Acosta","d.acosta@tiba.com","4106-8400  int. 424",,,,,,"0",,"2011-08-18 14:51:14","1","2012-09-25 10:59:16","1"
+"122","1","C","Mariela - Pago a Proveedores","mariela@sources.com.ar","4757-5505",,,,,,"0",,"2011-08-19 10:10:31","1","2011-08-19 10:10:38","1"
+"43","2","C","CPN Cristina Dombrouski","cdombrouski@donbasilio.com.ar","03755-15696603 // 03755-425382",,,,,,"0",,"2011-08-26 12:14:21","1","2012-09-17 09:58:59","1"
+"73","2","C","Sr. Diego M. Iglesias - Sr. Eddie A. Ballester","contable3@icebergagricola.com.ar","Tel/Fax: +549 0264 154103706","Finca & Packing: Calle 14 y América","s/n",,"CP: J5425XAB","Rawson","18",,"2011-08-29 15:24:08","1","2011-11-25 14:36:55","1"
+"448","1","C","Sr. Gabriel CIVIELLO",,,"Avda. Ramon S. Castillo y Avda. Comodoro PI","S/N",,"CP: 1104BEN","C.A.B.A.","1",,"2011-09-14 17:34:40","1",,
+"442","1","C","Damian Armando","armandodamian@johndeere.com","0341-410-5332","Juan Orseti","481","--","S2152CFA","Gral. Baigorria","21",,"2011-09-15 11:48:32","1","2017-06-28 13:41:47","1"
+"460","2","C","Srta. Gisel CABRAL","ccecuyo@ccecuyo.com.ar",,,,,,,"0",,"2011-09-21 13:46:12","1",,
+"465","1","C","ssss","info@zamoracitrus.com.ar",,,,,,,"0",,"2011-09-23 12:19:19","1","2011-09-23 13:04:15","1"
+"468","1","C","Sr. Dr. Mariano CAPRARULO","melcecnea@arnet.com.ar",,,,,,,"0",,"2011-09-23 16:12:22","1",,
+"469","1","C","Sr. Alberto CASSAB","albertocassab@dismarsrl.com.ar","info@cassabahun.com.ar",,,,,,"0",,"2011-09-26 14:06:42","1","2011-09-26 14:10:20","1"
+"483","1","C","A","contabilidad@delcavid.com",,,,,,,"0",,"2011-10-04 10:56:04","1","2011-10-04 14:21:44","1"
+"484","1","C","AA","gastonh@hebillahermanos.com.ar",,,,,,,"0",,"2011-10-04 12:25:25","1","2011-10-04 12:36:28","1"
+"490","1","C","Sr. Marcelo CAMACHO","mcamacho@alimar.com.ar",,,,,,,"0",,"2011-10-05 13:41:43","1",,
+"491","1","C","Maximiliano Yafusa","maxi@andoycia.com.ar",,,,,,,"0",,"2011-10-05 13:59:58","1","2011-10-05 14:03:26","1"
+"172","1","C","NANCY FRANCHETTO DE BATTISTON","nanba@infovia.com.ar","02604  15 565652",,,,,,"0",,"2011-10-06 11:03:18","1","2012-02-03 13:25:45","1"
+"452","1","C","Nora Fresno","Nora-F@bua.marubeni.com",,,,,,,"0",,"2011-10-17 17:13:02","1",,
+"208","1","C","....",,"2962 496260",,,,,,"0",,"2011-11-03 17:00:13","1",,
+"147","2","C","Natalia Meglioli","nmeglioli@Yamana.com","264-4299700 Int. 710",,,,,,"0",,"2011-11-07 12:14:21","1","2012-07-23 11:03:06","1"
+"147","3","C","Sr. Nicolás BARETA","nbareta@Yamana.com","0264-4299713  celular 026445250461","Gral. Paz   (entre Salta y Santiago del Estero)","558 Oeste",,"CP: 5400","San Juan Capital","18",,"2011-11-07 12:15:33","1","2012-07-10 17:27:44","1"
+"519","1","C","Sr. Pedro SARAVIA o Srta. PAOLA o Sr. DANIEL","pedro.saravia@fmc.com",,,,,,,"0",,"2011-11-08 17:30:44","1","2011-12-20 17:31:26","1"
+"519","2","C","Sr. Pedro SARAVIA o Srta. PAOLA o Sr. DANIEL","pedro.saravia@fmc.com",,,,,,,"0",,"2011-11-08 17:31:26","1",,
+"42","2","C","Sr. Silvio Fernández","silvio@dlmargentina.com.ar","Móvil: (54911) 5183-2824","Alicia M. de Justo","1020","1º Of. 129","(C1107AAV)","Puerto Madero - C.A.B.A.","1",,"2011-11-10 13:52:32","1","2012-09-25 11:21:22","1"
+"525","1","C","CECILIA GOMEZ","cmendez@salesdejujuy.com",,,,,,,"0",,"2011-11-14 12:50:27","1",,
+"518","1","C","Sr. Pablo DRANIS","pdranis@xstratacopper.com.ar","0381 450-8800  int 8891o 8886",,,,,"San Miguel de Tucuman","24",,"2011-11-17 17:29:12","1","2012-03-19 13:39:49","1"
+"517","1","C","SERGIO RENARD","sergio.renard@hocplc.com",,,,,,,"0",,"2011-11-18 12:13:45","1","2011-11-18 15:48:24","1"
+"523","1","C","Sra. Alicia LOHRENGEL","alicia.lohrengel@minapirquitas.com","int 211    int  203 Pablo Nogueira  F&A Controller",,,,,,"0",,"2011-11-21 14:31:56","1","2014-02-28 16:50:31","1"
+"522","1","C","Cr. Srta Marcela MAXIT - COMEX","m.maxit@pasargentina.com","(54-11) 4816-3220 / 4816-3227","Paraguay","1132","Piso 5º","(C1057AAR)","C.A.B.A","1",,"2011-11-21 16:00:11","1","2012-01-10 09:34:37","1"
+"526","1","C","Sr. José Antonia GARCIA","jose.garcia2@orica.com",,,,,,,"0",,"2011-11-22 09:46:19","1","2011-11-23 10:55:59","1"
+"520","1","C","Barros, Carlos (San Juan)","cbarros@barrick.com",,,,,,,"0",,"2011-11-22 09:57:36","1","2011-11-22 11:55:24","1"
+"520","2","C","Meding, Michael","mmeding@barrick.com","0264 429-8177  celu  264 504 6932","Francisco de Villagra","531 Este",,"CP: J5402CPI","SAN JUAN CAPITAL","18",,"2011-11-22 09:59:00","1","2012-09-26 18:03:21","1"
+"521","1","C","Sr. Marcelo JARA - Srta. Adriana Leites","mjara@barrick.com","0264 430-3048 / 0264 15 5052699","Ruta Nacional N° 40 -","KM 3480","Parque Industrial","CP: 5419","Distrito Campo Afuera - Albardón","18",,"2011-11-22 10:00:01","1","2013-12-13 11:38:39","1"
+"520","3","C","Farias, Mauricio (San Juan)","mfarias@barrick.com",,,,,,,"0",,"2011-11-22 10:05:54","1",,
+"526","2","C","Sergio FUNES","sergio.funes@orica.com",,,,,,,"0",,"2011-11-23 10:36:46","1","2011-11-23 10:38:54","1"
+"163","1","C","Sergio Binetti  int  350","sbinetti@iron-group.com","Mobile (15) 3924 - 5165","Colectora Este, Ruta Panamericana","Km. 26,351",,"(B1611GEC)","Don Torcuato","2",,"2011-11-23 13:46:29","1","2012-02-07 10:17:14","1"
+"163","2","C","Gustavo MOLINA int 352","gmolina@",,,,,,,"0",,"2011-11-23 13:52:31","1",,
+"620","1","C","TRELLEBORG WHEEL SYSTEMS ARGENTINA SA","juanpablo.marquez@trelleborg.com",,,,,,,"0",,"2012-07-03 10:47:45","1",,
+"180","1","C","Javier Rodenas","jrodenas@barceloempresas.com.ar","0264 15 4467955",,,,,,"0",,"2011-12-07 09:47:41","1","2012-03-23 12:30:51","1"
+"251","1","C","Sr. Yong Soo KANG - Srta. Gabriela NAJERA","gnajera@vinasdelcampo.com.ar","( cel: 0264-15 4843828) 0264 425 4434","Avenida de Mayo","665","Piso 5°","CP: C1084AAB","Ciudad Autónoma de Buenos Aires","1",,"2011-12-15 09:49:01","1","2013-12-17 12:47:50","1"
+"520","4","C","Carlos VIDAL y Magdalena BENEGAS",,"5776-6601","BOUCHARD","547","12º OFICINA 10",,,"0",,"2011-12-16 13:42:16","1",,
+"315","1","C","Sr. Sebastian ROIZ","sebastian.roiz@willlis.com","5222-8438   4325-7080 int 438",,,,,,"0",,"2011-12-19 10:46:48","1",,
+"147","4","C","Srta. María Eugenia García","megarcia@yamana.com","0264-4299700 Int 726","General Paz","Nº 558 - Oeste",,"CP 5400","SAN JUAN CAPITAL","18",,"2011-12-21 12:34:01","1","2013-12-13 13:13:47","1"
+"522","2","C","Gabriela Maceira","GMaceira@pasargentina.com","Tel: (54-11) 4816-3220 / 4816-3227","Paraguay",,"Piso 5ª","(C1057AAR)","C.A.B.A.","1",,"2011-12-22 11:09:03","1","2012-01-10 09:34:59","1"
+"544","1","CBF","Alejandra, GIORDANO","alejandra.giordano@fiatauto.com.ar","0351 4103580",,,,,,"0",,"2011-12-27 12:59:22","1","2011-12-27 15:16:30","1"
+"544","2","CBF","Maricel, MALNIS","maricel.malnis@fiatauto.com.ar","0351-4102835",,,,,,"0",,"2011-12-27 12:59:43","1","2011-12-27 13:03:14","1"
+"544","3","CBF","Guadaluper Fernandez","Guadaluper.Fernandez@fiatauto.com.ar;","0341 410-3485",,,,,,"0",,"2011-12-27 15:35:14","1",,
+"544","4","CBF","Juan Proietto","Juan.Proietto@fiatauto.com.ar","0351 410-3444",,,,,,"0",,"2011-12-27 15:35:59","1",,
+"525","2","C","Srta. Cra. Valeria GOMAR","vgomar@salesdejujuy.com",,,,,,,"0",,"2011-12-28 10:19:55","1","2011-12-28 10:30:50","1"
+"289","1","C","Dr. Augusto Vechio","avechio@ebv.com.ar","4379-4798",,,,,,"0",,"2012-01-13 09:02:22","1",,
+"289","2","C","Dr. José Carlos Cueva","jcueva@ebv.com.ar","4379-6829",,,,,,"0",,"2012-01-13 09:11:24","1",,
+"525","3","C","José de Castro Alem - General Manager","jdecastro@salesdejujuy.com","Tel.: (+54 388) 426 3777 Mobile: (+54 9 388) 4968103","Atilio Palla","80","Los Perales","(CP 4600)","San Salvador de Jujuy","10",,"2012-01-18 10:55:50","1",,
+"252","1","C","Sr. Juan Manuel CONTERMO PERDONO","juanmconterno@aspaagroindustrias.com.ar","0260-15-420-2383   celular",,,,,,"0",,"2012-01-18 12:04:56","1","2012-08-14 17:36:43","1"
+"525","4","C","Sr. Marcelo SÁNCHEZ - Gerente de Administración","msanchez@salesdejujuy.com",,,,,,,"0",,"2012-01-18 13:18:06","1",,
+"252","2","C","Dr. Bernardo MERCADO - Abogado",,"011  15 5005-5697",,,,,,"0",,"2012-01-19 09:54:51","1",,
+"553","1","C","Lic. Mariana Carraro","mcarraro@nacionfactoring.com.ar","Tel/Fax: 5235-5525 / 5239-1691","Avda. L. N Alem","356","Piso 14","(C1003AAQ)","C.A.B.A.","1",,"2012-01-19 10:07:10","1",,
+"376","3","C","SUSANA SPILA    PAGO PROVEEDORES","susanaspila@rafalim.com  flaviafrancia@rafalim.com","03492 438-877   Int. 277  438-842 - SECTOR PAGOS  - FLAVIA","Paraná","899",,"CP: S2300IUQ","RAFAELA","21",,"2012-01-19 11:47:32","1","2012-01-27 12:32:19","1"
+"472","1","C","Sr. Andres PULENTA (h)","adm@augustopulenta.com",,,,,,,"0",,"2012-01-25 09:56:20","1",,
+"28","2","B","CHAJARÍ - OSCAR FARNEDA","oscar.farneda@nuevobersa.com.ar","03456 420-036 / 420-020",,,,,"CHAJARÍ","8",,"2012-01-25 13:09:04","1","2012-01-25 13:10:10","1"
+"580","1","C","Sector Importación","hideco@hideco.com.ar",,,,,,,"0",,"2012-01-26 13:02:14","1",,
+"443","1","C","Sebatian PASCUARIELLE   GUSTAVO KOTELCHUT","comercioexterior@sintermetal.info","4630-9177     15 5832-8704",,,,,,"0",,"2013-01-22 13:14:51","1","2014-04-21 17:03:30","1"
+"123","3","C","Cinthia Laura Costanzo","cinthia.costanzo@ar.spiraxsarco.com","+54 (11) 4589-1388",,,,,,"0",,"2012-01-30 09:44:45","1","2012-06-28 15:43:28","1"
+"203","1","C","Diego Monteleone - Adrián CONCILIO",,"03487-443212 // 443213",,,,,,"0",,"2012-02-03 11:52:55","1",,
+"264","1","C","Sr. Hernán Méndez","hernan_mendez@antaresnav.com.ar","4317-8454",,,,,,"0",,"2012-02-03 13:35:48","1","2012-02-03 13:41:42","1"
+"264","2","C","Srta. Marina Carpanelli","carpanem@antaresnav.com.ar","4317-8462",,,,,,"0",,"2012-02-03 13:37:00","1","2012-02-03 13:37:08","1"
+"585","1","C","Srta. Mariana Maccari","mariana.maccari@affiniagroup.com","4736-6821",,,,,,"0",,"2012-02-03 13:47:41","1","2012-02-03 13:47:49","1"
+"575","1","C","Sr. Ariel Magliulo","ariel@brastex.com.ar","4573-3300",,,,,,"0",,"2012-02-03 14:28:12","1",,
+"586","1","C","Carlos Scioli","cscioli@agira.com.ar",,,,,,,"0",,"2012-02-03 14:42:43","1",,
+"586","2","C","Juan Manuel Bugge","jmbugge@agira.com.ar",,,,,,,"0",,"2012-02-03 14:43:17","1",,
+"532","1","C","Srta. Luciana BELLIA","luciana.bellia@ar.mcd.com","4711-2539",,,,,,"0",,"2012-02-03 16:06:23","1",,
+"532","2","C","Guillermo.Cabrera@ar.mcd.com","Sr. Guillermo Cabrera","4711-2072",,,,,,"0",,"2012-02-03 16:08:25","1","2012-11-16 12:31:07","1"
+"593","1","C","Srta. Marcela GONZALEZ","marcela.gonzalez@mainprocess.com.ar",,,,,,,"0",,"2012-02-10 15:44:27","1","2012-06-18 10:27:23","1"
+"592","1","C","Sr .Osvaldo Gabalda","ogabalda@nutreco.com.ar","02604 445861",,,,,,"0",,"2012-02-14 08:51:45","1",,
+"39","4","C","Aldana ZIMMERMANN","azimmermann@corlasac.com",,,,,,,"0",,"2012-02-15 15:30:47","1",,
+"598","1","C","Sr. Marcelo Onorato","marcelo.onorato@smurfitkappa.com.ar","Int. 7472",,,,,,"0",,"2012-03-01 08:34:31","1","2014-05-08 09:59:49","1"
+"147","5","C","Diego Martínez","diego.martinez@Yamana.com","264-4299700 - Int. 721",,,,,,"0",,"2012-03-09 14:13:01","1","2012-03-22 17:06:56","1"
+"603","1","C","aretman3@visteon.com","Srta. Alejandra RETMAN - Gerencia de Finanzas",,,,,,,"0",,"2012-03-12 09:39:35","1","2012-03-15 10:42:51","1"
+"604","1","C","javier_rios@goodyear.com","Sr. Javier RIOS - Gerencia de Comercio Exterior",,,,,,,"0",,"2012-03-13 17:24:06","1",,
+"148","1","C","José Risueño","ucexport2@gmail.com","0264 497-2337   : 0264 - 156708908",,,,,,"0",,"2012-03-19 08:53:43","1","2013-03-04 10:45:30","1"
+"605","1","C","03327- 445212","fernando.heredia@iff.com",,,,,,,"0",,"2012-03-19 13:36:18","1",,
+"352","1","C","MATIAS MELIGRANA","mmeligrana@patagoniabioenergia.com.ar","55 55 0262   - celular 15 61156913","Cabildo","2677","4| B","C1428AAU","CAPITAL FEDERAL","0",,"2012-03-28 17:06:37","1",,
+"600","1","C","Srta. Vanina Zuniga - Srta. Ana Carla Haddad","vzuniga@aguarica.com.ar",,"Av. Libertad esquina San Martin","S/Nro.",,"CP 4740","Andalgalá","3",,"2012-04-10 10:36:31","1",,
+"538","1","C","Sr. Federico AULIU","FAuliu@aspro.com",,,,,,,"0",,"2012-04-12 09:52:21","1",,
+"430","1","C","Sr. José A. URRETIA - Sr. Edmundo PUYOL",,,"ALSINA","1433","PISO 9º - OFICINA A","C1088AAK","C.A.B.A.","1",,"2012-04-19 10:46:05","1","2013-12-04 10:58:29","1"
+"201","1","C","Jorge BENITEZ","contaduria@pipore.com.ar","0376 449-0056   fijo 0376 4490014 desde las 7 a las 12hs y desde las 15 a las 18.30hs.-",,,,,,"0",,"2012-04-26 11:48:10","1","2013-07-30 09:09:51","1"
+"201","2","C","Sra. Hasse Pamela - Sr. Jorge Benitez",,"4326-2295","Calle Florida","142","Piso 6º - Oficina Q","CP C1005AAD","C.A.B.A.","1","ARGENTINA","2012-05-03 08:55:26","1",,
+"570","1","C","Florencia Barreiro","MERCOSEED S.A. (fbarreiro@estudio-giuliani.com.ar)",,,,,,,"0",,"2012-07-11 17:31:47","1","2014-04-03 08:23:38","1"
+"352","2","C","Mariel Amancay Snyders","msnyders@patagoniabioenergia.com.ar","5555 0272",,,,,,"0",,"2012-05-28 13:00:56","1","2012-05-28 14:00:17","1"
+"588","1","C","Betina Jimenez","bjimenez@antrimenergy.com.ar",,,,,,,"0",,"2012-05-29 12:15:29","1",,
+"190","1","C","Gonzalo Correa","pcorrea@furukawa.com.br",,,,,,,"0",,"2012-06-01 10:06:46","1","2012-11-05 09:44:26","1"
+"615","1","C","'Edgardo Olaeta'   / Adolfo (0247815442161) Patricia (telefonista)","eolaeta@buratovich.com","02478 15 44517102",,,,,,"0",,"2012-06-06 11:03:40","1","2014-02-17 16:36:17","1"
+"92","2","C","Jorge Nescier - Jefe de Finanzas","jorge.nescier@milkaut.com.ar","+ 54 342 4501229",,,,,,"0",,"2012-06-07 08:24:09","1",,
+"661","2","C","'administracion' <administracion@sinatracomercial.com.ar>","'administracion' <administracion@sinatracomercial.",,,,,,,"0",,"2013-11-04 17:19:21","1",,
+"25","2","B","COMEX - FRON DESK",,"5222- 6694 / 6871 / 6892 / 6073 / 6793",,,,,,"0",,"2012-06-12 13:14:56","1",,
+"186","1","C","Claudia G. Sferco","c.sferco@cosur-ar.com",,,,,,,"0",,"2012-06-13 09:43:59","1","2012-11-15 08:59:04","1"
+"173","1","C","COMEX VANESA","contable114@noelma.com.ar",,,,,,,"0",,"2012-06-21 08:38:45","1",,
+"425","1","C","Sandra Ermilio","sandra.ermilio@airliquide.com","(+5411) 4708 2215",,,,,,"0",,"2012-06-28 12:19:09","1",,
+"123","4","C","Ramiro Garnil","ramiro.garnil@ar.spiraxsarco.com","54 (11) 4589-1386",,,,,,"0",,"2012-06-28 15:41:03","1","2012-06-28 15:48:09","1"
+"567","3","C","CLAUDIA NAVARRO - PAGO A PROVEEDORES Ctas. a Pagar","claudia.navarro@delphi.com","(5411) 4858-8818",,,,,,"0",,"2012-08-06 09:12:30","1","2012-08-14 17:55:22","1"
+"199","1","C","CRA. GRISELDA LABRIOLA","griseldalabriola413@hotmail.com","0380 15 468-4988   0380-4434748",,,,,,"0",,"2012-08-30 16:33:41","1","2012-11-01 17:02:18","1"
+"290","3","C","Srta. Gabriela Oscari","gabriela_oscari@bactssa.com.ar","Tel: (54-11) 4510-9835.  COM A 3602","Calle Nro. 8 y Av. Edison Terminal 5 Puerto Nuevo","S/N",,"CP:  C1104BCA","C.A.B.A.","1",,"2012-09-06 09:42:02","1",,
+"629","1","C","Cdr. Jorge Minutella",,,,,,,,"0",,"2012-09-10 18:04:29","1",,
+"174","1","C","Srta. Cecilia - Secretaria de LUIS","mcarias@citricolaayui.com.ar","int 114",,,,,,"0",,"2012-09-11 12:42:46","1","2012-10-09 12:54:01","1"
+"146","1","C","FLORENCIA - ESTEFANIA",,,,,,,,"0",,"2012-09-11 16:30:27","1",,
+"85","3","C","Daniel Galdeano <daniel@lomasdelsol.com.ar>",,,,,,,,"0",,"2012-09-19 16:13:45","1","2012-09-19 16:14:32","1"
+"592","2","C","Cristian Prats - Nutreco","cprats@nutreco.com.ar",,,,,,,"0",,"2012-09-25 10:35:32","1","2012-09-25 10:54:31","1"
+"434","4","C","Sofía Saraví","s.saravi@tiba.com",". +54 11 4106 8400 Ext.424",,,,,,"0",,"2012-09-25 10:54:13","1","2012-09-25 10:58:11","1"
+"631","1","C","CRISTIAN GUIÑAZU - Depto. Logístico -","cguinazu@fincaagostino.com","54 261 524 9358 / 59. Ext: 35.","Carril Barrancas","10590","-------------","5517","MAIPU","13","ARGENTINA","2012-10-01 11:14:59","1",,
+"606","1","C","Dra. Maria Monica Zanetti","mzanetti@farmesa.com","4588-4600","Acceso Oeste Km- 47,5",,,"B1748AGH","GRAL. RODRIGUEZ","2",,"2012-10-02 12:49:19","1",,
+"458","1","C","14,30 A 17,00",,,,,,,,"0",,"2012-10-09 13:10:48","1",,
+"197","3","C","Sr. Felix SUZUKI",,,,,,,,"0",,"2012-10-10 09:25:35","1",,
+"626","1","C","MARCELO",,"11 1551821712",,,,,,"0",,"2012-10-30 16:55:30","1","2012-10-31 17:50:51","1"
+"639","1","C","Lic.Mariano Indihar","indiharma@exportrade.com.ar","Cel phone: 54 (9)11 5226 6467",,,,,,"0",,"2012-11-01 14:18:04","1",,
+"607","1","C","Jorge L. DÁVILA",,,,,,,,"0",,"2012-11-05 09:19:06","1",,
+"637","1","C","CECILIA EGEA",,"03405 15  427600  CELULAR",,,,,,"0",,"2012-11-05 17:10:55","1","2012-11-14 16:15:52","1"
+"637","2","C","Srta Julieta Tortosa","julietatortosa@molinosvictoria.com","9 (3406) 15427601  INT 213",,,,,,"0",,"2012-11-13 17:23:34","1","2012-11-16 16:11:40","1"
+"641","1","C","Srta. Norma Oliveros","administracion@logisticasrl.com.ar",,,,,,,"0",,"2012-11-15 17:12:02","1","2013-01-22 16:10:47","1"
+"90","2","C","REINALDO PALMIERI","palmieri@mielesa.com.ar",,,,,,,"0",,"2012-11-27 17:13:40","1",,
+"652","1","C","ROMINA COLEDANI","rcoledani@motomec.com.ar",,,,,,,"0",,"2012-11-29 18:01:18","1",,
+"653","1","C","info@cmsalta.com.ar","info@cmsalta.com.ar",,,,,,,"0",,"2012-12-04 10:54:02","1",,
+"657","1","C","Sr. Pablo IRIARTE",,,"CALLE BAUNESS","2722","PISO 6to - A.","CP: C1431DOH","C.A.B.A.","1",,"2013-01-15 09:04:26","1",,
+"656","1","C","BETASOFT SRL",,,,,,,,"0",,"2013-01-22 16:24:22","1",,
+"659","1","C","Sr. Sebastian Pascarielle Girbau","sebastianp@sural.com.ar","Tel: (5411) 4630-9177","Zuviría","4839",,"(C1439BDK)","C.A.B.A.","1",,"2013-01-25 13:26:43","1",,
+"541","1","C","Sr. Lisandro Tron","direccion@fertecsrl.com.ar","03472 444400","Ruta Nacional Nº 9","Km. 443",,"CP:  2580","Marcos Juárez","6",,"2013-02-19 10:34:04","1","2013-02-19 11:17:59","1"
+"542","1","C","TOUS Paula (FAASA) <paula.tous@fiatauto.com.ar>","BOUVIER Marilina (FAASA) <marilina.bouvier@fiataut","0351 410 3580","marilina 3451",,,,,"0",,"2013-02-27 12:43:17","1","2013-07-03 10:20:09","1"
+"670","1","C","Srta. Silvia Babij","silvia.babij@sanofi.com","4732-5316  4732-5000","Intedente Tomkinson","2054",,"(B1642EMU)","San Isidro","2",,"2013-03-07 09:48:46","1",,
+"190","2","C","<ypetralia@furukawa.com.br>",,,,,,,,"0",,"2013-03-13 09:13:21","1",,
+"671","1","C","Sr. Lisandro Tron - Sr. Darío Panichelli",,,"Ruta nacional Nº9 km 443","Int. Loinas Este 435",,"CP: X2580CDE","Marcos Juarez","6",,"2013-03-15 09:51:32","1",,
+"615","2","C","MAURICIO",,,,,,,,"0",,"2013-03-19 11:00:52","1","2013-03-19 11:01:02","1"
+"33","3","C","Sr. Marcelo ZARZA","marcelozarza_ifai@hotmail.com","03755 15 511-019",,,,,,"0",,"2013-03-19 11:35:29","1","2013-04-15 12:41:23","1"
+"176","1","C","Sra. Maria Yoshida",,,"Lisandro de la Torre","1246",,"(B1629JED)","Parque Industrial Pilarica - Fatima - PILAR","2",,"2013-04-17 09:25:53","1",,
+"684","1","C","Srta. Fernanda Mansilla","fernandamansilla@nialtec.com.ar","4484-6750 ·","Almafuerte","3790",,"(B1754ASP)","San Justo","2",,"2013-04-30 16:13:36","1",,
+"315","2","C","Srta. Sandra Barrado - Srta. Ana GRIMALDI",,"5411 4324 1155","San Martin","344","Piso 15","CP: C1004AAH","C.A.B.A.","1",,"2013-05-07 11:50:45","1",,
+"352","3","C","RECEPSION",,"54-11 5555-0255","Juramento 2059 8º of 804 C1428DNG",,,,,"0",,"2013-05-29 17:30:24","1","2013-10-16 13:58:13","1"
+"640","1","C","Sr.Cristopher Palermo - Srta. Adriana - Srta. Karen",,,"Hipólito Bouchard","2889","Parque Industrial","(1824)","Lanús Este","2",,"2013-06-03 11:52:41","1",,
+"581","1","C","Axel Luis Ballerio",,"interno 12103",,,,,,"0",,"2013-06-07 10:12:25","1",,
+"127","1","C","RICARDO",,"02984 524257",,,,,,"0",,"2013-07-03 11:37:34","1",,
+"678","1","C","Lic. Francisco Martín Akio Komatsu",,"Cel: 03755 15490474",,,,,,"0",,"2013-07-25 09:06:14","1",,
+"571","1","C","Juan Manuel Castedo","jcastedo@alsea.com.ar","5530-7000   INT 7055",,,,,,"0",,"2013-07-30 16:18:00","1","2013-08-05 12:30:37","1"
+"700","1","C","Sr. Alfredo V. Raczko","araczko@williner.com.ar","+54 11 4809-4800","J. Salguero","2731","Piso 2do Of. 26","(C1425DEL)","C.A.B.A.","1",,"2013-09-02 12:15:48","1","2013-09-05 12:02:56","1"
+"661","1","C","Lic. Analia Aldonatti - Lic. Javier De Maio","analia.aldonatti@sinatracomercial.com.ar",,"CALLE A MOREAU DE JUSTO","1120","PISO 3 - Of 306-A","C1107AAX","C.A.B.A.","1",,"2013-09-26 12:30:37","1","2013-11-04 17:20:29","1"
+"570","2","C","veronica","PAGO A PROVEEDORES","4786-9794",,,,,,"0",,"2013-10-11 10:42:24","1","2013-10-11 10:45:33","1"
+"712","1","C","Srta. Maria Lorena Balma",,"15-3780-8424","Reconquista","1046","Piso 2 Of. 3","CP: C1003ABV","C.A.B.A.","0",,"2013-12-05 16:05:32","1",,
+"521","2","C","Adriana Leites","aleites@barrick.com","00 54- 264-4913021  Celular: (54-264) 5303936","Ruta Nacional N° 40","Km. 3480","Parque Industrial","CP: 5419","Distrito Campo Afuera - Albardón","18",,"2013-12-13 11:27:42","1","2013-12-13 11:38:20","1"
+"94","2","C","Sr. Richard Kraayenbrink",,,"Acassuso","548",,"B1642CGL","San Isidro","2",,"2013-12-13 13:31:21","1",,
+"165","1","C","Marcelo","Marcelo@multiagroargentina.com.ar",,,,,,,"0",,"2014-01-09 11:23:47","1",,
+"715","1","C","JESICA BENEGAS","produccion@meryerstonesaddles.com","47115936","Av. Del Libertador","2361",,"B1636DSP","OLIVOS","2","ARGENTINA","2014-01-10 12:36:20","1",,
+"723","1","C","Sr. ""Beto"" Sviercz","beto@cooptabmis.com.ar",,,,,,,"0",,"2014-02-27 15:21:58","1",,
+"723","2","C","Sra Norma Kasmirczuk","kasmir@cooptabmis.com.ar",,,,,,,"0",,"2014-02-27 15:22:15","1",,
+"598","2","C","Marcelo Balduchi Pago Proveedores","carlos.diez@smurfit","int 7206  int 7245  carlos Diez",,,,,,"0",,"2014-03-26 11:42:23","1","2014-03-26 16:47:12","1"
+"727","1","C","SS","coopyerbdosdemayoltda@hotmail.com",,,,,,,"0",,"2014-04-09 10:40:11","1",,
+"729","1","C","Srta. Belen TORO","mbelen_1984@hotmail.com",,"CALLE RUIZ DAUDET","291",,"(M5600IVE)","San Rafael","0",,"2014-04-09 11:38:06","1","2014-04-09 11:44:29","1"
+"523","2","C","Pablo Calvo","pablo.calvo@minapirquitas.com",,,,,,,"0",,"2014-05-06 09:53:54","1",,
+"176","2","C","Marcelo Entivero","marcelo.entivero@makita.com.ar",,,,,,,"0",,"2014-05-06 13:04:56","1","2014-05-30 09:00:37","1"
+"523","3","C","Sr. Pablo Nogueira (controller)","pablo.nogueira@minaspirquitas.com","interno 203",,,,,,"0",,"2014-05-13 16:41:41","1","2014-05-13 16:43:25","1"
+"598","3","C","Alberto Thiermann (Contaduria)","alberto.thiermann@smurfitkappa.com.ar","5253-7000 int 7262",,,,,,"0",,"2014-05-21 14:38:42","1","2014-05-21 14:39:51","1"
+"711","1","C","ALEJANDRO GEROSA","info@gerosa.com.ar",,,,,,,"0",,"2014-06-13 13:33:13","1",,
+"701","1","C","David CAMACHO","david@repicky.com.ar","5354-5100 (int. 162)","CALLE 162","110",,,"B1883FKB","2","ARGENTINA","2014-08-11 15:03:40","1",,
+"661","3","C","Nadia BATYK","nadia.batyk@sinatracomercial.com.ar","(5411) 5430 2390","CALLE FRANCISCO MADERO","875","Piso: 1 Dpto.: A","B1707CTK","VILLA SARMIENTO","2","ARGENTINA","2014-09-15 11:35:11","1",,
+"741","1","C","Srta. Rosana GRINBERG",,,"BOUCHARD","3432",,"B1651BVD","San Martin - San Andrés","2",,"2014-09-25 10:39:02","1",,
+"779","1","C","CIBELES ARG.","cibelesargentina@cibelesargentina.com",,,,,,,"0",,"2015-12-01 10:52:27","1",,
+"781","1","C","Sr. Miguel Angel Garcia","magarcia@bellacup.com.ar","0230 4496500","Calle 9","1330",,"1629","Centro AMC - Parque Ind. Pilar","2","ARGENTINA","2016-02-16 11:01:15","1",,
+"783","1","C","Sr. Raúl Alemandri - Sr. Omar Marcuzzi","<omarcuzzi@fimaco.com.ar",,"Ruta Provincial. 70 - -","Km. 22",,"CP: 3080","Esperanza","21",,"2016-03-17 12:59:15","1",,
+"792","1","C","Sr. Claudio Bisi - Sr. Horacioi Bisi",,"Tel. (+ 54 11) 4844-9499 / 2727 / 0791","Av. Triunvirato","3743",,"CP: B1650EWE","Billinghurst","2",,"2016-03-31 16:56:17","1","2016-03-31 17:01:27","1"
+"793","1","C","Srta. Pamela Granata","pgranata@importadorabsas.com.ar",,"Mármol","1650,",,"CP: 1661","Bella Vista.","2",,"2016-03-31 17:18:07","1",,
+"788","1","C","Sr. Oscar Villegas",,,"Olegario Andrade","525","Dpto 2","M5500HYJ","Mendoza","13","ARGENTINA","2016-04-08 13:41:49","1",,
+"747","1","C","Sr. Roberto Osvaldo Rodriguez",,,"Rojas","1285",,"C1416CPD","CABA","1","ARGENTINA","2016-04-08 14:45:26","1",,
+"543","1","C","Sr. Pablo Aitta -Srta. Ariana Raffo",,"Pablo Aitta (pablo.aitta@gm.com) +54 341 498-1485","Libertador","101","Piso 13","B138BEA","Vicente Lopez","2","ARGENTINA","2016-05-10 14:12:56","1","2018-11-08 22:06:22","1"
+"695","1","C","Norberto Giordano",,,"Ruta Prov. N° 6 -","Km. 178.300",,,"Los Cardales","2",,"2016-08-23 14:04:37","1",,
+"816","1","C","Sr. Marcos Garcia - Srta. Analia Ramos - Sr. Nahuel Heyde",,,"Avda. Panamericana","Km. 38,5",,"CP: 1619","GARÍN","2",,"2016-11-07 12:58:57","1",,
+"583","1","C","Daniel GOMEZ","dgomez@bolland.com.ar","4320-7500  int  1237",,,,,,"0",,"2016-11-16 14:19:30","1","2016-11-16 14:19:46","1"
+"701","2","C","LUCAS - PROVEEDORES de 14 a 17",,"5354-5100 (int. 187)",,,,,,"0",,"2016-11-21 13:33:28","1",,
+"716","1","C","Martin Ginzburg    CuentasaPagar","cuentasapagar@arimex.com","Tel. + 54 11 4707-3000 int. 3002","Av. Andrés Rolón","1107",,"(B1642BIL),","San Isidro","2",,"2016-12-07 11:42:51","1","2016-12-23 11:02:15","1"
+"542","2","C","Diego Sabena","diego.sabena@fcagroup.com","Te: 0351-4102824",,,,,,"0",,"2016-12-19 16:22:33","1",,
+"462","1","C","Dr. Fernando RIVERA","caipa@caipa.org.ar",,,,,,,"0",,"2017-06-28 13:35:33","1",,
+"709","1","C","CUENTAS A PAGAR",,"4707-3000 int. 3102   3164",,,,,,"0",,"2017-07-03 12:04:15","1","2017-07-05 11:35:38","1"
+"172","2","C","PAGO A PROVEEDORES - Paola - ELSA",,"02604 442-444  INT 122",,,,,,"0",,"2017-07-21 10:24:05","1",,
+"581","2","C","MARIANELLA CORREIA   -  Victoria Quintas","int 12684  int 12296","supervisora de impuestos",,,,,,"0",,"2018-10-25 13:32:36","1","2018-10-31 11:29:33","1"
+"840","1","C","Norma B Diocare","Analista de Administracion y Contratos.","Tel.  +54 (299) 479 0197 (Int.121)",,,,,,"0",,"2018-10-26 14:43:02","1",,
+"840","2","C","Andrea E. Segura",,"Tel.  +54 (299) 479 0197",,,,,,"0",,"2018-10-26 14:43:25","1","2018-10-26 14:55:08","1"
+"581","3","C","Andres de la Cuesta Maiza","int 11469",,,,,,,"0",,"2018-10-29 09:38:36","1","2018-10-31 10:57:33","1"
+"228","1","C","Alberdi Martin","malberdi@cartellone.com.ar","5077-1000 int 2285","ALICA M. de JUSTO","550","piso",,,"0",,"2018-10-29 10:04:39","1","2020-01-24 09:00:32","1"
+"228","2","C","Proveedores",,"Tel 54 261 481-9000 · int 4373 FABIO DAMORE 4497   eliana cano 4362",,,,,,"0",,"2018-10-29 10:05:58","1","2022-04-27 12:11:06","1"
+"435","1","C","Analia Mendez","amendez@unilan.com.ar","in 2225",,,,,,"0",,"2018-10-29 10:15:57","1",,
+"543","2","C","Rocio Gonzalez","rocio.1.gonzalez@gm.com","+54 341 498-1497",,,,,,"0",,"2018-11-08 22:07:03","1",,
+"543","3","C","Veronica King - Supervisora de impuestos","veronica.king@gm.com","0341 4981817",,,,,,"0",,"2019-02-27 09:52:04","1",,
+"905","1","C","Srta. María Pía Maroglio - Sr. Marcelo G. Gomez - Srta. Romina P. Motto",,,,,,,,"0",,"2019-10-09 15:37:15","1",,
+"228","3","C","Silvia Escudero -  Alicia Olivera  Eliana Cano",,"0261 481-9015  PROVEEDORES",,,,,,"0",,"2019-10-29 14:18:29","1",,

@@ -1,0 +1,3 @@
+"Idsubdoble","Numero","Fecha","Periodo","IdEstado","Id_Cliente","cantidad","valor","plazo","fec_vto","IdTipo_Doc","IdReferencia","observacion","Imp_Comi_Do","Imp_Comi_Uni","TCambio","Impor_Comi","factura_id","pto_vta","Fac_Nro","Feccre","usucre","fecultmod","usuultmod","vendedor_id","sub_hijo","idsubpad"
+"17","1","2020-06-01",,"31","866","0","125","2","2020-08-01","1","29",,,,,"250","3016","2","2797","2020-05-31 14:09:15","OSCAR","2020-08-02 22:07:14","1",,,
+"18","2","2020-08-02",,"31","866","0","125","2","2020-10-02","1","29","PERIODOS: AGOSTO - SEPTIEMBRE",,,,"250","3016","2","2797","2020-08-02 22:01:11","OSCAR","2020-08-02 22:07:14",,,,
