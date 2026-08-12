@@ -34,6 +34,12 @@
         public $comisioncomprador;
         public $totalminuta;
 
+        public $equivalenteaux = 0;
+        public $comisionvendedoraux = 0;
+        public $comisioncompradoraux = 0;
+        public $totalminutaaux = 0;
+
+
         #[Computed]
         public function estados()
         {
@@ -95,7 +101,7 @@
             $this->importe = $this->minuta->importe;
             $this->tipocambio = $this->minuta->tipo_cambio;
             $this->equivalente = $this->minuta->equivalente;
-
+            $this->equivalenteaux = $this->minuta->equivalente;
 
             $this->observacion = $this->minuta->observacion;
             $this->porcientovendedor = $this->minuta->comision_vendedor;
@@ -105,14 +111,119 @@
             $this->porcentajecomprador = $this->minuta->comision_comprador;
             $this->comisioncomprador = $this->minuta->importe_comision_comprador;
             $this->totalminuta = $this->minuta->importe_comision_vendedor +  $this->minuta->importe_comision_comprador;
+        }
 
+        public function updatedCompradorid(): void
+        {
+            $comprador = \App\Models\Entidad::select('tipo_operacion', 'porcentaje_comision', 'cuit', 'tipo_entidad_id')->find($this->compradorid);
+            $this->tipocomprador = substr($comprador->tipo_operacion, 0,1);
+            $this->porcentajecomprador = $comprador->porcentaje_comision;
+            $this->observacion = $comprador->tipo_entidad_id == 1 ? 'CUIT: '. $comprador->cuit : $this->observacion;
+        }
 
+        public function updatedVendedorid(): void
+        {
+            $vendedor = \App\Models\Entidad::select('tipo_operacion', 'porcentaje_comision', 'cuit', 'tipo_entidad_id')->find($this->vendedorid);
+            $this->tipovendedor = substr($vendedor->tipo_operacion, 0,1);
+            $this->porcentajevendedore = $vendedor->porcentaje_comision;
+            $this->observacion = $vendedor->tipo_entidad_id == 1 ? 'CUIT: '. $vendedor->cuit : $this->observacion;
+        }
 
+        // al ingresar o modificar valor de tipo de cambio
+        public function updatedTipocambio(): void
+        {
+            $this->validate([
+                                'importe' => ['required', 'numeric:min(0.01):decimal(0,2)'],
+                                'tipocambio' => ['required', 'numeric:min(0.01):decimal(0,2)'],
+                            ],
+                            [
+                                'importe' => 'Solo números',
+                                'tipocambio' => 'Solo números',
+                            ]);
 
+            if ($this->importe != '' && $this->tipocambio != '') {
+                //              $importeaux    = str_replace(',', '.', $this->importe);
+                //            $tipocambioaux = str_replace(',', '.', $this->tipocambio);
+                $this->equivalenteaux     = $this->importe *  $this->tipocambio;
+                $this->equivalente     = round($this->equivalenteaux, 2);
 
+                // $this->equivalente =  $this->equivalenteaux ; //number_format($this->equivalenteaux, 2, ',', '.');
+                $this->comisionVendedor();
+                $this->comisionComprador();
+            }
+        }
+        // para ejecutar el enter en tipo de cambio
+        public function entertipocambio()
+        {
+            $this->updatedTipocambio();
         }
 
 
+        // vendedor
+        // Si modifica el porcentaje de la comisión
+        public function updatedPorcientovendedor()
+        {
+            $valorporciento = 0;
+            $valorporciento = $this->porcientovendedor / 1000;
+            $this->porcentajevendedore = $this->porcientovendedor;
+
+            if ($this->equivalente != 0) {
+                //$this->comisionvendedoraux = $this->equivalenteaux * $valorporciento;
+                $this->comisionVendedor();
+            }
+        }
+
+        // comprador
+        // si modifica el porcentaje de la comisión
+        public function updatedPorcientocomprador()
+        {
+            $valorporciento = 0;
+            $valorporciento = $this->porcientocomprador / 1000;
+            $this->porcentajecomprador = $this->porcientocomprador;
+
+            if ($this->equivalenteaux != 0) {
+                //$this->comisioncompradoraux = $this->equivalenteaux * $valorporciento;
+                $this->comisionComprador();
+            }
+        }
+
+        // vendedor
+        // comisión en pesos
+        public function comisionVendedor()
+        {
+            if ($this->equivalenteaux != 0  && $this->porcentajevendedore != 0) {
+                $this->comisionvendedoraux = ($this->equivalenteaux * $this->porcentajevendedore) /1000;
+                //$this->comisionvendedor = number_format($this->comisionvendedoraux, 2); //number_format($this->comisionvendedoraux, 2, ',', '.');
+                $this->comisionvendedor = round($this->comisionvendedoraux, 2); //number_format($this->comisionvendedoraux, 2, ',', '.');
+
+                $this->ftotalminuta();
+            }
+        }
+
+        // comprador
+        // comisiòn en pesos
+        public function comisionComprador()
+        {
+            if ($this->equivalenteaux != 0  && $this->porcentajecomprador != 0) {
+                $this->comisioncompradoraux = ($this->equivalenteaux * $this->porcentajecomprador) /1000;
+                $this->comisioncomprador = round($this->comisioncompradoraux, 2); //number_format($this->comisioncompradoraux, 2, ',', '.');
+                $this->ftotalminuta();
+            }
+        }
+
+        // total minuta
+        // tiene que estar al menos una comisión
+        public function ftotalminuta()
+        {
+            $this->totalminutaaux = $this->comisioncompradoraux + $this->comisionvendedoraux;
+            $this->totalminuta    =  round($this->totalminutaaux, 2); //number_format($this->totalminutaaux, 2, ',', '.');
+        }
+
+        public function cancel(): void
+        {
+            $this->reset();
+            $this->redirectRoute('minutas.boletos.index', navigate: true);
+        }
 
     };
 ?>
