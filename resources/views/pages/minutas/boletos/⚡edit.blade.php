@@ -96,6 +96,7 @@
             $this->tipocambio = $this->minuta->tipo_cambio;
             $this->equivalente = $this->minuta->equivalente;
 
+
             $this->observacion = $this->minuta->observacion;
             $this->porcientovendedor = $this->minuta->comision_vendedor;
             $this->porcentajevendedore = $this->minuta->comision_vendedor;
