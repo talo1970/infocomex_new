@@ -110,6 +110,9 @@
             $this->porcientocomprador = $this->minuta->comision_comprador;
             $this->porcentajecomprador = $this->minuta->comision_comprador;
             $this->comisioncomprador = $this->minuta->importe_comision_comprador;
+            $this->comisioncompradoraux = $this->minuta->importe_comision_comprador;
+            $this->comisionvendedoraux = $this->minuta->importe_comision_vendedor;
+
             $this->totalminuta = $this->minuta->importe_comision_vendedor +  $this->minuta->importe_comision_comprador;
         }
 
@@ -193,9 +196,7 @@
         {
             if ($this->equivalenteaux != 0  && $this->porcentajevendedore != 0) {
                 $this->comisionvendedoraux = ($this->equivalenteaux * $this->porcentajevendedore) /1000;
-                //$this->comisionvendedor = number_format($this->comisionvendedoraux, 2); //number_format($this->comisionvendedoraux, 2, ',', '.');
                 $this->comisionvendedor = round($this->comisionvendedoraux, 2); //number_format($this->comisionvendedoraux, 2, ',', '.');
-
                 $this->ftotalminuta();
             }
         }
@@ -224,6 +225,12 @@
             $this->reset();
             $this->redirectRoute('minutas.boletos.index', navigate: true);
         }
+
+        public function grabarMinutaBoleto()
+        {
+                dump('hola');
+        }
+
 
     };
 ?>
