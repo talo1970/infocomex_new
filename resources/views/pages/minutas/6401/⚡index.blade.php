@@ -102,7 +102,8 @@ new class extends Component
                 <flux:table.column>clientes</flux:table.column>
                 <flux:table.column>Fecha</flux:table.column>
                 <flux:table.column>Desde</flux:table.column>
-                <flux:table.column>hasta</flux:table.column>
+                <flux:table.column>Hasta</flux:table.column>
+                <flux:table.column>Cantidad</flux:table.column>
                 <flux:table.column>Banco</flux:table.column>
                 <flux:table.column align="center">Acción</flux:table.column>
             </flux:table.columns>
@@ -126,6 +127,10 @@ new class extends Component
                             <!-- hasta-->
                             <flux:table.cell>
                                 {{$minuta->periodo_hasta }}
+                            </flux:table.cell>
+                            <!-- cantidad-->
+                            <flux:table.cell align="center">
+                                {{$minuta->periodo_cantidad }}
                             </flux:table.cell>
                             <!-- bancos-->
                             <flux:table.cell>

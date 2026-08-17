@@ -94,7 +94,7 @@
             $this->tipocomprador = substr($this->minuta->comprador->tipo_operacion, 0,1);
             $this->vendedorid = $this->minuta->vendedor_id;
             $this->tipovendedor = substr($this->minuta->vendedor->tipo_operacion, 0,1);
-            $this->monedaid = $this->minuta->monedi_id;
+            $this->monedaid = $this->minuta->moneda_id;
             $this->valorid = $this->minuta->valor_id;
             $this->claseid = $this->minuta->clase_id;
             $this->referenciaid = $this->minuta->referencia_id;
@@ -228,7 +228,67 @@
 
         public function grabarMinutaBoleto()
         {
-                dump('hola');
+                //dump('hola');
+            $this->validate([
+                                'estadoid' => ['required', 'exists:estados,id'],
+                                'fechaboleto' => ['required'],
+                                'compradorid' => ['required', 'exists:entidads,id'],
+                                'vendedorid' => ['required', 'exists:entidads,id'],
+                                'monedaid' =>['required', 'exists:monedas,id'],
+                                'valorid' =>['required', 'exists:valors,id'],
+                                'claseid' =>['required', 'exists:clases,id'],
+                                'importe' =>['required', 'regex:/^[\d.]+$/'],
+                                'tipocambio' =>['required', 'regex:/^[\d.]+$/'],
+                                'referenciaid' => ['required'],
+                                'observacion' => ['nullable'],
+                            ],
+                            [
+                                'estadoid' => 'Es requerido',
+                                'fechaboleto' => 'Es requerido',
+                                'compradorid' => 'Es requerido',
+                                'compradorid.exists' => 'no es una entidad',
+                                'vendedorid' => 'Es requerido',
+                                'monedaid' => 'Es requerido',
+                                'valorid' => 'Es requerido',
+                                'claseid' => 'Es requerido',
+                                'importe.redex' => 'Solo números',
+                                'importe' => 'Es requerido',
+                                'tipocambio' => 'Es requerido',
+                                'tipocambio.redex' => 'Solo números',
+                                'referenciaid' => 'Es requerido',
+                            ]);
+
+            $this->minuta->estado_id = $this->estadoid;
+            $this->minuta->fecha = $this->fechaboleto;
+            $this->minuta->comprador_id = $this->compradorid;
+            $this->minuta->vendedor_id = $this->vendedorid;
+            $this->minuta->moneda_id = $this->monedaid;
+            $this->minuta->valor_id = $this->valorid;
+            $this->minuta->clase_id = $this->claseid;
+            $this->minuta->referencia_id = $this->referenciaid;
+            $this->minuta->importe = $this->importe;
+            $this->minuta->tipo_cambio = $this->tipocambio;
+            $this->minuta->equivalente = $this->equivalente;
+            $this->minuta->observacion = $this->observacion;
+            $this->minuta->comision_vendedor = $this->porcientovendedor;
+            $this->minuta->importe_comision_vendedor = $this->comisionvendedor;
+            $this->minuta->comision_comprador = $this->porcientocomprador;
+            $this->minuta->importe_comision_comprador = $this->comisioncomprador ;
+
+            DB::transaction(function()  {
+                if ($this->minuta->isDirty()) {
+                    Flux::toast(heading: 'Editar', text:'grabo por esta sucio', variant:'success', position:'top end');
+                    $this->minuta->save();
+                } else {
+                    Flux::toast(heading: 'Editar', text:' NO ESTA SUCIA PASO PERO NO GRABO', variant:'success', position:'top end');
+                }
+            });
+
+            $this->dispatch('refreshComponent')->to('pages::minutas.boletos.index');
+            $this->reset();
+            Flux::modal('minuta-cambio-crear-modal')->close();
+
+
         }
 
 
