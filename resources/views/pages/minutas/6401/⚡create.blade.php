@@ -5,6 +5,12 @@
 
     new class extends Component {
 
+        public $maximo;
+        public $fechaboleto;
+        public $estadoid;
+
+        public $entidadid;
+
         #[Computed]
         public function estados()
         {
@@ -21,6 +27,18 @@
         public function bancos()
         {
             return \App\Models\Entidad::bancos()->select('id', 'razon_social')->get();
+        }
+
+        public function dehydrate()
+        {
+            $this->fechaboleto =  date('Y-m-d');;
+        }
+
+        public function updatedEntidadid(): void
+        {
+            $comprador = \App\Models\Entidad::select('tipo_operacion', 'porcentaje_comision', 'cuit', 'tipo_entidad_id')->find($this->entidadid);
+//            $this->porcentajecomprador = $comprador->porcentaje_comision;
+            $this->observacion = $comprador->tipo_entidad_id == 1 ? 'CUIT: '. $comprador->cuit : $this->observacion;
         }
 
     };
@@ -43,11 +61,8 @@
                     <div class="w-1/2">
                         <flux:select searchable wire:model="estadoid" label="Estado" placeholder="Seleccione un Estado">
                             @foreach ($this->estados as $estado)
-                                @if ($estado->id == 1)
-                                    {{$this->estadoid = 1}}
-                                @endif
-                                <flux:select.option value="{{ $estado->id }}"
-                                                    wire:key="{{ $estado->id }}">{{ $estado->nombre }}</flux:select.option>
+                                @if ($estado->id == 1)  {{$this->estadoid = 1}} @endif
+                                <flux:select.option value="{{ $estado->id }}" wire:key="{{ $estado->id }}">{{ $estado->nombre }}</flux:select.option>
                             @endforeach
                         </flux:select>
                     </div>
@@ -87,12 +102,12 @@
                         <div class="w-28">
                             <flux:label>Periodo desde</flux:label>
                         </div>
-                        <div class="w-16">
-                            <flux:input wire:model="periododmes" />
+                        <div class="w-12">
+                            <flux:input wire:model="periododmes" maxlength="1" />
                         </div>
                         {{-- Períodos desde año--}}
-                        <div class="w-32">
-                            <flux:input wire:model="periododanio" />
+                        <div class="w-24">
+                            <flux:input wire:model="periododanio" maxlength="4"/>
                         </div>
                     </div>
                     <div class="w-1/2 flex flex-row items-start space-x-4 text-left">
@@ -100,12 +115,12 @@
                         <div class="w-28">
                             <flux:label>Periodo hasta</flux:label>
                         </div>
-                        <div class="w-16">
-                            <flux:input wire:model="periodohmes" />
+                        <div class="w-12">
+                            <flux:input wire:model="periodohmes" maxlength="1" />
                         </div>
                         {{-- Períodos hasta año--}}
-                        <div class="w-32">
-                            <flux:input wire:model="periodohanio"/>
+                        <div class="w-24">
+                            <flux:input wire:model="periodohanio" maxlength="4"/>
                         </div>
                     </div>
                 </div>

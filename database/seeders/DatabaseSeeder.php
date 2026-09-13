@@ -29,43 +29,6 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
         ]);
 */
-        // 1
-        User::factory()->create([
-            'name' => 'Oscar',
-            'email' => 'oscar@example.com',
-            'password' => bcrypt('password'),
-        ]);
-        // 2
-        User::factory()->create([
-            'name' => 'Carlos',
-            'email' => 'carlos@example.com',
-            'password' => bcrypt('password'),
-        ]);
-        // 3
-        User::factory()->create([
-            'name' => 'Subcripcion',
-            'email' => 'subcripcion@example.com',
-            'password' => bcrypt('password'),
-        ]);
-        // 4
-        User::factory()->create([
-            'name' => 'Empresa',
-            'email' => 'empresa@example.com',
-            'password' => bcrypt('password'),
-        ]);
-        // 5
-        User::factory()->create([
-            'name' => 'Pablo',
-            'email' => 'pablo@example.com',
-            'password' => bcrypt('password'),
-        ]);
-
-        User::factory()->create([
-            'id' => 100,
-            'name' => 'Talo',
-            'email' => 'gitalo@pjn.gov.ar',
-            'password' => bcrypt('password'),
-        ]);
 
         Schema::disableForeignKeyConstraints();
 
@@ -92,10 +55,48 @@ class DatabaseSeeder extends Seeder
         $this->call(EntidadHonorarioProductoSeeder::class);
         $this->call(EntidadProductoVendedorSeeder::class);
         $this->call(ReciboSeeder::class);
+        $this->call(RoleSeeder::class);
 
         $this->call(MinutaSeeder::class);
 
         Schema::enableForeignKeyConstraints();
+        // 1
+        User::factory()->create([
+            'name' => 'Oscar',
+            'email' => 'oscar@example.com',
+            'password' => bcrypt('password'),
+        ])->assignRole('Administrador');
+        // 2
+        User::factory()->create([
+            'name' => 'Carlos',
+            'email' => 'carlos@example.com',
+            'password' => bcrypt('password'),
+        ])->assignRole('Administrador');
+        // 3
+        User::factory()->create([
+            'name' => 'Subcripcion',
+            'email' => 'subcripcion@example.com',
+            'password' => bcrypt('password'),
+        ])->assignRole('Vendedor');
+        // 4
+        User::factory()->create([
+            'name' => 'Empresa',
+            'email' => 'empresa@example.com',
+            'password' => bcrypt('password'),
+        ])->assignRole('Vendedor');
+        // 5
+        User::factory()->create([
+            'name' => 'Pablo',
+            'email' => 'pablo@example.com',
+            'password' => bcrypt('password'),
+        ])->assignRole('Vendedor');
+
+        User::create([
+            'id' => 100,
+            'name' => 'Talo',
+            'email' => 'gitalo@pjn.gov.ar',
+            'password' => bcrypt('password'),
+        ])->assignRole('Administrador');
 
     }
 }

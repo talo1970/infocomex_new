@@ -14,23 +14,24 @@
                     {{ __('Dashboard') }}
                 </flux:navbar.item>
 
-                <flux:dropdown>
-                    <flux:button icon:trailing="chevron-down">Administración</flux:button>
+                @if(auth()->user()->hasPermissionTo('administración', 'web'))
+                    <flux:dropdown>
+                        <flux:button icon:trailing="chevron-down">Administración</flux:button>
 
-                    <flux:menu>
-                        <flux:menu.item :href="route('entidades.index')" :current="request()->routeIs('entidades.index')" wire:navigate>Entidades</flux:menu.item>
-                        <flux:menu.item :href="route('entidades.index')" :current="request()->routeIs('entidades.index')" wire:navigate>Estados Constr</flux:menu.item>
-                        <flux:menu.item :href="route('codicion.index')" :current="request()->routeIs('codicion.index')" wire:navigate>Cond. de ventas</flux:menu.item>
-                        <flux:menu.item :href="route('codicion.index')" :current="request()->routeIs('codicion.index')" wire:navigate>Tipos Documentos</flux:menu.item>
-                        <flux:menu.item :href="route('codicion.index')" :current="request()->routeIs('codicion.index')" wire:navigate>Valor</flux:menu.item>
-                        <flux:menu.item :href="route('monedas.index')" :current="request()->routeIs('monedas.index')" wire:navigate>Monedas</flux:menu.item>
-                        <flux:menu.item :href="route('referencias.index')" :current="request()->routeIs('referencias.index')" wire:navigate>Referencias</flux:menu.item>
-                        <flux:menu.item :href="route('cotizaciones.index')" :current="request()->routeIs('cotizaciones.index')" wire:navigate>Cotización diaria</flux:menu.item>
-                        <flux:menu.item :href="route('productos.index')" :current="request()->routeIs('productos.index')" wire:navigate>Productos</flux:menu.item>
-                        <flux:menu.item :href="route('honorarios.index')" :current="request()->routeIs('honorarios.index')" wire:navigate>Honorarios de Productos</flux:menu.item>
-                    </flux:menu>
-                </flux:dropdown>
-
+                        <flux:menu>
+                            <flux:menu.item :href="route('entidades.index')" :current="request()->routeIs('entidades.index')" wire:navigate>Entidades</flux:menu.item>
+                            <flux:menu.item :href="route('entidades.index')" :current="request()->routeIs('entidades.index')" wire:navigate>Estados Constr</flux:menu.item>
+                            <flux:menu.item :href="route('codicion.index')" :current="request()->routeIs('codicion.index')" wire:navigate>Cond. de ventas</flux:menu.item>
+                            <flux:menu.item :href="route('codicion.index')" :current="request()->routeIs('codicion.index')" wire:navigate>Tipos Documentos</flux:menu.item>
+                            <flux:menu.item :href="route('codicion.index')" :current="request()->routeIs('codicion.index')" wire:navigate>Valor</flux:menu.item>
+                            <flux:menu.item :href="route('monedas.index')" :current="request()->routeIs('monedas.index')" wire:navigate>Monedas</flux:menu.item>
+                            <flux:menu.item :href="route('referencias.index')" :current="request()->routeIs('referencias.index')" wire:navigate>Referencias</flux:menu.item>
+                            <flux:menu.item :href="route('cotizaciones.index')" :current="request()->routeIs('cotizaciones.index')" wire:navigate>Cotización diaria</flux:menu.item>
+                            <flux:menu.item :href="route('productos.index')" :current="request()->routeIs('productos.index')" wire:navigate>Productos</flux:menu.item>
+                            <flux:menu.item :href="route('honorarios.index')" :current="request()->routeIs('honorarios.index')" wire:navigate>Honorarios de Productos</flux:menu.item>
+                        </flux:menu>
+                    </flux:dropdown>
+                @endif
                 <flux:dropdown>
                     <flux:button icon:trailing="chevron-down">Operaciones Diarias</flux:button>
 

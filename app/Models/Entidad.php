@@ -100,6 +100,7 @@ class Entidad extends Model
     {
         return $this->belongsTo(TipoEntidad::class);
     }
+
     /**
      * @return BelongsTo<Provincia, $this>
      */
@@ -107,6 +108,7 @@ class Entidad extends Model
     {
         return $this->belongsTo(Provincia::class);
     }
+
     /**
      * @return BelongsTo<TipoComprobante, $this>
      */
@@ -114,6 +116,7 @@ class Entidad extends Model
     {
         return $this->belongsTo(TipoComprobante::class);
     }
+
     /**
      * @return BelongsTo<User, $this>
      */
@@ -121,6 +124,7 @@ class Entidad extends Model
     {
         return $this->belongsTo(User::class);
     }
+
     /**
      * @return HasMany<EntidadProductoVendedor, $this>
      */
@@ -128,6 +132,7 @@ class Entidad extends Model
     {
         return $this->hasMany(EntidadProductoVendedor::class);
     }
+
     /**
      * @return HasMany<Contacto, $this>
      */
@@ -135,6 +140,7 @@ class Entidad extends Model
     {
         return $this->hasMany(Contacto::class);
     }
+
     /**
      * @return HasMany<Minuta, $this>
      */
@@ -142,13 +148,15 @@ class Entidad extends Model
     {
         return $this->hasMany(Minuta::class, 'comprador_id');
     }
+
     /**
      * @return HasMany<Minuta, $this>
      */
     public function vendedores(): HasMany
     {
-        return $this->hasMany(Minuta::class , 'vendedor_id');
+        return $this->hasMany(Minuta::class, 'vendedor_id');
     }
+
     /**
      * @return HasMany<Minuta, $this>
      */
@@ -156,6 +164,7 @@ class Entidad extends Model
     {
         return $this->hasMany(Minuta::class);
     }
+
     /**
      * @return HasMany<Minuta, $this>
      */
@@ -167,7 +176,7 @@ class Entidad extends Model
     #[Scope]
     protected function bancos(Builder $query): void
     {
-        $query->where('tipo_entidad_id','2');
+        $query->where('tipo_entidad_id', '2');
     }
 
     #[Scope]
