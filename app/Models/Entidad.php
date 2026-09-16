@@ -122,15 +122,20 @@ class Entidad extends Model
      */
     public function vendedor(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'vendedor_id');
     }
 
     /**
      * @return HasMany<EntidadProductoVendedor, $this>
      */
-    public function entidadProductoVendedor(): HasMany
+   /* public function entidadProductoVendedor(): HasMany
     {
         return $this->hasMany(EntidadProductoVendedor::class);
+    }
+   */
+    public function productosVendedores(): HasMany
+    {
+        return $this->hasMany(EntidadProductoVendedor::class, 'entidad_id','id');
     }
 
     /**

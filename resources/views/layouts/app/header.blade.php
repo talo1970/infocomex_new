@@ -46,7 +46,15 @@
 
                     </flux:menu>
                 </flux:dropdown>
+                <flux:dropdown>
+                    <flux:button icon:trailing="chevron-down">Admin. Usuarios</flux:button>
 
+                    <flux:menu>
+                        <flux:menu.item :href="route('usuario.index')" :current="request()->routeIs('usuarios.index')" wire:navigate>Usuarios</flux:menu.item>
+                        <flux:menu.item :href="route('roles.index')" :current="request()->routeIs('roles.index')" wire:navigate>Roles</flux:menu.item>
+
+                    </flux:menu>
+                </flux:dropdown>
 
 
             </flux:navbar>

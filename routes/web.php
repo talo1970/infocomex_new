@@ -49,6 +49,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // minutas Suscripciones
     Route::livewire('/minutas/suscripciones/index/{producto?}', 'pages::minutas.suscripciones.index')->name('minutas.suscripciones');
 
+    // Admin
+    //  Roles
+    Route::livewire('/admin/roles/index', 'pages::admin.roles.index')->name('roles.index')->middleware('can:roles.vista');
+    // Usuarios
+    Route::livewire('/usuario', 'pages::admin.usuarios.index')->name('usuario.index');
 
 });
 

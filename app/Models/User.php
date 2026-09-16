@@ -69,4 +69,13 @@ class User extends Authenticatable implements PasskeyUser
     {
         return $this->hasMany(Minuta::class);
     }
+
+    public function entidadesProductosVendedores(): HasMany
+    {
+        return $this->hasMany(
+            EntidadProductoVendedor::class,
+            'vendedor_id',
+            'id'
+        );
+    }
 }

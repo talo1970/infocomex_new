@@ -17,6 +17,10 @@ return new class extends Migration
             $table->foreignUuid('entidad_id')->constrained('entidads');
             $table->foreignId('producto_id')->constrained('productos');
             $table->foreignId('vendedor_id')->references('id')->on('users');
+            $table->unique(
+                ['entidad_id', 'producto_id', 'vendedor_id'],
+                'epv_entidad_producto_vendedor_unique'
+            );
 
             $table->timestamps();
         });
