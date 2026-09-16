@@ -30,19 +30,37 @@ new class extends Component
     public $detalleMinutas;
 
 
+    private function esVendedor(): bool
+    {
+        return auth()->user()->hasRole('vendedor');
+    }
+
     #[Computed]
     public function minutasCom6401()
     {
         $this->fecha = now();
         $this->fecha_inicio = now()->subMonths(6);
-        dump(' estado: '.$this->estadosFilter. ' fecha_ inicio: '.$this->fecha_inicio. ' fecha: '.$this->fecha);
+        //(' estado: '.$this->estadosFilter. ' fecha_ inicio: '.$this->fecha_inicio. ' fecha: '.$this->fecha);
 
-        return Minuta::com6401()
+        if ($this->esVendedor()) {
+            dump(' estado: '.$this->estadosFilter. ' fecha_ inicio: '.$this->fecha_inicio. ' fecha: '.$this->fecha.' es vendedor');
+            return Minuta::com6401()
+                        ->where('usuario_vendedor_id', auth()->id())
                         ->where('estado_id', $this->estadosFilter)
                         ->whereBetween('fecha', [$this->fecha_inicio, $this->fecha])
                         ->withAggregate('entidad_cliente','razon_social')
                         ->orderBy('entidad_cliente_razon_social')
                         ->paginate(20);
+            } else {
+            dump(' estado: '.$this->estadosFilter. ' fecha_ inicio: '.$this->fecha_inicio. ' fecha: '.$this->fecha);
+
+            return Minuta::com6401()
+                         ->where('estado_id', $this->estadosFilter)
+                         ->whereBetween('fecha', [$this->fecha_inicio, $this->fecha])
+                         ->withAggregate('entidad_cliente','razon_social')
+                         ->orderBy('entidad_cliente_razon_social')
+                         ->paginate(20);
+        }
     }
 
     #[Computed]
@@ -114,7 +132,7 @@ new class extends Component
                         <flux:table.row :key="$minuta->id">
                             <!-- clientes-->
                             <flux:table.cell>
-                                {{ $minuta->entidad_cliente->razon_social }}
+                                {{ $minuta->entidad_cliente?->razon_social }}
                             </flux:table.cell>
                             <!-- Fecha-->
                             <flux:table.cell>

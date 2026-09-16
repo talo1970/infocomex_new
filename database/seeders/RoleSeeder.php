@@ -15,7 +15,7 @@ class RoleSeeder extends Seeder
     {
         $role1 = Role::create(['name' => 'super-admin']);
         $role2 = Role::create(['name' => 'Administrador']);
-        $role3 = Role::create(['name' => 'Vendedor']);
+        $role3 = Role::create(['name' => 'vendedor']);
 
         $role4 = Role::create(['name' => 'minutas']);
         $role5 = Role::create(['name' => 'boletos_cambio']);
@@ -28,8 +28,8 @@ class RoleSeeder extends Seeder
         $role11 = Role::create(['name' => 'Suscripciones BCRA']);
         $role12 = Role::create(['name' => 'Suscripciones Doble']);
 
-        $role8 = Role::create(['name' => 'Estado cuenta vendedor']);
-        $role8 = Role::create(['name' => 'Facturas Vendedor']);
+        $role8 = Role::create(['name' => 'estado cuenta vendedor']);
+        $role8 = Role::create(['name' => 'facturas vendedor']);
 
         $role8 = Role::create(['name' => 'Consulta']);
 
