@@ -15,10 +15,13 @@
 
         public $numeroboleto;
         public $bancoid;
+
         public $periododmes;
         public $periododanio;
         public $periodohmes;
         public $periodohanio;
+        public $periodocantidad;
+
         public $observacion;
         public $comisiondolares;
         public $totalcomisiondolares;
@@ -64,7 +67,7 @@
             //return \App\Models\Entidad::clientes()->select('id', 'razon_social')->get();
             $productoId = 3;
             if ($this->esVendedor()) {
-                $this->clientes = \App\Models\Entidad::query()
+                $clientes = \App\Models\Entidad::query()
                                          ->whereHas('productosVendedores', function ($query) {
                                              $query
                                                  ->where('producto_id', '3')
@@ -75,7 +78,7 @@
                // dd($this->clientes);
                // return $this->clientes;
             } else {
-                $this->clientes = \App\Models\Entidad::query()
+                $clientes = \App\Models\Entidad::query()
                                             ->whereHas('productosVendedores', function ($query) {
                                                 $query
                                                     ->where('producto_id', '3');
@@ -84,7 +87,7 @@
                                             ->get();
             }
 
-            return $this->clientes;
+            return $clientes;
         }
 
         #[Computed]
@@ -120,6 +123,140 @@
             //dd($vendedor_select[0]['vendedor_id']);
             $this->vendedorid = $vendedor_select[0]['vendedor_id'];
 
+        }
+        public function updatedPeriododmes(): void
+        {
+            $this->procesarperiodo();
+            /*
+            $this->validate([
+                                'periododmes' => ['required', 'numeric', 'min:1', 'max:4'],
+                            ],
+                            [
+                                'periododmes' => 'Solo números',
+                                'periododmes.numeric' => 'solo nùmeros',
+                                'periododmes.nim' => 'mayor 0',
+                                'periododmes.max' => 'menor 5',
+                            ]);
+            */
+        }
+
+        public function updatedPeriododanio()
+        {
+            $this->procesarperiodo();
+            /*
+            $this->validate([
+                                'periododanio' => ['required', 'numeric', 'min:2000', 'max:2040'],
+                            ],
+                            [
+                                'periododanio'=> 'Solo números',
+                                'periododanio.min' => 'mayos 2000',
+                                'periododanio.max' => 'menor 2040',
+                            ]);
+        */
+        }
+        public function updatedPeriodohmes()
+        {
+            $this->procesarperiodo();
+
+            /*$this->validate([
+                                'periodohmes' => ['required', 'numeric', 'min:1', 'max:4'],
+                            ],
+                            [
+                                'periodohmes'=> 'Solo números',
+                                'periodohmes.numeric'=> 'Solo números',
+                                'periodohmes.nim' => 'mayor 0',
+                                'periodohmes.max' => 'menor 5',
+                            ]);
+            */
+        }
+
+
+        public function updatedPeriodohanio()
+        {
+            $this->procesarperiodo();
+        }
+
+        public function procesarperiodo()
+        {
+            $this->periodocantidad = 0;
+
+                    // periododmes
+                    // periododanio
+
+                    // periodohmes
+                    // periodohanio
+            $this->validate([
+                                'periododmes' => ['required', 'numeric', 'min:1', 'max:4'],
+                                'periododanio' => ['required', 'numeric', 'min:2000', 'max:2040'],
+                                'periodohmes' => ['required', 'numeric', 'min:1', 'max:4'],
+                                'periodohanio' => ['required', 'numeric', 'min:2000', 'max:2040'],
+                            ],
+                            [
+                                'periododmes.numeric' => 'solo número',
+                                'periododmes.nim' => 'mayor 0',
+                                'periododmes.max' => 'menor 5',
+
+                                'periododanio'=> 'Solo números',
+                                'periododanio.min' => 'mayos 2000',
+                                'periododanio.max' => 'menor 2040',
+
+                                'periodohmes.numeric'=> 'Solo número',
+                                'periodohmes.nim' => 'mayor 0',
+                                'periodohmes.max' => 'menor 5',
+
+                                'periodohanio'=> 'Solo números',
+                                'periodohanio.numeric'=> 'Solo números',
+                                'periodohanio.min' => 'mayos 2000',
+                                'periodohanio.max' => 'menor 2040',
+                            ]);
+
+            if ($this->periododanio > $this->periodohanio) {
+                $this->validate([
+                                    'periododanio' => 'required|numeric',
+                                    'periodohanio' => 'required|numeric|gt:periododanio',
+                                ],
+                                [
+                                    'periodohanio' => 'Año hasta, tiene que se mayor',
+                                    ]);
+
+            }
+
+                    if ($this->periododanio <= $this->periodohanio) {
+
+                        if ($this->periododmes == $this->periodohmes && $this->periododanio == $this->periodohanio){
+                            dump('1     -'.$this->periododmes.' - '.$this->periodohmes.' - '.$this->periododanio.' - '.$this->periodohanio);
+
+                            $this->periodocantidad = 1;
+
+
+                        } elseif ($this->periododmes < $this->periodohmes && $this->periododanio == $this->periodohanio){
+                            dump('3     -'.$this->periododmes.' - '.$this->periodohmes.' - '.$this->periododanio.' - '.$this->periodohanio);
+                            for ($i = $this->periododmes -1; $i < $this->periodohmes; $i++){
+                                $this->periodocantidad++;
+                                dump('3-a   -'.$this->periodocantidad);
+                            }
+                        } elseif ($this->periododanio < $this->periodohanio){
+                           dump('4     -'.$this->periodocantidad .' -- '.$this->periododmes.' - '.$this->periodohmes.' - '.$this->periododanio.' - '.$this->periodohanio);
+
+                            for ($i = $this->periododmes; $i < 4; $i++){
+                                $this->periodocantidad++;
+                                dump('4-a   -'.$this->periodocantidad);
+                            }
+
+                            for ($i = 1 ; $i < ($this->periododanio - $this->periodohanio) -1; $i++){
+                                $this->periodocantidad + 4;
+                                dump('4-b   -'.$this->periodocantidad);
+                            }
+                            dump('4-bb   -'.$this->periodohmes);
+
+                            for ($i = 0 ; $i < $this->periodohmes; $i++){
+                                $this->periodocantidad++;
+                                dump('4-c   -'.$this->periodocantidad);
+                            }
+                        }
+
+                       // $this->periodocantidad = 4;
+                    }
         }
 
         public function grabarMinuta6401()
@@ -235,31 +372,41 @@
                 </div>
                 <flux:separator class="my-4" />
                 {{-- 2° fila --}}
-                <div class="ml-32 flex w-3/4 flex-row justify-between space-x-4 text-left">
-                    <div class="w-1/2 flex flex-row items-start space-x-4 text-left">
+                <div class="ml-32 flex flex-row justify-between space-x-4 text-left">
+                    <div class="w-1/3 flex flex-row items-start space-x-4 text-left">
                         {{-- Períodos desde mes--}}
-                        <div class="w-28">
+                        <div class="w-28 text-right">
                             <flux:label>Periodo desde</flux:label>
                         </div>
                         <div class="w-12">
-                            <flux:input wire:model="periododmes" maxlength="1" />
+                            <flux:input wire:model.live="periododmes" maxlength="1" />
                         </div>
                         {{-- Períodos desde año--}}
                         <div class="w-24">
-                            <flux:input wire:model="periododanio" maxlength="4"/>
+                            <flux:input wire:model.live="periododanio" maxlength="4"/>
                         </div>
                     </div>
-                    <div class="w-1/2 flex flex-row items-start space-x-4 text-left">
+                    <div class="w-1/3 flex flex-row items-start space-x-4 text-left">
                         {{-- Períodos hasta mes--}}
-                        <div class="w-28">
+                        <div class="w-28 text-right">
                             <flux:label>Periodo hasta</flux:label>
                         </div>
                         <div class="w-12">
-                            <flux:input wire:model="periodohmes" maxlength="1" />
+                            <flux:input wire:model.live="periodohmes" maxlength="1" />
                         </div>
                         {{-- Períodos hasta año--}}
                         <div class="w-24">
-                            <flux:input wire:model="periodohanio" maxlength="4"/>
+                            <flux:input wire:model.live="periodohanio" maxlength="4"/>
+                        </div>
+                    </div>
+                    <div class="w-1/3 flex flex-row items-start space-x-4 text-left">
+                        {{-- Períodos hasta mes--}}
+                        <div class="w-24 text-right">
+                            <flux:label>Total</flux:label>
+                        </div>
+                        {{-- totalPeríodos hasta año--}}
+                        <div class="w-24">
+                            <flux:input wire:model="periodocantidad" maxlength="4"/>
                         </div>
                     </div>
                 </div>
