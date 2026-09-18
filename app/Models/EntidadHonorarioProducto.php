@@ -14,7 +14,7 @@ class EntidadHonorarioProducto extends Model
 
     public function honorario_producto(): BelongsTo
     {
-        return $this->belongsTo(HonorarioProducto::class);
+        return $this->belongsTo(HonorarioProducto::class, 'honorario_producto_id');
     }
 
 }

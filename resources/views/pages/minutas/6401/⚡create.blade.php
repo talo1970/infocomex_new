@@ -29,6 +29,23 @@
         public $totalminuta;
         public $nombre_vendedor;
         public $vendedorid;
+        public $isView = true;
+        public $bancoVendedor;
+        public $bancoVendedorId;
+
+
+        public function mount()
+        {
+            if ($this->esVendedor()) {
+                $banco =  \App\Models\Entidad::bancos()->select('id', 'razon_social')
+                                          ->where('razon_social', 'BCRA COM A 6401')->first();
+
+                $this->bancoVendedor = $banco->razon_social;
+                $this->bancoVendedorId = $banco->id;
+
+
+            }
+        }
 
         private function esVendedor(): bool
         {
@@ -99,10 +116,11 @@
         #[Computed]
         public function bancos()
         {
-            if ($this->esVendedor()) {
-                return \App\Models\Entidad::bancos()->select('id', 'razon_social')
-                                            ->where('razon_social', 'BCRA COM A 6401')->get();
-            } else {
+            if (!$this->esVendedor()) {
+                //return \App\Models\Entidad::bancos()->select('id', 'razon_social')
+                //                            ->where('razon_social', 'BCRA COM A 6401')->get();
+
+                //} else {
                 return \App\Models\Entidad::bancos()->select('id', 'razon_social')->get();
             }
         }
@@ -114,62 +132,38 @@
 
         public function updatedEntidadid(): void
         {
+            $this->comisiondolares = 0;
             $comprador = \App\Models\Entidad::select('tipo_operacion', 'porcentaje_comision', 'cuit', 'tipo_entidad_id')->find($this->entidadid);
-//            $this->porcentajecomprador = $comprador->porcentaje_comision;
+
             $this->observacion = $comprador->tipo_entidad_id == 1 ? 'CUIT: '. $comprador->cuit : $this->observacion;
 
             $vendedor_select = \App\Models\EntidadProductoVendedor::where('producto_id', '3')
                                                                     ->where('entidad_id', $this->entidadid)->get()->toArray();
-            //dd($vendedor_select[0]['vendedor_id']);
             $this->vendedorid = $vendedor_select[0]['vendedor_id'];
+
+            $comisinoentidad = \App\Models\EntidadHonorarioProducto::where('entidad_id', $this->entidadid)
+                                                            ->whereHas('honorario_producto', function($query)  {
+                                                                $query->where('producto_id', $this->productoId);
+                                                            })
+                                                            ->with('honorario_producto')
+                                                            ->first();
+
+            $this->comisiondolares = $comisinoentidad->honorario_producto->importe;
 
         }
         public function updatedPeriododmes(): void
         {
             $this->procesarperiodo();
-            /*
-            $this->validate([
-                                'periododmes' => ['required', 'numeric', 'min:1', 'max:4'],
-                            ],
-                            [
-                                'periododmes' => 'Solo números',
-                                'periododmes.numeric' => 'solo nùmeros',
-                                'periododmes.nim' => 'mayor 0',
-                                'periododmes.max' => 'menor 5',
-                            ]);
-            */
         }
 
         public function updatedPeriododanio()
         {
             $this->procesarperiodo();
-            /*
-            $this->validate([
-                                'periododanio' => ['required', 'numeric', 'min:2000', 'max:2040'],
-                            ],
-                            [
-                                'periododanio'=> 'Solo números',
-                                'periododanio.min' => 'mayos 2000',
-                                'periododanio.max' => 'menor 2040',
-                            ]);
-        */
         }
         public function updatedPeriodohmes()
         {
             $this->procesarperiodo();
-
-            /*$this->validate([
-                                'periodohmes' => ['required', 'numeric', 'min:1', 'max:4'],
-                            ],
-                            [
-                                'periodohmes'=> 'Solo números',
-                                'periodohmes.numeric'=> 'Solo números',
-                                'periodohmes.nim' => 'mayor 0',
-                                'periodohmes.max' => 'menor 5',
-                            ]);
-            */
         }
-
 
         public function updatedPeriodohanio()
         {
@@ -185,6 +179,8 @@
 
                     // periodohmes
                     // periodohanio
+
+
             $this->validate([
                                 'periododmes' => ['required', 'numeric', 'min:1', 'max:4'],
                                 'periododanio' => ['required', 'numeric', 'min:2000', 'max:2040'],
@@ -221,99 +217,90 @@
 
             }
 
-                    if ($this->periododanio <= $this->periodohanio) {
+            if ($this->periododanio <= $this->periodohanio) {
+                if ($this->periododmes == $this->periodohmes && $this->periododanio == $this->periodohanio){
+//                    dump('1     -'.$this->periododmes.' - '.$this->periodohmes.' - '.$this->periododanio.' - '.$this->periodohanio);
+                    $this->periodocantidad = 1;
 
-                        if ($this->periododmes == $this->periodohmes && $this->periododanio == $this->periodohanio){
-                            dump('1     -'.$this->periododmes.' - '.$this->periodohmes.' - '.$this->periododanio.' - '.$this->periodohanio);
-
-                            $this->periodocantidad = 1;
-
-
-                        } elseif ($this->periododmes < $this->periodohmes && $this->periododanio == $this->periodohanio){
-                            dump('3     -'.$this->periododmes.' - '.$this->periodohmes.' - '.$this->periododanio.' - '.$this->periodohanio);
-                            for ($i = $this->periododmes -1; $i < $this->periodohmes; $i++){
-                                $this->periodocantidad++;
-                                dump('3-a   -'.$this->periodocantidad);
-                            }
-                        } elseif ($this->periododanio < $this->periodohanio){
-                           dump('4     -'.$this->periodocantidad .' -- '.$this->periododmes.' - '.$this->periodohmes.' - '.$this->periododanio.' - '.$this->periodohanio);
-
-                            for ($i = $this->periododmes; $i < 4; $i++){
-                                $this->periodocantidad++;
-                                dump('4-a   -'.$this->periodocantidad);
-                            }
-
-                            for ($i = 1 ; $i < ($this->periododanio - $this->periodohanio) -1; $i++){
-                                $this->periodocantidad + 4;
-                                dump('4-b   -'.$this->periodocantidad);
-                            }
-                            dump('4-bb   -'.$this->periodohmes);
-
-                            for ($i = 0 ; $i < $this->periodohmes; $i++){
-                                $this->periodocantidad++;
-                                dump('4-c   -'.$this->periodocantidad);
-                            }
-                        }
-
-                       // $this->periodocantidad = 4;
+                } elseif ($this->periododmes < $this->periodohmes && $this->periododanio == $this->periodohanio){
+//                    dump('3     -'.$this->periododmes.' - '.$this->periodohmes.' - '.$this->periododanio.' - '.$this->periodohanio);
+                    for ($i = $this->periododmes -1; $i < $this->periodohmes; $i++){
+                        $this->periodocantidad++;
+//                        dump('3-a - '.$this->periodocantidad);
                     }
+                } elseif ($this->periododanio < $this->periodohanio){
+//                   dump('4  -  '.$this->periodocantidad .' -- '.$this->periododmes.' - '.$this->periodohmes.' - '.$this->periododanio.' - '.$this->periodohanio);
+                    for ($i = $this->periododmes; $i < 4; $i++){
+                        $this->periodocantidad++;
+//                        dump('4-a  -  '.$this->periodocantidad);
+                    }
+
+                    for ($i = 1 ; $i < ($this->periodohanio - $this->periododanio); $i++){
+                        $this->periodocantidad  = $this->periodocantidad + 4;
+//                        dump('4-b  -  '.$this->periodocantidad);
+                    }
+//                    dump('4-bb  -  '.$this->periodocantidad);
+                    for ($i = 0 ; $i <= $this->periodohmes; $i++){
+                        $this->periodocantidad++;
+//                        dump('4-c  -  '.$this->periodocantidad);
+                    }
+                }
+            }
+
+            if ($this->periodocantidad > 0 && $this->comisiondolares >0) {
+                $this->totalcomisiondolares = $this->periodocantidad * $this->comisiondolares;
+                if ($this->tipocambio > 0) {
+                    $this->totalminuta = $this->tipocambio *  $this->totalcomisiondolares;
+                }
+
+            }
+
         }
 
         public function grabarMinuta6401()
         {
+            dd($this->bancoid);
             $this->validar();
+
+
 
         }
 
         public function validar()
         {
-            return $this->validate([
 
-                                    'numeroboleto' => ['required'],
-                                    'estadoid' => ['required'],
+            $this->validate([
+                                    'estadoid' => ['required', 'exists:estados,id'],
                                     'fechaboleto' => ['required'],
-                                    'entidadid' => ['required'],
-                                    'bancoid' => ['required'],
+                                    'entidadid' => ['required', 'exists:entidads,id'],
+                                    'bancoid' => ['required', 'exists:entidads,id'],
                                     'periododmes' => ['required'],
                                     'periododanio' => ['required'],
                                     'periodohmes' => ['required'],
                                     'periodohanio' => ['required'],
-                                    'observacion' => ['required'],
-                                    'comisiondolares' => ['required'],
-                                    'totalcomisiondolares' => ['required'],
-                                    'tipocambio' => ['required'],
-                                    'totalminuta' => ['required'],
-
-                                       'tipoentidadid' => ['required', 'exists:tipo_entidads,id'],
-                                       'razon_social' => ['required','string','max:255'],
-                                       'cuit' => ['nullable','string','max:20'],
-                                       'tipofacturaid' => ['nullable', 'exists:tipo_comprobantes,id'],
-                                       'comision' => ['nullable'],
-                                       'limite' => ['nullable'],
-                                       'facturacion_minima' => ['nullable'],
-                                       'facturacion_fija' => ['nullable'],
-                                       'telefono' => ['nullable','string','max:100'],
-                                       'mail' => ['nullable','string','max:255'],
-                                       'contacto' => ['nullable','string','max:100'],
-                                       'domicilio' => ['nullable','string','max:255'],
-                                       'numero' => ['nullable','string','max:25'],
-                                       'codigoPostal' => ['nullable','string','max:25'],
-                                       'deptopiso' => ['nullable','string','max:50'],
-                                       'localidad' => ['nullable','string','max:100'],
-                                       'provinciaid' => ['required', 'exists:provincias,id'],
-                                       'pais' => ['nullable','string','max:25'],
-                                       'modofacturacion' => ['nullable'],
-                                       'tipocliente' => ['nullable','string','max:25'],
-                                       'codigoproveedor' => ['nullable','string','max:25'],
-                                       'observacion' => ['nullable','string','max:255'],
+                                    'observacion' => ['nullable'],
+                                    'comisiondolares' => ['required','regex:/^[\d.]+$/'],
+                                    'totalcomisiondolares' => ['required','regex:/^[\d.]+$/'],
+                                    'tipocambio' => ['required','regex:/^[\d.]+$/'],
+                                    'totalminuta' => ['required','regex:/^[\d.]+$/'],
                                    ],
                                    [
-                                       'tipoentidadid' => 'Se queriere el tipo de Entidad',
-                                       'razon_social' => 'Ingrese la Razón Social de la entidad',
-                                       'cuit' =>   'tiene que se menor a 20 caracteres',
-                                       'contacto' => 'tiene que se menor a 100 caracteres',
-                                       'provinciaid' => 'ingrese una provincia',
+                                    'estadoid' => 'es requerido',
+                                    'fechaboleto' => 'es requerido',
+                                    'entidadid' => 'es requerido',
+                                    'bancoid' => 'es requerido',
+                                    'periododmes' => 'es requerido',
+                                    'periododanio' => 'es requerido',
+                                    'periodohmes' => 'es requerido',
+                                    'periodohanio' => 'es requerido',
+                                    'comisiondolares' => 'es requerido',
+                                    'totalcomisiondolares' => 'es requerido',
+                                    'tipocambio' => 'es requerido',
+                                    'totalminuta' => 'es requerido',
                                    ]);
+
+
+
         }
 
     };
@@ -359,15 +346,21 @@
                             @endforeach
                         </flux:select>
                     </div>
-                    {{-- Vendedor --}}
+                    {{-- banco --}}
                     <div class="w-1/2">
-                        <flux:select variant="listbox" searchable wire:model.live="bancoid" label="Banco"
-                                     placeholder="Seleccione un Banco">
-                            @foreach ($this->bancos as $banco)
-                                <flux:select.option value="{{ $banco->id }}"
-                                                    wire:key="{{ $banco->id }}">{{ $banco->razon_social }}</flux:select.option>
-                            @endforeach
-                        </flux:select>
+                        @if ($this->esVendedor())
+                            <div>
+                                <flux:input :disabled="true" wire:model="bancoVendedor" label="Banco" />
+                            </div>
+                        @else
+                            <flux:select variant="listbox" searchable wire:model.live="bancoid" label="Banco"
+                                         placeholder="Seleccione un Banco">
+                                @foreach ($this->bancos as $banco)
+                                    <flux:select.option value="{{ $banco->id }}"
+                                                        wire:key="{{ $banco->id }}">{{ $banco->razon_social }}</flux:select.option>
+                                @endforeach
+                            </flux:select>
+                        @endif
                     </div>
                 </div>
                 <flux:separator class="my-4" />
@@ -435,7 +428,7 @@
                         </div>
                         {{-- Total comisión en dolares --}}
                         <div class="w-1/5">
-                            <flux:input wire:model="totalcomisiondolares" label="Total Comisión U$S" />
+                            <flux:input :disabled="true" wire:model="totalcomisiondolares" label="Total Comisión U$S" />
                         </div>
                     </div>
 
@@ -447,9 +440,9 @@
                             <flux:input wire:model.model.live="tipocambio" wire:keydown.enter="entertipocambio"
                                         label="Tipo de Cambio" />
                         </div>
-                        {{-- equivalente --}}
+                        {{-- total minuta --}}
                         <div class="w-1/3">
-                            <flux:input icon="currency-dollar" wire:model="totalminuta" readonly
+                            <flux:input :disabled="true" icon="currency-dollar" wire:model="totalminuta" readonly
                                         label="Total Comisión $" />
                         </div>
                     </div>
