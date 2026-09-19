@@ -29,6 +29,7 @@ new class extends Component
     public $entidadid;
     public $detalleMinutas;
 
+    protected $listeners = ['refreshComponent' => '$refresh'];
 
     private function esVendedor(): bool
     {
@@ -81,7 +82,7 @@ new class extends Component
             <flux:subheading size="lg" class="mb-4 flex justify-between">{{ __('Minutas de Com. 6401') }}
 
                 <!-- modal-->
-                <flux:modal.trigger name="minuta-cambio-crear-modal">
+                <flux:modal.trigger name="minuta-6401-crear-modal">
                     <flux:badge
                         wire:click="$dispatch('crear-6401-modal', { modo: 'crear'})"
                         icon="plus-circle" class="cursor-pointer" variant="primary" color="red">Nueva Minuta</flux:badge>

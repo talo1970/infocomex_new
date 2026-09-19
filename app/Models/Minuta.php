@@ -49,6 +49,7 @@ class Minuta extends Model
         'anio_cantidad',
         'periodo_desde',
         'periodo_hasta',
+        'periodo_cantidad',
         'importe_comision_unidad',
         'importe_comision_dolares',
         'importe_comision',
@@ -278,6 +279,11 @@ class Minuta extends Model
         $query->where('producto_id', '1')->whereYear('fecha', '=', date('Y') );
     }
 
+    #[Scope]
+    protected function maxMinuta(Builder $query, $value): void
+    {
+        $query->where('producto_id', $value)->whereYear('fecha', '=', date('Y') );
+    }
     /*
         public function scopeBoletos(Builder $query): void
         {

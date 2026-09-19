@@ -33,6 +33,7 @@
         public $bancoVendedor;
         public $bancoVendedorId;
 
+        public $isVendedor = 0;
 
         public function mount()
         {
@@ -42,8 +43,7 @@
 
                 $this->bancoVendedor = $banco->razon_social;
                 $this->bancoVendedorId = $banco->id;
-
-
+                $this->isVendedor = 1;
             }
         }
 
@@ -83,7 +83,7 @@
         {
             //return \App\Models\Entidad::clientes()->select('id', 'razon_social')->get();
             $productoId = 3;
-            if ($this->esVendedor()) {
+            if ($this->isVendedor) {
                 $clientes = \App\Models\Entidad::query()
                                          ->whereHas('productosVendedores', function ($query) {
                                              $query
@@ -116,7 +116,7 @@
         #[Computed]
         public function bancos()
         {
-            if (!$this->esVendedor()) {
+            if (!$this->isVendedor) {
                 //return \App\Models\Entidad::bancos()->select('id', 'razon_social')
                 //                            ->where('razon_social', 'BCRA COM A 6401')->get();
 
@@ -149,6 +149,7 @@
                                                             ->first();
 
             $this->comisiondolares = $comisinoentidad->honorario_producto->importe;
+            $this->procesarperiodo();
 
         }
         public function updatedPeriododmes(): void
@@ -170,110 +171,161 @@
             $this->procesarperiodo();
         }
 
+        public function updatedComisiondolares()
+        {
+            $this->procesarperiodo();
+        }
+
+        public function updatedTipocambio()
+        {
+            $this->procesarperiodo();
+        }
+
         public function procesarperiodo()
         {
             $this->periodocantidad = 0;
 
-                    // periododmes
-                    // periododanio
+            // periododmes
+            // periododanio
 
-                    // periodohmes
-                    // periodohanio
+            // periodohmes
+            // periodohanio
 
-
-            $this->validate([
-                                'periododmes' => ['required', 'numeric', 'min:1', 'max:4'],
-                                'periododanio' => ['required', 'numeric', 'min:2000', 'max:2040'],
-                                'periodohmes' => ['required', 'numeric', 'min:1', 'max:4'],
-                                'periodohanio' => ['required', 'numeric', 'min:2000', 'max:2040'],
-                            ],
-                            [
-                                'periododmes.numeric' => 'solo número',
-                                'periododmes.nim' => 'mayor 0',
-                                'periododmes.max' => 'menor 5',
-
-                                'periododanio'=> 'Solo números',
-                                'periododanio.min' => 'mayos 2000',
-                                'periododanio.max' => 'menor 2040',
-
-                                'periodohmes.numeric'=> 'Solo número',
-                                'periodohmes.nim' => 'mayor 0',
-                                'periodohmes.max' => 'menor 5',
-
-                                'periodohanio'=> 'Solo números',
-                                'periodohanio.numeric'=> 'Solo números',
-                                'periodohanio.min' => 'mayos 2000',
-                                'periodohanio.max' => 'menor 2040',
-                            ]);
-
-            if ($this->periododanio > $this->periodohanio) {
+            if ($this->periododmes != '' && $this->periodohmes != '' && $this->periododanio != '' && $this->periodohanio != '' )
+            {
                 $this->validate([
-                                    'periododanio' => 'required|numeric',
-                                    'periodohanio' => 'required|numeric|gt:periododanio',
-                                ],
-                                [
-                                    'periodohanio' => 'Año hasta, tiene que se mayor',
+                                    'periododmes' => ['required','numeric','min:1','max:4'],
+                                    'periododanio' => ['required','numeric','min:2000','max:2040'],
+                                    'periodohmes' => ['required','numeric','min:1','max:4'],
+                                    'periodohanio' => ['required','numeric','min:2000','max:2040'],
+                                ], [
+                                    'periododmes.numeric' => 'solo número',
+                                    'periododmes.nim'     => 'mayor 0',
+                                    'periododmes.max'     => 'menor 5',
+
+                                    'periododanio'     => 'Solo números',
+                                    'periododanio.min' => 'mayos 2000',
+                                    'periododanio.max' => 'menor 2040',
+
+                                    'periodohmes.numeric' => 'Solo número',
+                                    'periodohmes.nim'     => 'mayor 0',
+                                    'periodohmes.max'     => 'menor 5',
+
+                                    'periodohanio'         => 'Solo números',
+                                    'periodohanio.numeric' => 'Solo números',
+                                    'periodohanio.min'     => 'mayos 2000',
+                                    'periodohanio.max'     => 'menor 2040',
+                                ]);
+
+                if ($this->periododanio > $this->periodohanio) {
+                    $this->validate([
+                                        'periododanio' => 'required|numeric',
+                                        'periodohanio' => 'required|numeric|gt:periododanio',
+                                    ], [
+                                        'periodohanio' => 'Año hasta, tiene que se mayor',
                                     ]);
 
-            }
+                }
 
-            if ($this->periododanio <= $this->periodohanio) {
-                if ($this->periododmes == $this->periodohmes && $this->periododanio == $this->periodohanio){
+                if ($this->periododanio <= $this->periodohanio) {
+                    if ($this->periododmes == $this->periodohmes && $this->periododanio == $this->periodohanio) {
 //                    dump('1     -'.$this->periododmes.' - '.$this->periodohmes.' - '.$this->periododanio.' - '.$this->periodohanio);
-                    $this->periodocantidad = 1;
+                        $this->periodocantidad = 1;
 
-                } elseif ($this->periododmes < $this->periodohmes && $this->periododanio == $this->periodohanio){
+                    }
+                    else if ($this->periododmes < $this->periodohmes && $this->periododanio == $this->periodohanio) {
 //                    dump('3     -'.$this->periododmes.' - '.$this->periodohmes.' - '.$this->periododanio.' - '.$this->periodohanio);
-                    for ($i = $this->periododmes -1; $i < $this->periodohmes; $i++){
-                        $this->periodocantidad++;
+                        for ($i = $this->periododmes - 1; $i < $this->periodohmes; $i++) {
+                            $this->periodocantidad++;
 //                        dump('3-a - '.$this->periodocantidad);
+                        }
                     }
-                } elseif ($this->periododanio < $this->periodohanio){
+                    else if ($this->periododanio < $this->periodohanio) {
 //                   dump('4  -  '.$this->periodocantidad .' -- '.$this->periododmes.' - '.$this->periodohmes.' - '.$this->periododanio.' - '.$this->periodohanio);
-                    for ($i = $this->periododmes; $i < 4; $i++){
-                        $this->periodocantidad++;
+                        for ($i = $this->periododmes; $i < 4; $i++) {
+                            $this->periodocantidad++;
 //                        dump('4-a  -  '.$this->periodocantidad);
-                    }
+                        }
 
-                    for ($i = 1 ; $i < ($this->periodohanio - $this->periododanio); $i++){
-                        $this->periodocantidad  = $this->periodocantidad + 4;
+                        for ($i = 1; $i < ($this->periodohanio - $this->periododanio); $i++) {
+                            $this->periodocantidad = $this->periodocantidad + 4;
 //                        dump('4-b  -  '.$this->periodocantidad);
-                    }
+                        }
 //                    dump('4-bb  -  '.$this->periodocantidad);
-                    for ($i = 0 ; $i <= $this->periodohmes; $i++){
-                        $this->periodocantidad++;
+                        for ($i = 0; $i <= $this->periodohmes; $i++) {
+                            $this->periodocantidad++;
 //                        dump('4-c  -  '.$this->periodocantidad);
+                        }
                     }
                 }
-            }
 
-            if ($this->periodocantidad > 0 && $this->comisiondolares >0) {
-                $this->totalcomisiondolares = $this->periodocantidad * $this->comisiondolares;
-                if ($this->tipocambio > 0) {
-                    $this->totalminuta = $this->tipocambio *  $this->totalcomisiondolares;
+                if ($this->periodocantidad > 0 && $this->comisiondolares > 0) {
+                    $this->totalcomisiondolares = $this->periodocantidad * $this->comisiondolares;
+                    if ($this->tipocambio > 0) {
+                        $this->totalminutaaux = $this->tipocambio * $this->totalcomisiondolares;
+                        $this->totalminuta    = round($this->totalminutaaux, 2);
+                    }
+
                 }
-
             }
 
         }
 
         public function grabarMinuta6401()
         {
-            dd($this->bancoid);
+            //dd($this->bancoid);
             $this->validar();
+
+            $this->maximo = \App\Models\Minuta::maxMinuta(3)->max('numero') + 1;
+
+            DB::transaction(function () {
+                try {
+                    $cargo = \App\Models\Minuta::create([
+                                                            'numero'                   => $this->maximo,
+                                                            'estado_id'                => $this->estadoid,
+                                                            'producto_id'              => 3,
+                                                            'fecha'                    => $this->fechaboleto,
+                                                            'entidad_cliente_id'       => $this->entidadid,
+                                                            'bcra_id'                  => $this->isVendedor != 0 ? $this->bancoVendedorId : $this->bancoid,
+                                                            'periodo_desde'            => $this->periododmes . '-' . $this->periododanio,
+                                                            'periodo_hasta'            => $this->periodohmes . '-' . $this->periodohanio,
+                                                            'periodo_cantidad'         => $this->periodocantidad,
+                                                            'observacion'              => $this->observacion,
+                                                            'tipo_cambio'              => $this->tipocambio,
+                                                            'importe_comision_unidad'  => $this->comisiondolares,
+                                                            'importe_comision_dolares' => $this->totalcomisiondolares,
+                                                            'importe_comision'         => $this->totalminuta,
+                                                            'usuario_vendedor_id'      => $this->vendedorid,
+                                                        ]);
+                }
+                catch (\Exception $e) {
+                    Log::error($e->getMessage());
+                }
+            });
+
+            $this->dispatch('refreshComponent')->to('pages::minutas.6401.index');
+            $this->reset();
+            Flux::modal('minuta-6401-crear-modal')->close();
+
+
 
 
 
         }
 
+        public function cancel(): void
+        {
+            $this->reset();
+            $this->redirectRoute('minutas.6401.index', navigate: true);
+        }
+
         public function validar()
         {
-
             $this->validate([
                                     'estadoid' => ['required', 'exists:estados,id'],
                                     'fechaboleto' => ['required'],
                                     'entidadid' => ['required', 'exists:entidads,id'],
-                                    'bancoid' => ['required', 'exists:entidads,id'],
+                                    'bancoid' => ['required_if:isVendedor,0'],
                                     'periododmes' => ['required'],
                                     'periododanio' => ['required'],
                                     'periodohmes' => ['required'],
@@ -285,29 +337,27 @@
                                     'totalminuta' => ['required','regex:/^[\d.]+$/'],
                                    ],
                                    [
-                                    'estadoid' => 'es requerido',
-                                    'fechaboleto' => 'es requerido',
-                                    'entidadid' => 'es requerido',
-                                    'bancoid' => 'es requerido',
-                                    'periododmes' => 'es requerido',
-                                    'periododanio' => 'es requerido',
-                                    'periodohmes' => 'es requerido',
-                                    'periodohanio' => 'es requerido',
+                                    'estadoid' => 'estado es requerido',
+                                    'fechaboleto' => 'fecha es requerido',
+                                    'entidadid' => 'entidad es requerido',
+                                    'bancoid' => 'banco es requerido',
+
+                                    'periododmes' => 'período mes desde es requerido',
+                                    'periododanio' => 'período año desde es requerido',
+                                    'periodohmes' => 'período mes hasta es requerido',
+                                    'periodohanio' => 'período año hasta es requerido',
                                     'comisiondolares' => 'es requerido',
                                     'totalcomisiondolares' => 'es requerido',
                                     'tipocambio' => 'es requerido',
                                     'totalminuta' => 'es requerido',
                                    ]);
-
-
-
         }
 
     };
 ?>
 
 <div>
-    <flux:modal name="minuta-cambio-crear-modal" class="min-w-[64rem]">
+    <flux:modal name="minuta-6401-crear-modal" class="min-w-[64rem]">
         <form wire:submit="grabarMinuta6401" class="space-y-6">
             <div>
                 <flux:heading class="font-bold bg-red-100 text-center dark:bg-red-800" size="lg">Datos de la Minuta 6401
@@ -348,7 +398,7 @@
                     </div>
                     {{-- banco --}}
                     <div class="w-1/2">
-                        @if ($this->esVendedor())
+                        @if ($this->isVendedor)
                             <div>
                                 <flux:input :disabled="true" wire:model="bancoVendedor" label="Banco" />
                             </div>
@@ -424,7 +474,7 @@
                         </div>
                         {{-- comisión dolares --}}
                         <div class="w-1/3">
-                            <flux:input wire:model="comisiondolares" label="Comisión U$S" />
+                            <flux:input wire:model.live="comisiondolares" label="Comisión U$S" />
                         </div>
                         {{-- Total comisión en dolares --}}
                         <div class="w-1/5">
