@@ -120,54 +120,34 @@
     };
 ?>
 
-<div>
-
-    <livewire:pages::minutas.boletos.create/>
-    <livewire:pages::minutas.boletos.edit/>
-
-    <div class="space-y-4">
-        <div class="relative mb-4 w-full">
-        <flux:heading size="xl" level="1">{{ __('Minuta Cambio') }}</flux:heading>
-        <flux:subheading size="lg" class="mb-4 flex justify-between">{{ __('Minutas de Boletos de Cambio') }}
-
-            <!-- modal-->
-            <flux:modal.trigger name="minuta-cambio-crear-modal">
-                <flux:badge
-                    wire:click="$dispatch('crear-cambio-modal', { modo: 'crear'})"
-                    icon="plus-circle" class="cursor-pointer" variant="primary" color="red">Nueva Minuta</flux:badge>
-            </flux:modal.trigger>
-        </flux:heading>
+<div class="space-y-4">
+    <div class="-mb-4">
+        <livewire:pages::minutas.boletos.create/>
+        <livewire:pages::minutas.boletos.edit/>
     </div>
+
+        <div class="relative mb-4 w-full bg-gradient-to-r from-red-50 to-gray-300">
+            <flux:heading size="xl" level="1">{{ __('Minuta Cambio') }}</flux:heading>
+            <flux:subheading size="lg" class="mb-4 flex justify-between">{{ __('Minutas de Boletos de Cambio') }}
+                <!-- modal-->
+                <flux:modal.trigger name="minuta-cambio-crear-modal">
+                    <flux:badge
+                    wire:click="$dispatch('crear-cambio-modal', { modo: 'crear'})"
+                    icon="plus-circle" class="cursor-pointer mr-2" variant="solid" color="gray">Nueva Minuta</flux:badge>
+                </flux:modal.trigger>
+            </flux:heading>
+            <flux:separator variant="subtle" />
+        </div>
         <div class="flex justify-center items-center flex-wrap gap-2">
 
-        <!-- Dropdown por estado -->
-{{--        <flux:dropdown>
-            <flux:button class="w-48 mr-16 text-left" icon-trailing="chevron-down">ddEstado</flux:button>
-            <flux:menu searchable>
-                <flux:menu.radio.group wire:model.live="estadosFilter">
-                    <flux:menu.radio wire:click="$set('estadosFilter', 'all')" value="all" :checked="$estadosFilter === 'all'">
-                        Todos
-                    </flux:menu.radio>
-                    @foreach($this->estados as $estado)
-                        <flux:menu.radio wire:click="$set('estadosFilter', '{{$estado->id}}')" value="{{$estado->id}}" :checked="$estadosFilter === '{{$estado->nombre}}'">
-                            {{$estado->nombre}}
-                        </flux:menu.radio>
-                    @endforeach
+            <flux:label class="mr-2 text-xl">Estado:</flux:label>
+            <flux:select searchable wire:model.live="estadosFilter" class="max-w-[20rem]">
+                {{--<flux:select.option value="all">Todos los estados</flux:select.option>--}}
+                @foreach ($this->estados as $estado)
+                    <flux:select.option value="{{ $estado->id }}" wire:key="{{ $estado->id }}">{{ $estado->nombre }}</flux:select.option>
+                @endforeach
+            </flux:select>
 
-                </flux:menu.radio.group>
-            </flux:menu>
-        </flux:dropdown>
---}}
-
-            <div class="flex gap-2">
-                <flux:label class="w-24 text-xl">Estado: </flux:label>
-                <flux:select searchable wire:model.live="estadosFilter" placeholder="Seleccione un Estado">
-                    @foreach ($this->estados as $estado)
-                        @if ($estado->id == 1)  {{$this->estadosFilter = 1}} @endif
-                        <flux:select.option value="{{ $estado->id }}" wire:key="{{ $estado->id }}">{{ $estado->nombre }}</flux:select.option>
-                    @endforeach
-                </flux:select>
-            </div>
             <div class="ml-32 flex gap-2">
                 <flux:label class="w-40 text-xl">Planilla del dìa: </flux:label>
                 <flux:date-picker class="w-48" wire:model.live="fechaplanilla" type="input"/>

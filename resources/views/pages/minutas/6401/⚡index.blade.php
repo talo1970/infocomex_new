@@ -78,42 +78,29 @@ new class extends Component
         <livewire:pages::minutas.6401.edit/>
     </div>
     <div class="relative mb-4 w-full bg-gradient-to-r from-red-50 to-red-300 ">
-            <flux:heading size="xl" level="1" class="ml-2 text-black">{{ __('Minuta Com-6401') }}</flux:heading>
-                <flux:subheading size="lg" class="mb-4 ml-2 dark:text-black flex justify-between">{{ __('Administración de minutas de Com. 6401') }}
+        <flux:heading size="xl" level="1" class="ml-2 text-black">{{ __('Minuta Com-6401') }}</flux:heading>
+            <flux:subheading size="lg" class="mb-4 ml-2 dark:text-black flex justify-between">{{ __('Administración de minutas de Com. 6401') }}
                 <!-- modal-->
                 <flux:modal.trigger name="minuta-6401-crear-modal">
                     <flux:badge
                         wire:click="$dispatch('crear-6401-modal', { modo: 'crear'})"
-                        icon="plus-circle" class="cursor-pointer" variant="solid" color="red">Nueva Minuta
+                        icon="plus-circle" class="cursor-pointer mr-2" variant="solid" color="red">Nueva Minuta
                     </flux:badge>
                 </flux:modal.trigger>
-            </flux:heading>
+        </flux:heading>
         <flux:separator variant="subtle" />
     </div>
-
-
-
-
-
+    {{-- filtros --}}
     <div class="flex justify-center items-center flex-wrap gap-2">
-
         <!-- Dropdown por estado -->
-        <flux:dropdown>
-            <flux:button class="w-48 mr-16 text-left" icon-trailing="chevron-down">Estado</flux:button>
-            <flux:menu searchable>
-                <flux:menu.radio.group wire:model.live="estadosFilter">
-                    <flux:menu.radio wire:click="$set('estadosFilter', 'all')" value="all" :checked="$estadosFilter === 'all'">
-                        Todos
-                    </flux:menu.radio>
-                    @foreach($this->estados as $estado)
-                        <flux:menu.radio wire:click="$set('estadosFilter', '{{$estado->id}}')" value="{{$estado->id}}" :checked="$estadosFilter === '{{$estado->nombre}}'">
-                            {{$estado->nombre}}
-                        </flux:menu.radio>
-                    @endforeach
 
-                </flux:menu.radio.group>
-            </flux:menu>
-        </flux:dropdown>
+        <flux:label class="mr-2 text-xl">Estado:</flux:label>
+        <flux:select searchable wire:model.live="estadosFilter" class="max-w-[16rem] mr-8">
+            {{--<flux:select.option value="all">Todos los estados</flux:select.option>--}}
+            @foreach ($this->estados as $estado)
+                <flux:select.option value="{{ $estado->id }}" wire:key="{{ $estado->id }}">{{ $estado->nombre }}</flux:select.option>
+            @endforeach
+        </flux:select>
 
         <div class="flex gap-2">
             <flux:label class="w-40 text-xl">Planilla del día: </flux:label>
@@ -165,7 +152,7 @@ new class extends Component
                                 <flux:modal.trigger name="editar-6401-modal">
                                     <flux:tooltip content="Editar minuta">
                                         <flux:badge color="indigo" as="button"
-                                                    wire:click="$dispatch('editar-minuta-modal', { minuta: '{{$minuta}}'})"
+                                                    wire:click="$dispatch('minutaEdit', {minuta: '{{$minuta->id}}'})"
                                                     icon="pencil" class="cursor-pointer" >
                                         </flux:badge>
                                     </flux:tooltip>

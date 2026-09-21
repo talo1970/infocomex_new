@@ -152,6 +152,7 @@
             $this->procesarperiodo();
 
         }
+
         public function updatedPeriododmes(): void
         {
             $this->procesarperiodo();
@@ -161,6 +162,7 @@
         {
             $this->procesarperiodo();
         }
+
         public function updatedPeriodohmes()
         {
             $this->procesarperiodo();
@@ -265,7 +267,6 @@
                         $this->totalminutaaux = $this->tipocambio * $this->totalcomisiondolares;
                         $this->totalminuta    = round($this->totalminutaaux, 2);
                     }
-
                 }
             }
 
@@ -306,11 +307,6 @@
             $this->dispatch('refreshComponent')->to('pages::minutas.6401.index');
             $this->reset();
             Flux::modal('minuta-6401-crear-modal')->close();
-
-
-
-
-
         }
 
         public function cancel(): void
@@ -487,7 +483,7 @@
                     <div class="mt-4 flex w-full flex-row items-start space-x-4 text-left">
                         {{-- Tipo de cambio --}}
                         <div class="ml-78 w-1/3">
-                            <flux:input wire:model.model.live="tipocambio" wire:keydown.enter="entertipocambio"
+                            <flux:input wire:model.model.live="tipocambio"
                                         label="Tipo de Cambio" />
                         </div>
                         {{-- total minuta --}}
