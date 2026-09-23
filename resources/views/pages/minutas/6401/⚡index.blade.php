@@ -77,7 +77,7 @@ new class extends Component
         <livewire:pages::minutas.6401.create/>
         <livewire:pages::minutas.6401.edit/>
     </div>
-    <div class="relative mb-4 w-full bg-gradient-to-r from-red-50 to-red-300 ">
+    <div class="relative mb-4 w-full bg-gradient-to-r from-red-50 to-fuchsia-300 ">
         <flux:heading size="xl" level="1" class="ml-2 text-black">{{ __('Minuta Com-6401') }}</flux:heading>
             <flux:subheading size="lg" class="mb-4 ml-2 dark:text-black flex justify-between">{{ __('Administración de minutas de Com. 6401') }}
                 <!-- modal-->

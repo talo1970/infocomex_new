@@ -1,89 +1,97 @@
 <?php
 
-use Livewire\Component;
-use Livewire\Attributes\On;
-use Livewire\Attributes\Computed;
-use Illuminate\Support\Number;
+    use Flux\Flux;
+    use Livewire\Component;
+    use Livewire\Attributes\On;
+    use Livewire\Attributes\Computed;
+    use Illuminate\Support\Number;
 
 
-new class extends Component
-{
-    public $modo;
-    public $fecha;
-    public $monedaid;
-    public $cotizacions;
+    new class extends Component {
+        public $modo;
+        public $fecha;
+        public $monedaid;
+        public $cotizacions;
+        public $cotizacion;
 
-    public $cotizacion;
-
-    #[On('cotizacion-crear')]
-    public function crearCotizacion($modo): void
-    {
-        $this->modo = $modo;
-
-    }
-
-    #[On('cotizacion-editar')]
-    public function editarCotizacion($modo, \App\Models\Cotizacion $cotizacion): void
-    {
-        $this->modo = $modo;
-        $this->cotizacion = $cotizacion;
-
-        $this->fecha = $this->cotizacion->fecha;
-        $this->monedaid = $this->cotizacion->moneda_id;
-    //    $this->cotizacions = $this->cotizacion->cotizacion;
-        $this->cotizacions =  Number::format($this->cotizacion->cotizacion, locale: 'es');
-
-    }
-
-    #[Computed]
-    public function monedas()
-    {
-        return \App\Models\Moneda::select('id', 'nombre')->get();
-    }
-
-    public function grabarCotizacion()
-    {
-        $this->cotizacions = str_replace('.', '', $this->cotizacions);
-        $validated = $this->validate([
-                                         'fecha' => ['required', 'string', 'max:150'],
-                                         'monedaid' => ['required', 'exists:monedas,id'],
-                                         'cotizacions' => ['required', 'regex:/^\d+(,\d+)?$/'],
-                                     ],
-                                     [
-                                         'fecha' => 'Se queriere ingresar una Fecha',
-                                         'monedaid' => 'Se queriere ingresar una Moneda',
-                                         'cotizacions' => 'Se queriere ingresar una cotizacion',
-                                     ]);
-
-        $this->cotizacions = str_replace(',', '.', $this->cotizacions);
-
-        if ($this->modo == 'Alta')
+        #[On('cotizacion-crear')]
+        public function crearCotizacion($modo): void
         {
+            $this->modo = $modo;
 
-            //dump($this->modo);
-            DB::transaction(function()  {
-                $cotiza = \App\Models\Cotizacion::create([
-                                                             'fecha' => $this->fecha,
-                                                             'moneda_id' => $this->monedaid,
-                                                             'cotizacion' => $this->cotizacions,
-                                                         ]);
-                //dump($cotiza);
-
-            });
-        } else {
-            //dump($this->modo);
-
-            $this->cotizacion->fecha = $this->fecha;
-            $this->cotizacion->moneda_id = $this->monedaid;
-            $this->cotizacion->cotizacion = $this->cotizacions;
-            $this->cotizacion->save();
         }
 
-        Flux::modal('cotizacion-modal')->close();
-        $this->dispatch('refreshComponent')->to('pages::cotizaciones.index');
-    }
+        #[On('cotizacion-editar')]
+        public function editarCotizacion($modo, \App\Models\Cotizacion $cotizacion): void
+        {
+            $this->modo       = $modo;
+            $this->cotizacion = $cotizacion;
 
-};
+            $this->fecha    = $this->cotizacion->fecha;
+            $this->monedaid = $this->cotizacion->moneda_id;
+            //    $this->cotizacions = $this->cotizacion->cotizacion;
+            $this->cotizacions = Number::format($this->cotizacion->cotizacion, locale: 'es');
+
+        }
+
+        #[Computed]
+        public function monedas()
+        {
+            return \App\Models\Moneda::select('id', 'nombre')->get();
+        }
+
+        public function grabarCotizacion()
+        {
+            $this->cotizacions = str_replace('.', '', $this->cotizacions);
+            $validated         = $this->validate([
+                                                     'fecha' => [
+                                                         'required',
+'string',
+'max:150'
+                                                     ],
+'monedaid' => [
+    'required',
+'exists:monedas,id'
+],
+'cotizacions' => [
+    'required',
+    'regex:/^\d+(,\d+)?$/'
+],
+                                                 ], [
+                                                     'fecha'       => 'Se queriere ingresar una Fecha',
+                                                     'monedaid'    => 'Se queriere ingresar una Moneda',
+                                                     'cotizacions' => 'Se queriere ingresar una cotizacion',
+                                                 ]);
+
+            $this->cotizacions = str_replace(',', '.', $this->cotizacions);
+
+            if ($this->modo == 'Alta') {
+
+                //dump($this->modo);
+                DB::transaction(function() {
+                    $cotiza = \App\Models\Cotizacion::create([
+                                                                 'fecha'      => $this->fecha,
+                                                                 'moneda_id'  => $this->monedaid,
+                                                                 'cotizacion' => $this->cotizacions,
+                                                             ]);
+                    //dump($cotiza);
+
+                });
+            }
+            else {
+                //dump($this->modo);
+
+                $this->cotizacion->fecha      = $this->fecha;
+                $this->cotizacion->moneda_id  = $this->monedaid;
+                $this->cotizacion->cotizacion = $this->cotizacions;
+                $this->cotizacion->save();
+            }
+
+            Flux::modal('cotizacion-modal')->close();
+            $this->dispatch('refreshComponent')->to('pages::cotizaciones.index');
+        }
+
+    };
 ?>
 
 <div>
@@ -104,7 +112,8 @@ new class extends Component
                     <flux:select wire:model="monedaid" label="Moneda" placeholder="Seleccione una Moneda">
                         <flux:select.option>-</flux:select.option>
                         @foreach ($this->monedas as $moneda)
-                            <flux:select.option value="{{ $moneda->id }}" wire:key="{{ $moneda->id }}">{{ $moneda->nombre }}</flux:select.option>
+                            <flux:select.option value="{{ $moneda->id }}"
+                                                wire:key="{{ $moneda->id }}">{{ $moneda->nombre }}</flux:select.option>
                         @endforeach
                     </flux:select>
                 </div>
@@ -125,7 +134,8 @@ new class extends Component
 
             </flux:modal.close>
 
-            <flux:button wire:click="grabarCotizacion()" variant="primary" wireclass="cursor-pointer ms-2">Grabar</flux:button>
+            <flux:button wire:click="grabarCotizacion()" variant="primary" wireclass="cursor-pointer ms-2">Grabar
+            </flux:button>
 
         </div>
 

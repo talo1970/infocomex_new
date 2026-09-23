@@ -1,67 +1,67 @@
 <?php
 
-use Livewire\Component;
-use Livewire\Attributes\On;
+    use Flux\Flux;
+    use Livewire\Component;
+    use Livewire\Attributes\On;
 
-new class extends Component
-{
-    public $modelo;
-    public $codigo;
-    public $tipo;
-    public $nombre;
+    new class extends Component {
+        public $modelo;
+        public $codigo;
+        public $tipo;
+        public $nombre;
 
-
-    #[On('editar-codigo-modal')]
-    public function editarCodigo( \App\Models\CodigoVenta $codigo ): void
-    {
-        $this->codigo = $codigo;
-        $this->modo = 'edit';
-        $this->modelo = "CodigoVenta";
-
-        $this->nombre = $this->codigo->nombre;
-    }
-
-    #[On('editar-general-modal')]
-    public function editarTipo(\App\Models\TipoDocumento $tipo ): void
-    {
-        $this->tipo = $tipo;
-        $this->modo = 'edit';
-        $this->modelo = "TipoDocumento";
-
-        $this->nombre = $this->tipo->nombre;
-
-    }
-
-    public function grabarEdicion()
-    {
-
-        $validated = $this->validate([
-                                         'nombre' => ['required', 'string', 'max:150'],
-                                     ],
-                                     [
-                                         'nombre' => 'Se queriere ingresar un Nombre'
-                                     ]);
-
-
-        if ($this->modelo == "TipoDocumento")
+        #[On('editar-codigo-modal')]
+        public function editarCodigo(\App\Models\CodigoVenta $codigo): void
         {
-            $this->tipo->nombre = $this->nombre;
-            $this->tipo->save();
+            $this->codigo = $codigo;
+            $this->modo   = 'edit';
+            $this->modelo = "CodigoVenta";
 
-        } elseif ($this->modelo == "CodigoVenta")
-        {
-            $this->codigo->nombre = $this->nombre;
-            $this->codigo->save();
+            $this->nombre = $this->codigo->nombre;
         }
 
-        Flux::modal('general-edit-modal')->close();
-        $this->dispatch('refreshComponent')->to('pages::condiciones.index');
+        #[On('editar-general-modal')]
+        public function editarTipo(\App\Models\TipoDocumento $tipo): void
+        {
+            $this->tipo   = $tipo;
+            $this->modo   = 'edit';
+            $this->modelo = "TipoDocumento";
+
+            $this->nombre = $this->tipo->nombre;
+
+        }
+
+        public function grabarEdicion()
+        {
+
+            $validated = $this->validate([
+                                             'nombre' => [
+                                                 'required',
+                                                 'string',
+                                                 'max:150'
+                                             ],
+                                         ], [
+                                             'nombre' => 'Se queriere ingresar un Nombre'
+                                         ]);
 
 
-    }
+            if ($this->modelo == "TipoDocumento") {
+                $this->tipo->nombre = $this->nombre;
+                $this->tipo->save();
+
+            }
+            else if ($this->modelo == "CodigoVenta") {
+                $this->codigo->nombre = $this->nombre;
+                $this->codigo->save();
+            }
+
+            Flux::modal('general-edit-modal')->close();
+            $this->dispatch('refreshComponent')->to('pages::condiciones.index');
 
 
-};
+        }
+
+    };
 ?>
 
 <div>
@@ -90,7 +90,8 @@ new class extends Component
 
                 </flux:modal.close>
 
-                <flux:button wire:click="grabarEdicion()" variant="primary" wireclass="cursor-pointer ms-2">Grabar</flux:button>
+                <flux:button wire:click="grabarEdicion()" variant="primary" wireclass="cursor-pointer ms-2">Grabar
+                </flux:button>
 
             </div>
         </form>

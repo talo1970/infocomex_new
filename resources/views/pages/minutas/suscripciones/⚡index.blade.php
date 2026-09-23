@@ -41,6 +41,7 @@
             return \App\Models\Minuta::where('producto_id', $this->producto->id)
                                      ->where('estado_id', $this->estadosFilter)->whereDate('fecha', '<=', $this->fecha)
                                      ->withAggregate('entidad_cliente', 'razon_social')
+                ->orderByDesc('fecha')
                                      ->orderBy('entidad_cliente_razon_social')->paginate($this->perPage);
         }
 
@@ -60,10 +61,15 @@
     };
 ?>
 
-<div>
+<div class="space-y-4">
+    <div class="-mb-4">
+        <livewire:pages::minutas.suscripciones.create/>
+        <livewire:pages::minutas.suscripciones.edit/>
+    </div>
     <div class="space-y-4">
-        <div class="relative mb-4 w-full">
-            <flux:heading size="xl" level="1">{{ __('Planilla de '. $this->producto->nombre) }}</flux:heading>
+        <div class="relative mb-4 w-full bg-gradient-to-r from-teal-50 to-teal-300 ">
+
+        <flux:heading size="xl" level="1">{{ __('Planilla de '. $this->producto->nombre) }}</flux:heading>
             <flux:subheading size="lg"
                              class="mb-4 flex justify-between">{{ __('Administración de '. $this->producto->nombre) }}
 
@@ -71,33 +77,23 @@
                 <flux:modal.trigger name="minuta-cambio-crear-modal">
                     <flux:badge
                         wire:click="$dispatch('crear-cambio-modal', { modo: 'crear'})"
-                        icon="plus-circle" class="cursor-pointer" variant="primary" color="red">Nueva Minuta
+                        icon="plus-circle" class="cursor-pointer" variant="solid" color="teal">Nueva Minuta
                     </flux:badge>
                 </flux:modal.trigger>
             </flux:heading>
+            <flux:separator variant="subtle" />
+
         </div>
         <div class="flex justify-center items-center flex-wrap gap-2">
 
             <!-- Dropdown por estado -->
-            <flux:dropdown>
-                <flux:button class="w-48 mr-16 text-left" icon-trailing="chevron-down">Estado</flux:button>
-                <flux:menu searchable>
-                    <flux:menu.radio.group wire:model.live="estadosFilter">
-                        <flux:menu.radio wire:click="$set('estadosFilter', 'all')" value="all"
-                                         :checked="$estadosFilter === 'all'">
-                            Todos
-                        </flux:menu.radio>
-                        @foreach($this->estados as $estado)
-                            <flux:menu.radio wire:click="$set('estadosFilter', '{{$estado->id}}')"
-                                             value="{{$estado->id}}"
-                                             :checked="$estadosFilter === '{{$estado->nombre}}'">
-                                {{$estado->nombre}}
-                            </flux:menu.radio>
-                        @endforeach
-
-                    </flux:menu.radio.group>
-                </flux:menu>
-            </flux:dropdown>
+            <flux:label class="mr-2 text-xl">Estado:</flux:label>
+            <flux:select searchable wire:model.live="estadosFilter" class="max-w-[16rem] mr-8">
+                {{--<flux:select.option value="all">Todos los estados</flux:select.option>--}}
+                @foreach ($this->estados as $estado)
+                    <flux:select.option value="{{ $estado->id }}" wire:key="{{ $estado->id }}">{{ $estado->nombre }}</flux:select.option>
+                @endforeach
+            </flux:select>
 
             <div class="flex gap-2">
                 <flux:label class="w-40 text-xl">Planilla del dìa:</flux:label>
@@ -145,10 +141,16 @@
                         <flux:table.cell>
                             {{$minuta->cantidad }}
                         </flux:table.cell>
-
                         <!-- Edit-->
                         <flux:table.cell align="center" class="w-24">
-
+                            <flux:modal.trigger name="minuta-editar-modal">
+                                <flux:tooltip content="Editar minuta">
+                                    <flux:badge color="indigo" as="button"
+                                                wire:click="$dispatch('minutaEdit', {minuta: '{{$minuta->id}}'})"
+                                                icon="pencil" class="cursor-pointer" >
+                                    </flux:badge>
+                                </flux:tooltip>
+                            </flux:modal.trigger>
                         </flux:table.cell>
                     </flux:table.row>
                 @endforeach

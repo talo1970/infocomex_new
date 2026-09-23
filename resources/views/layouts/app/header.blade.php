@@ -37,10 +37,12 @@
 
                     <flux:menu>
                         <flux:menu.item :href="route('minutas.boletos.index')" :current="request()->routeIs('minutas.boletos.index')" wire:navigate>Minuta Cambio</flux:menu.item>
+                        <flux:menu.separator/>
                         <flux:menu.item :href="route('minutas.6401.index')" :current="request()->routeIs('minutas.6401.index')" wire:navigate>Minuta Com. 6401</flux:menu.item>
                         <flux:menu.item :href="route('minutas.formularios', ['producto' => 9])" :current="request()->routeIs('minutas.formularios')" wire:navigate>Minuta Precio Transferencia</flux:menu.item>
                         <flux:menu.item :href="route('minutas.formularios', ['producto' => 10])" :current="request()->routeIs('minutas.formularios')" wire:navigate>Minuta Formulario 2668</flux:menu.item>
                         <flux:menu.item :href="route('minutas.formularios', ['producto' => 11])" :current="request()->routeIs('minutas.formularios')" wire:navigate>Minuta Formulario 2672</flux:menu.item>
+                        <flux:menu.separator/>
                         <flux:menu.item :href="route('minutas.suscripciones', ['producto' => 6])" :current="request()->routeIs('minutas.suscripciones')" wire:navigate>Minuta Suscripciones</flux:menu.item>
                         <flux:menu.item :href="route('minutas.suscripciones', ['producto' => 7])" :current="request()->routeIs('minutas.suscripciones')" wire:navigate>Minuta Suscripciones BCRA</flux:menu.item>
 

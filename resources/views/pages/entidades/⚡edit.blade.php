@@ -127,9 +127,7 @@ new #[Title('Edición de la Entidad')] class extends Component
     #[Computed]
     public function honorarios()
     {
-
-        return \App\Models\HonorarioProducto::where('producto_id', $this->productoid)
-                                            ->get();
+        return \App\Models\HonorarioProducto::where('producto_id', $this->productoid)->get();
     }
 
     public function updatedVendedorid(): void

@@ -1,95 +1,133 @@
 <?php
 
-use Livewire\Component;
-use Livewire\Attributes\Computed;
-use Livewire\Attributes\On;
+    use Flux\Flux;
+    use Livewire\Component;
+    use Livewire\Attributes\Computed;
+    use Livewire\Attributes\On;
 
 
+    new class extends Component {
+        public $entidad_id;
+        public $contacto;
+        public $mail;
+        public $telefono;
+        public $domicilio;
+        public $numero;
+        public $codigoPostal;
+        public $deptopiso;
+        public $localidad;
+        public $provinciaid = 25;
+        public $pais;
 
-new class extends Component
-{
-    public $entidad_id;
+        /*
+        public function mount($entidad): void
+        {
+            //dump($entidad);
+            $entidad_id = $entidad;
+            dump($entidad_id);
+        }
+        */
 
-    public $contacto;
-    public $mail;
-    public $telefono;
-    public $domicilio;
-    public $numero;
-    public $codigoPostal;
-    public $deptopiso;
-    public $localidad;
-    public $provinciaid = 25;
-    public $pais;
+        #[On('crear-contacto-modal')]
+        public function contactoCrear($modo, $entidad): void
+        {
+            $this->entidad_id = $entidad;
+            //dump($entidad_id);
+        }
 
-    /*
-    public function mount($entidad): void
-    {
-        //dump($entidad);
-        $entidad_id = $entidad;
-        dump($entidad_id);
-    }
-    */
+        #[Computed]
+        public function provincias()
+        {
+            return \App\Models\Provincia::select('id', 'nombre')->get();
+        }
 
-    #[On('crear-contacto-modal')]
-    public function contactoCrear($modo, $entidad): void
-    {
-        $this->entidad_id = $entidad;
-        //dump($entidad_id);
-    }
-
-    #[Computed]
-    public function provincias()
-    {
-        return \App\Models\Provincia::select('id', 'nombre')->get();
-    }
-
-    public function grabarContacto(): void
-    {
+        public function grabarContacto(): void
+        {
 
 
-        $validated = $this->validate([
-                                         'entidad_id' => ['required'],
-                                        'contacto' => ['required', 'string', 'max:150'],
-                                        'mail' => ['nullable', 'string', 'max:150'],
-                                        'telefono' => ['nullable', 'string', 'max:150'],
-                                        'domicilio' => ['nullable', 'string', 'max:150'],
-                                        'numero' => ['nullable', 'string', 'max:55'],
-                                        'codigoPostal' => ['nullable', 'string', 'max:50'],
-                                        'deptopiso' => ['nullable', 'string', 'max:100'],
-                                        'localidad' => ['nullable', 'string', 'max:150'],
-                                        'provinciaid' => ['required', 'exists:provincias,id'],
-                                        'pais' => ['nullable', 'string', 'max:150'],
-                                     ]);
+            $validated = $this->validate([
+                                             'entidad_id'   => [ 'required' ],
+                                             'contacto'     => [
+                                                 'required',
+                                                 'string',
+                                                 'max:150'
+                                             ],
+                                             'mail'         => [
+                                                 'nullable',
+                                                 'string',
+                                                 'max:150'
+                                             ],
+                                             'telefono'     => [
+                                                 'nullable',
+                                                 'string',
+                                                 'max:150'
+                                             ],
+                                             'domicilio'    => [
+                                                 'nullable',
+                                                 'string',
+                                                 'max:150'
+                                             ],
+                                             'numero'       => [
+                                                 'nullable',
+                                                 'string',
+                                                 'max:55'
+                                             ],
+                                             'codigoPostal' => [
+                                                 'nullable',
+                                                 'string',
+                                                 'max:50'
+                                             ],
+                                             'deptopiso'    => [
+                                                 'nullable',
+                                                 'string',
+                                                 'max:100'
+                                             ],
+                                             'localidad'    => [
+                                                 'nullable',
+                                                 'string',
+                                                 'max:150'
+                                             ],
+                                             'provinciaid'  => [
+                                                 'required',
+                                                 'exists:provincias,id'
+                                             ],
+                                             'pais'         => [
+                                                 'nullable',
+                                                 'string',
+                                                 'max:150'
+                                             ],
+                                         ]);
 
-        DB::transaction(function()  {
-            $contacto = \App\Models\Contacto::create([
-                                                'entidad_id' => $this->entidad_id,
-                                                'contacto' => $this->contacto,
-                                                'mail' => $this->mail,
-                                                'telefono' => $this->telefono,
-                                                'domicilio' => $this->domicilio,
-                                                'numero' => $this->numero,
-                                                'departamento_piso' => $this->deptopiso,
-                                                'codigo_postal' => $this->codigoPostal,
-                                                'localidad' => $this->localidad,
-                                                'provincia_id' => $this->provinciaid,
-                                                'pais' => $this->pais,
-                                             ]);
-        });
+            DB::transaction(function() {
+                $contacto = \App\Models\Contacto::create([
+                                                             'entidad_id'        => $this->entidad_id,
+                                                             'contacto'          => $this->contacto,
+                                                             'mail'              => $this->mail,
+                                                             'telefono'          => $this->telefono,
+                                                             'domicilio'         => $this->domicilio,
+                                                             'numero'            => $this->numero,
+                                                             'departamento_piso' => $this->deptopiso,
+                                                             'codigo_postal'     => $this->codigoPostal,
+                                                             'localidad'         => $this->localidad,
+                                                             'provincia_id'      => $this->provinciaid,
+                                                             'pais'              => $this->pais,
+                                                         ]);
+            });
 
-        Flux::modal('contacto-modal')->close();
-        $this->dispatch('refreshComponent')->to('pages::contactos.index');
+            Flux::modal('contacto-modal')->close();
+            $this->dispatch('refreshComponent')->to('pages::contactos.index');
 
-    }
+        }
 
-    public function cancel(): void
-    {
-        $this->reset();
-        Flux::modal('contacto-modal')->close();
+        public function cancel(): void
+        {
+            $this->reset();
+            Flux::modal('contacto-modal')->close();
 
-        $this->redirectRoute('entidades.edit', navigate: true);
-    }
-};
+            $this->redirectRoute('entidades.edit', navigate: true);
+        }
+
+    };
 ?>
 
 <div>
@@ -147,7 +185,8 @@ new class extends Component
                     <div class="w-1/4">
                         <flux:select wire:model="provinciaid" label="Provicia" placeholder="Seleccione una Provincia">
                             @foreach ($this->provincias as $provincia)
-                                <flux:select.option value="{{ $provincia->id }}" wire:key="{{ $provincia->id }}">{{ $provincia->nombre }}</flux:select.option>
+                                <flux:select.option value="{{ $provincia->id }}"
+                                                    wire:key="{{ $provincia->id }}">{{ $provincia->nombre }}</flux:select.option>
                             @endforeach
                         </flux:select>
                     </div>
@@ -167,7 +206,9 @@ new class extends Component
 
                 </flux:modal.close>
 
-                <flux:button wire:click="grabarContacto()" variant="primary" wireclass="cursor-pointer ms-2">Grabar Contacto</flux:button>
+                <flux:button wire:click="grabarContacto()" variant="primary"
+                             wireclass="cursor-pointer ms-2">Grabar Contacto
+                </flux:button>
 
             </div>
         </form>

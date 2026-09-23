@@ -21,6 +21,8 @@
         public $estadosFilter = '1';
         public $perPage       = 10;
 
+        protected $listeners = ['refreshComponent' => '$refresh'];
+
         public function mount(Producto $producto): void
         {
             $this->producto    = $producto;
@@ -54,7 +56,7 @@
             //$this->fecha= Carbon::parse($this->fecha)->format('Y-m-d');
             //$this->fecha_inicio = Carbon::parse($this->fecha_inicio)->format('Y-m-d');
 
-            dump(' estado: '.$this->estadosFilter. ' fecha_ inicio: '.$this->fecha_inicio. ' fecha: '.$this->fecha);
+            //dump('Producto: '.$this->producto_id.' estado: '.$this->estadosFilter. ' fecha_ inicio: '.$this->fecha_inicio. ' fecha: '.$this->fecha);
 
             /*
             $minutas = \App\Models\Entidad::bancos()
@@ -70,6 +72,7 @@
                                         ->where('estado_id', $this->estadosFilter)
                                         ->whereDate('fecha', '<=', $this->fecha)
                                         ->withAggregate('entidad_cliente','razon_social')
+                ->orderByDesc('fecha')
                                         ->orderBy('entidad_cliente_razon_social')
                                         ->paginate($this->perPage);
         }
@@ -96,17 +99,18 @@
         <livewire:pages::minutas.formularios.create/>
         <livewire:pages::minutas.formularios.edit/>
     </div>
-    <div class="relative mb-4 w-full">
-        <flux:heading size="xl" level="1">{{ __('Minutas de '. $this->producto->nombre) }}</flux:heading>
+    <div class="relative mb-4 w-full bg-gradient-to-r from-red-50 to-red-300 ">
+    <flux:heading size="xl" level="1">{{ __('Minutas de '. $this->producto->nombre) }}</flux:heading>
         <flux:subheading size="lg" class="mb-4 flex justify-between">{{ __('Administración de '. $this->producto->nombre) }}
             <!-- modal-->
             <flux:modal.trigger name="minuta-crear-modal">
                 <flux:badge
                     wire:click="$dispatch('minutaCrear', { producto: '{{$this->producto}}'})"
-                    icon="plus-circle" class="cursor-pointer" variant="primary" color="red">Nueva Minuta
+                    icon="plus-circle" class="cursor-pointer" variant="solid" color="red">Nueva Minuta
                 </flux:badge>
             </flux:modal.trigger>
         </flux:heading>
+        <flux:separator variant="subtle" />
     </div>
     <div class="flex justify-center items-center flex-wrap gap-2">
 
@@ -159,12 +163,17 @@
                     <!-- bancos-->
                     <flux:table.cell>
                         {{$minuta->anio_cantidad }}
-
                     </flux:table.cell>
-
                     <!-- Edit-->
                     <flux:table.cell align="center" class="w-24">
-
+                        <flux:modal.trigger name="minuta-editar-modal">
+                            <flux:tooltip content="Editar minuta">
+                                <flux:badge color="indigo" as="button"
+                                            wire:click="$dispatch('minutaEdit', {minuta: '{{$minuta->id}}'})"
+                                            icon="pencil" class="cursor-pointer" >
+                                </flux:badge>
+                            </flux:tooltip>
+                        </flux:modal.trigger>
                     </flux:table.cell>
                 </flux:table.row>
             @endforeach

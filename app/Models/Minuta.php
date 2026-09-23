@@ -44,6 +44,7 @@ class Minuta extends Model
         'usuario_vendedor_id',
         'entidad_cliente_id',
         'bcra_id',
+        'arca',
         'anio_desde',
         'anio_hasta',
         'anio_cantidad',

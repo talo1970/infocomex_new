@@ -1,5 +1,6 @@
 <?php
 
+    use Flux\Flux;
     use Livewire\Attributes\Computed;
     use Livewire\Attributes\On;
     use Livewire\Component;
@@ -8,10 +9,8 @@
         public $minuta;
         public $isVendedor = 0;
         public $productoId = 3;
-
         public $numeroboleto;
         public $estadoid;
-
         public $fechaboleto;
         public $entidadid;
         public $bancoVendedor;
@@ -37,32 +36,33 @@
                 $this->isVendedor = 1;
             }
 
-            $this->numeroboleto =$this->minuta->numero;
-            $this->fechaboleto = $this->minuta->fecha;
-            $this->estadoid = $this->minuta->estado_id;
+            $this->numeroboleto = $this->minuta->numero;
+            $this->fechaboleto  = $this->minuta->fecha;
+            $this->estadoid     = $this->minuta->estado_id;
 
             $this->entidadid = $this->minuta->entidad_cliente_id;
             if ($this->isVendedor == 0) {
                 $this->bancoid = $this->minuta->bcra_id;
-            } else {
+            }
+            else {
                 //ver si lo busco lo que est`cargado por si la carga la hace Oscer y le pone otra entidad
-                $this->bancoVendedor = 'BCRA COM A 6401';
+                $this->bancoVendedor   = 'BCRA COM A 6401';
                 $this->bancoVendedorId = $this->minuta->bcra_id;
             }
 //dd($this->minuta);
-            $desde = explode('-', $this->minuta->periodo_desde);
-            $this->periododmes = $desde[0];
-            $this->periododanio = $desde[1];
-            $hasta = explode('-', $this->minuta->periodo_hasta);
-            $this->periodohmes = $hasta[0];
-            $this->periodohanio = $hasta[1];
-            $this->periodocantidad = $this->minuta->periodo_cantidad;
-            $this->observacion = $this->minuta->observacion;
-            $this->vendedorid = $this->minuta->usuario_vendedor_id;
-            $this->comisiondolares =$this->minuta->importe_comision_unidad;
+            $desde                      = explode('-', $this->minuta->periodo_desde);
+            $this->periododmes          = $desde[ 0 ];
+            $this->periododanio         = $desde[ 1 ];
+            $hasta                      = explode('-', $this->minuta->periodo_hasta);
+            $this->periodohmes          = $hasta[ 0 ];
+            $this->periodohanio         = $hasta[ 1 ];
+            $this->periodocantidad      = $this->minuta->periodo_cantidad;
+            $this->observacion          = $this->minuta->observacion;
+            $this->vendedorid           = $this->minuta->usuario_vendedor_id;
+            $this->comisiondolares      = $this->minuta->importe_comision_unidad;
             $this->totalcomisiondolares = $this->minuta->importe_comision_dolares;
-            $this->tipocambio = $this->minuta->tipo_cambio;
-            $this->totalminuta = $this->minuta->importe_comision;
+            $this->tipocambio           = $this->minuta->tipo_cambio;
+            $this->totalminuta          = $this->minuta->importe_comision;
         }
 
         private function esVendedor(): bool
@@ -76,22 +76,14 @@
             //return \App\Models\Entidad::clientes()->select('id', 'razon_social')->get();
             $productoId = 3;
             if ($this->isVendedor) {
-                $clientes = \App\Models\Entidad::query()
-                                               ->whereHas('productosVendedores', function ($query) {
-                                                   $query
-                                                       ->where('producto_id', '3')
-                                                       ->where('vendedor_id', auth()->id());
-                                               })
-                                               ->orderBy('razon_social')
-                                               ->get(); //toSql();
-            } else {
-                $clientes = \App\Models\Entidad::query()
-                                               ->whereHas('productosVendedores', function ($query) {
-                                                   $query
-                                                       ->where('producto_id', '3');
-                                               })
-                                               ->orderBy('razon_social')
-                                               ->get();
+                $clientes = \App\Models\Entidad::query()->whereHas('productosVendedores', function($query) {
+                        $query->where('producto_id', '3')->where('vendedor_id', auth()->id());
+                    })->orderBy('razon_social')->get(); //toSql();
+            }
+            else {
+                $clientes = \App\Models\Entidad::query()->whereHas('productosVendedores', function($query) {
+                        $query->where('producto_id', '3');
+                    })->orderBy('razon_social')->get();
             }
 
             return $clientes;
@@ -112,7 +104,7 @@
         #[Computed]
         public function bancos()
         {
-            if (!$this->isVendedor) {
+            if ( ! $this->isVendedor) {
                 //return \App\Models\Entidad::bancos()->select('id', 'razon_social')
                 //                            ->where('razon_social', 'BCRA COM A 6401')->get();
 
@@ -123,26 +115,26 @@
 
         public function dehydrate()
         {
-            $this->fechaboleto =  date('Y-m-d');;
+            $this->fechaboleto = date('Y-m-d');;
         }
 
         public function updatedEntidadid(): void
         {
             $this->comisiondolares = 0;
-            $comprador = \App\Models\Entidad::select('tipo_operacion', 'porcentaje_comision', 'cuit', 'tipo_entidad_id')->find($this->entidadid);
+            $comprador             = \App\Models\Entidad::select('tipo_operacion', 'porcentaje_comision', 'cuit', 'tipo_entidad_id')
+                                                        ->find($this->entidadid);
 
-            $this->observacion = $comprador->tipo_entidad_id == 1 ? 'CUIT: '. $comprador->cuit : $this->observacion;
+            $this->observacion = $comprador->tipo_entidad_id == 1 ? 'CUIT: ' . $comprador->cuit : $this->observacion;
 
-            $vendedor_select = \App\Models\EntidadProductoVendedor::where('producto_id', '3')
-                                                                  ->where('entidad_id', $this->entidadid)->get()->toArray();
-            $this->vendedorid = $vendedor_select[0]['vendedor_id'];
+            $vendedor_select  = \App\Models\EntidadProductoVendedor::where('producto_id', '3')
+                                                                   ->where('entidad_id', $this->entidadid)->get()
+                                                                   ->toArray();
+            $this->vendedorid = $vendedor_select[ 0 ][ 'vendedor_id' ];
 
             $comisinoentidad = \App\Models\EntidadHonorarioProducto::where('entidad_id', $this->entidadid)
-                                                                   ->whereHas('honorario_producto', function($query)  {
+                                                                   ->whereHas('honorario_producto', function($query) {
                                                                        $query->where('producto_id', $this->productoId);
-                                                                   })
-                                                                   ->with('honorario_producto')
-                                                                   ->first();
+                                                                   })->with('honorario_producto')->first();
 
             $this->comisiondolares = $comisinoentidad->honorario_producto->importe;
             $this->procesarperiodo();
@@ -189,13 +181,32 @@
             // periodohmes
             // periodohanio
 
-            if ($this->periododmes != '' && $this->periodohmes != '' && $this->periododanio != '' && $this->periodohanio != '' )
-            {
+            if ($this->periododmes != '' && $this->periodohmes != '' && $this->periododanio != '' && $this->periodohanio != '') {
                 $this->validate([
-                                    'periododmes' => ['required','numeric','min:1','max:4'],
-                                    'periododanio' => ['required','numeric','min:2000','max:2040'],
-                                    'periodohmes' => ['required','numeric','min:1','max:4'],
-                                    'periodohanio' => ['required','numeric','min:2000','max:2040'],
+                                    'periododmes' => [
+                                        'required',
+'numeric',
+'min:1',
+'max:4'
+                                    ],
+'periododanio' => [
+    'required',
+'numeric',
+'min:2000',
+'max:2040'
+],
+'periodohmes' => [
+    'required',
+'numeric',
+'min:1',
+'max:4'
+],
+'periodohanio' => [
+    'required',
+    'numeric',
+    'min:2000',
+    'max:2040'
+],
                                 ], [
                                     'periododmes.numeric' => 'solo número',
                                     'periododmes.nim'     => 'mayor 0',
@@ -281,27 +292,28 @@
             $this->validar();
 
 
-                    $this->minuta->estado_id                = $this->estadoid;
-                    $this->minuta->fecha                    = $this->fechaboleto;
-                    $this->minuta->entidad_cliente_id       = $this->entidadid;
-                    $this->minuta->bcra_id                  = $this->isVendedor != 0 ? $this->bancoVendedorId : $this->bancoid;
-                    $this->minuta->periodo_desde            = $this->periododmes . '-' . $this->periododanio;
-                    $this->minuta->periodo_hasta            = $this->periodohmes . '-' . $this->periodohanio;
-                    $this->minuta->periodo_cantidad         = $this->periodocantidad;
-                    $this->minuta->observacion              = $this->observacion;
-                    $this->minuta->tipo_cambio              = $this->tipocambio;
-                    $this->minuta->importe_comision_unidad  = $this->comisiondolares;
-                    $this->minuta->importe_comision_dolares = $this->totalcomisiondolares;
-                    $this->minuta->importe_comision         = $this->totalminuta;
-                    $this->minuta->usuario_vendedor_id      = $this->vendedorid;
+            $this->minuta->estado_id                = $this->estadoid;
+            $this->minuta->fecha                    = $this->fechaboleto;
+            $this->minuta->entidad_cliente_id       = $this->entidadid;
+            $this->minuta->bcra_id                  = $this->isVendedor != 0 ? $this->bancoVendedorId : $this->bancoid;
+            $this->minuta->periodo_desde            = $this->periododmes . '-' . $this->periododanio;
+            $this->minuta->periodo_hasta            = $this->periodohmes . '-' . $this->periodohanio;
+            $this->minuta->periodo_cantidad         = $this->periodocantidad;
+            $this->minuta->observacion              = $this->observacion;
+            $this->minuta->tipo_cambio              = $this->tipocambio;
+            $this->minuta->importe_comision_unidad  = $this->comisiondolares;
+            $this->minuta->importe_comision_dolares = $this->totalcomisiondolares;
+            $this->minuta->importe_comision         = $this->totalminuta;
+            $this->minuta->usuario_vendedor_id      = $this->vendedorid;
 
-            DB::transaction(function () {
+            DB::transaction(function() {
                 try {
                     if ($this->minuta->isDirty()) {
                         $this->minuta->save();
-                        Flux::toast(heading: 'Editar', text:'grabo por esta sucio', variant:'success', position:'top end');
-                    } else {
-                        Flux::toast(heading: 'Editar', text:' NO ESTA SUCIA PASO PERO NO GRABO', variant:'success', position:'top end');
+                        Flux::toast(heading: 'Editar', text: 'grabo por esta sucio', variant: 'success', position: 'top end');
+                    }
+                    else {
+                        Flux::toast(heading: 'Editar', text: ' NO ESTA SUCIA PASO PERO NO GRABO', variant: 'success', position: 'top end');
                     }
                 }
                 catch (\Exception $e) {
@@ -317,34 +329,51 @@
         public function validar()
         {
             $this->validate([
-                                'estadoid' => ['required', 'exists:estados,id'],
-                                'fechaboleto' => ['required'],
-                                'entidadid' => ['required', 'exists:entidads,id'],
-                                'bancoid' => ['required_if:isVendedor,0'],
-                                'periododmes' => ['required'],
-                                'periododanio' => ['required'],
-                                'periodohmes' => ['required'],
-                                'periodohanio' => ['required'],
-                                'observacion' => ['nullable'],
-                                'comisiondolares' => ['required','regex:/^[\d.]+$/'],
-                                'totalcomisiondolares' => ['required','regex:/^[\d.]+$/'],
-                                'tipocambio' => ['required','regex:/^[\d.]+$/'],
-                                'totalminuta' => ['required','regex:/^[\d.]+$/'],
-                            ],
-                            [
-                                'estadoid' => 'estado es requerido',
+                                'estadoid' => [
+                                    'required',
+'exists:estados,id'
+                                ],
+'fechaboleto' => [ 'required' ],
+'entidadid' => [
+    'required',
+'exists:entidads,id'
+],
+'bancoid' => [ 'required_if:isVendedor,0' ],
+'periododmes' => [ 'required' ],
+'periododanio' => [ 'required' ],
+'periodohmes' => [ 'required' ],
+'periodohanio' => [ 'required' ],
+'observacion' => [ 'nullable' ],
+'comisiondolares' => [
+    'required',
+'regex:/^[\d.]+$/'
+],
+'totalcomisiondolares' => [
+    'required',
+'regex:/^[\d.]+$/'
+],
+'tipocambio' => [
+    'required',
+'regex:/^[\d.]+$/'
+],
+'totalminuta' => [
+    'required',
+    'regex:/^[\d.]+$/'
+],
+                            ], [
+                                'estadoid'    => 'estado es requerido',
                                 'fechaboleto' => 'fecha es requerido',
-                                'entidadid' => 'entidad es requerido',
-                                'bancoid' => 'banco es requerido',
+                                'entidadid'   => 'entidad es requerido',
+                                'bancoid'     => 'banco es requerido',
 
-                                'periododmes' => 'período mes desde es requerido',
-                                'periododanio' => 'período año desde es requerido',
-                                'periodohmes' => 'período mes hasta es requerido',
-                                'periodohanio' => 'período año hasta es requerido',
-                                'comisiondolares' => 'es requerido',
+                                'periododmes'          => 'período mes desde es requerido',
+                                'periododanio'         => 'período año desde es requerido',
+                                'periodohmes'          => 'período mes hasta es requerido',
+                                'periodohanio'         => 'período año hasta es requerido',
+                                'comisiondolares'      => 'es requerido',
                                 'totalcomisiondolares' => 'es requerido',
-                                'tipocambio' => 'es requerido',
-                                'totalminuta' => 'es requerido',
+                                'tipocambio'           => 'es requerido',
+                                'totalminuta'          => 'es requerido',
                             ]);
         }
 

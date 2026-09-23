@@ -1,29 +1,24 @@
 <?php
 
+    use Flux\Flux;
     use Livewire\Attributes\Computed;
     use Livewire\Attributes\On;
     use Livewire\Component;
 
     new class extends Component {
-
         public $maximo;
         public $fechaboleto;
         public $estadoid;
-
         public $entidadid;
         public $selectProducto;
         public $productoNombre;
         public $productoId;
-
         public $entidad_cliente_id;
-
         public $numeroboleto;
         public $arca = 'ARCA';
-
         public $anioDesde;
         public $anioHasta;
         public $periodocantidad;
-
         public $observacion;
         public $comisiondolares;
         public $totalcomisiondolares;
@@ -34,8 +29,10 @@
         public $isView = true;
         public $bancoVendedor;
         public $bancoVendedorId;
-
         public $isVendedor = 0;
+
+        public $totalminutaaux;
+
 
         #[On('minutaCrear')]
         public function minutaCrear($producto)
@@ -46,10 +43,11 @@
             $this->selectProducto = json_decode($producto);
             //$this->producto = $datosproducto;
             $this->productoNombre = $this->selectProducto->nombre;
-            $this->productoId = $this->selectProducto->id;
+            $this->productoId     = $this->selectProducto->id;
 
-          //dd($this->productoNombre);
+            //dd($this->productoNombre);
         }
+
         private function esVendedor(): bool
         {
             return auth()->user()->hasRole('vendedor');
@@ -97,9 +95,9 @@
                                                         ->find($this->entidadid);
 
             $this->observacion = $comprador->tipo_entidad_id == 1 ? 'CUIT: ' . $comprador->cuit : $this->observacion;
-            $vendedor_select  = \App\Models\EntidadProductoVendedor::where('producto_id', $this->productoId)
-                                                                   ->where('entidad_id', $this->entidadid)->get()
-                                                                   ->toArray();
+            $vendedor_select   = \App\Models\EntidadProductoVendedor::where('producto_id', $this->productoId)
+                                                                    ->where('entidad_id', $this->entidadid)->get()
+                                                                    ->toArray();
 
             $this->vendedorid = $vendedor_select[ 0 ][ 'vendedor_id' ];
 
@@ -140,13 +138,23 @@
             if ($this->anioDesde != '' && $this->anioHasta != '') {
 
                 $this->validate([
-                                    'anioDesde' => ['required', 'numeric', 'min:2000','max:2040'],
-                                    'anioHasta' => ['required', 'numeric', 'min:2000','max:2040'],
+                                    'anioDesde' => [
+                                        'required',
+                                        'numeric',
+                                        'min:2000',
+                                        'max:2040'
+                                    ],
+                                    'anioHasta' => [
+                                        'required',
+                                        'numeric',
+                                        'min:2000',
+                                        'max:2040'
+                                    ],
                                 ], [
-                                    'anioDesde'     => 'Solo números',
+                                    'anioDesde'         => 'Solo números',
                                     'anioDesde.numeric' => 'Solo números',
-                                    'anioDesde.min' => 'mayos 2000',
-                                    'anioDesde.max' => 'menor 2040',
+                                    'anioDesde.min'     => 'mayos 2000',
+                                    'anioDesde.max'     => 'menor 2040',
 
                                     'anioHasta'         => 'Solo números',
                                     'anioHasta.numeric' => 'Solo números',
@@ -167,7 +175,7 @@
 
                     if ($this->anioDesde == $this->anioHasta) {
                         $this->periodocantidad = 1;
-                       // dd($this->anioDesde .' = '. $this->anioHasta);
+                        // dd($this->anioDesde .' = '. $this->anioHasta);
                     }
                     else if ($this->anioDesde < $this->anioHasta) {
                         for ($i = $this->anioDesde - 1; $i < $this->anioHasta; $i++) {
@@ -184,45 +192,44 @@
                     }
                 }
             }
-
         }
 
-                public function grabarMinuta()
-                {
-                    //dd($this->bancoid);
-                    $this->validar();
+        public function grabarMinuta()
+        {
+            //dd($this->bancoid);
+            $this->validar();
 
-                    $this->maximo = \App\Models\Minuta::maxMinuta($this->productoId)->max('numero') + 1;
+            $this->maximo = \App\Models\Minuta::maxMinuta($this->productoId)->max('numero') + 1;
 
-                    DB::transaction(function() {
-                        try {
-                            $cargo = \App\Models\Minuta::create([
-                                                                    'numero'                   => $this->maximo,
-                                                                    'estado_id'                => $this->estadoid,
-                                                                    'producto_id'              => 3,
-                                                                    'fecha'                    => $this->fechaboleto,
-                                                                    'entidad_cliente_id'       => $this->entidadid,
-                                                                    'bcra_id'                  => $this->isVendedor != 0 ? $this->bancoVendedorId : $this->bancoid,
-                                                                    'periodo_desde'            => $this->periododmes . '-' . $this->periododanio,
-                                                                    'periodo_hasta'            => $this->periodohmes . '-' . $this->periodohanio,
-                                                                    'periodo_cantidad'         => $this->periodocantidad,
-                                                                    'observacion'              => $this->observacion,
-                                                                    'tipo_cambio'              => $this->tipocambio,
-                                                                    'importe_comision_unidad'  => $this->comisiondolares,
-                                                                    'importe_comision_dolares' => $this->totalcomisiondolares,
-                                                                    'importe_comision'         => $this->totalminuta,
-                                                                    'usuario_vendedor_id'      => $this->vendedorid,
-                                                                ]);
-                        }
-                        catch (\Exception $e) {
-                            Log::error($e->getMessage());
-                        }
-                    });
-
-                    $this->dispatch('refreshComponent')->to('pages::minutas.6401.index');
-                    $this->reset();
-                    Flux::modal('minuta-6401-crear-modal')->close();
+            DB::transaction(function() {
+                try {
+                    $cargo = \App\Models\Minuta::create([
+                                                            'numero'                   => $this->maximo,
+                                                            'estado_id'                => $this->estadoid,
+                                                            'producto_id'              => $this->productoId,
+                                                            'fecha'                    => $this->fechaboleto,
+                                                            'entidad_cliente_id'       => $this->entidadid,
+                                                            'arca'                     => 1,
+                                                            'anio_desde'               => $this->anioDesde,
+                                                            'anio_hasta'               => $this->anioHasta,
+                                                            'anio_cantidad'            => $this->periodocantidad,
+                                                            'observacion'              => $this->observacion,
+                                                            'tipo_cambio'              => $this->tipocambio,
+                                                            'importe_comision_unidad'  => $this->comisiondolares,
+                                                            'importe_comision_dolares' => $this->totalcomisiondolares,
+                                                            'importe_comision'         => $this->totalminuta,
+                                                            'usuario_vendedor_id'      => $this->vendedorid,
+                                                        ]);
                 }
+                catch (\Exception $e) {
+                    Log::error($e->getMessage());
+                }
+            });
+
+            $this->reset();
+            Flux::modal('minuta-crear-modal')->close();
+            $this->dispatch('refreshComponent')->to('pages::minutas.formularios.index');
+        }
 
         public function cancel(): void
         {
@@ -234,55 +241,30 @@
         public function validar()
         {
             $this->validate([
-                                'estadoid' => [
-                                    'required',
-'exists:estados,id'
-                                ],
-'fechaboleto' => [ 'required' ],
-'entidadid' => [
-    'required',
-'exists:entidads,id'
-],
-'bancoid' => [ 'required_if:isVendedor,0' ],
-'periododmes' => [ 'required' ],
-'periododanio' => [ 'required' ],
-'periodohmes' => [ 'required' ],
-'periodohanio' => [ 'required' ],
-'observacion' => [ 'nullable' ],
-'comisiondolares' => [
-    'required',
-'regex:/^[\d.]+$/'
-],
-'totalcomisiondolares' => [
-    'required',
-'regex:/^[\d.]+$/'
-],
-'tipocambio' => [
-    'required',
-'regex:/^[\d.]+$/'
-],
-'totalminuta' => [
-    'required',
-    'regex:/^[\d.]+$/'
-],
+                                'estadoid' => ['required','exists:estados,id'],
+                                'fechaboleto' => ['required' ],
+                                'entidadid' => ['required','exists:entidads,id'],
+                                'anioDesde' => ['required'],
+                                'anioHasta' => ['required'],
+                                'observacion' => ['nullable'],
+                                'comisiondolares' => ['required','regex:/^[\d.]+$/'],
+                                'totalcomisiondolares' => ['required','regex:/^[\d.]+$/'],
+                                'tipocambio' => ['required','regex:/^[\d.]+$/'],
+                                'totalminuta' => ['required','regex:/^[\d.]+$/'],
                             ], [
                                 'estadoid'    => 'estado es requerido',
                                 'fechaboleto' => 'fecha es requerido',
                                 'entidadid'   => 'entidad es requerido',
                                 'bancoid'     => 'banco es requerido',
 
-                                'periododmes'          => 'período mes desde es requerido',
-                                'periododanio'         => 'período año desde es requerido',
-                                'periodohmes'          => 'período mes hasta es requerido',
-                                'periodohanio'         => 'período año hasta es requerido',
+                                'anioDesde'         => 'período año desde es requerido',
+                                'anioHasta'         => 'período año hasta es requerido',
                                 'comisiondolares'      => 'es requerido',
                                 'totalcomisiondolares' => 'es requerido',
                                 'tipocambio'           => 'es requerido',
                                 'totalminuta'          => 'es requerido',
                             ]);
         }
-
-
 
     };
 ?>
@@ -291,7 +273,8 @@
     <flux:modal name="minuta-crear-modal" class="min-w-[64rem]">
         <form wire:submit="grabarMinuta" class="space-y-6">
             <div>
-                <flux:heading class="font-bold bg-red-100 text-center dark:bg-red-800" size="lg">Datos de la Minuta - {{$this->productoNombre}}
+                <flux:heading class="font-bold bg-red-100 text-center dark:bg-red-800"
+                              size="lg">Datos de la Minuta - {{$this->productoNombre}}
                 </flux:heading>
             </div>
             <flux:card>
@@ -305,8 +288,11 @@
                     <div class="w-1/2">
                         <flux:select searchable wire:model="estadoid" label="Estado" placeholder="Seleccione un Estado">
                             @foreach ($this->estados as $estado)
-                                @if ($estado->id == 1)  {{$this->estadoid = 1}} @endif
-                                <flux:select.option value="{{ $estado->id }}" wire:key="{{ $estado->id }}">{{ $estado->nombre }}</flux:select.option>
+                                @if ($estado->id == 1)
+                                    {{$this->estadoid = 1}}
+                                @endif
+                                <flux:select.option value="{{ $estado->id }}"
+                                                    wire:key="{{ $estado->id }}">{{ $estado->nombre }}</flux:select.option>
                             @endforeach
                         </flux:select>
                     </div>
@@ -344,7 +330,7 @@
                         </div>
                         {{-- Año desde--}}
                         <div class="w-24">
-                            <flux:input wire:model.live="anioDesde" maxlength="4"/>
+                            <flux:input wire:model.live="anioDesde" maxlength="4" />
                         </div>
                     </div>
                     <div class="w-1/3 flex flex-row items-start space-x-4 text-left">
@@ -353,7 +339,7 @@
                             <flux:label>Periodo hasta</flux:label>
                         </div>
                         <div class="w-24">
-                            <flux:input wire:model.live="anioHasta" maxlength="4"/>
+                            <flux:input wire:model.live="anioHasta" maxlength="4" />
                         </div>
                     </div>
                     <div class="w-1/3 flex flex-row items-start space-x-4 text-left">
@@ -363,7 +349,7 @@
                         </div>
                         {{-- totalPeríodos hasta año--}}
                         <div class="w-24">
-                            <flux:input wire:model="periodocantidad" maxlength="4"/>
+                            <flux:input :disabled="true" wire:model="periodocantidad" maxlength="4" />
                         </div>
                     </div>
                 </div>
@@ -382,7 +368,8 @@
                             <flux:select :disabled="true" wire:model="vendedorid" label="Vendedor">
                                 <flux:select.option>-</flux:select.option>
                                 @foreach($this->vendedores as $vendedor)
-                                    <flux:select.option value="{{$vendedor->id}}" wire:key="{{$vendedor->id}}">{{$vendedor->name}}</flux:select.option>
+                                    <flux:select.option value="{{$vendedor->id}}"
+                                                        wire:key="{{$vendedor->id}}">{{$vendedor->name}}</flux:select.option>
                                 @endforeach
                             </flux:select>
                         </div>
