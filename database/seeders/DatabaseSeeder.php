@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\configuracion;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -97,6 +98,59 @@ class DatabaseSeeder extends Seeder
             'email' => 'gitalo@pjn.gov.ar',
             'password' => bcrypt('password'),
         ])->assignRole('Administrador');
+
+        configuracion::create([
+            'nombre' => 'modo_facturación',
+            'valor_texto' => 'mensual',
+        ]);
+        configuracion::create([
+            'nombre' => 'dia_corte',
+            'valor_numerico' => 16,
+        ]);
+        configuracion::create([
+            'nombre' => 'fecha_migracion',
+            'valor_fecha' => '2021-05-10',
+        ]);
+        configuracion::create([
+            'nombre' => 'fecha_migracion_archivo',
+            'valor_fecha' => '2011-04-27',
+        ]);
+        configuracion::create([
+            'nombre' => 'dolar_factura_minima',
+            'valor_importe' => 50.00,
+        ]);
+        configuracion::create([
+            'nombre' => 'dolar_factura_maximo',
+            'valor_importe' => 500.00,
+        ]);
+        configuracion::create([
+            'nombre' => 'tipo_cambio_factura',
+            'valor_importe' => 1487.50,
+        ]);
+        configuracion::create([
+            'nombre' => 'valor_suscripcion',
+            'valor_importe' => 145,
+        ]);
+        configuracion::create([
+            'nombre' => 'valor_suscripcion_bcra',
+            'valor_importe' => 12070,
+        ]);
+        configuracion::create([
+            'nombre' => 'valor_suscripcion_doble',
+            'valor_importe' => 115,
+        ]);
+        configuracion::create([
+            'nombre' => 'anio_inicio',
+            'valor_numerico' => 2014,
+        ]);
+        configuracion::create([
+            'nombre' => 'directorio',
+            'valor_texto' => 'N:\infocomex',
+        ]);
+        configuracion::create([
+            'nombre' => 'periodo_cambio_contraseña',
+            'valor_numerico' => 3,
+        ]);
 
     }
 }

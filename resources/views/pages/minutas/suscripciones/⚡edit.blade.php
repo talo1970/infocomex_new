@@ -4,7 +4,15 @@ use Livewire\Component;
 
 new class extends Component
 {
-    //
+
+
+    private function esVendedor(): bool
+    {
+        return auth()->user()->hasRole('vendedor');
+    }
+
+
+
 };
 ?>
 
