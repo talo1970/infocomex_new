@@ -16,11 +16,14 @@
         public $fechaboleto;
 
         public $entidadid;
-        public int $plazo ;
+        public int $plazo;
+        public $inicio;
         public $fecha_vto;
         public $valor;
 
         public $cantidaSuscriptor;
+        public array $atributos = [];
+
 
         #[On('minutaCrear')]
         public function minutaCrear($producto, $valor)
@@ -33,7 +36,18 @@
             $this->productoId     = $this->selectProducto->id;
             $this->valor = $valor;
             $this->cantidaSuscriptor = 0;
+            $this->fecha_vto = \Carbon\Carbon::now()->addMonth()->format('Y-m-d');
+
             //dd($this->productoId, $valor);
+
+/*
+            $this->atributos[] = [
+                'inicio' => $this->fecha,
+                'plazo'=> 1,
+                'fin' => null,
+                'importe' => $this->importe
+            ];
+            */
         }
 
         private function esVendedor(): bool
@@ -50,7 +64,6 @@
         #[Computed]
         public function clientes()
         {
-
             if ($this->isVendedor) {
                 $clientes = \App\Models\Entidad::query()->whereHas('productosVendedores', function($query) {
                     $query->where('producto_id', $this->productoId)->where('vendedor_id', auth()->id());
@@ -95,7 +108,7 @@
             $this->validate(['plazo' => ['required', 'numeric', 'min:1']
                             ]);
 
-                $this->fecha_vto = \Carbon\Carbon::parse($this->fechaboleto)->addMonths($this->plazo);
+                $this->fecha_vto = \Carbon\Carbon::parse($this->fechaboleto)->addMonths($this->plazo)->format('Y-m-d');
 
         }
 
@@ -197,6 +210,9 @@
 
 
 
+
+
+/*
 cuando graba la suscripcion
     $novedad = Novedades::create([
     'fecha'        => Carbon::parse(now())->isoFormat('Y-MM-DD'),
@@ -212,10 +228,7 @@ cuando graba la suscripcion
     'extension' => $newArchivo[ 'extension' ],
     ]);
     }
-
-
-
-
+*/
     };
 ?>
 
@@ -305,9 +318,13 @@ cuando graba la suscripcion
                     </div>
                 </div>
                 {{-- Suscriptores--}}
+                @if (!empty($this->plazo))
+                        {{$this->fecha_vto}}
+                @endif
+
                 <flux:card class="mt-2">
                     <div class="-mt-6 h-48 overflow-auto">
-                        <livewire:pages::minutas.suscripciones.suscriptores.index :minuta="0"/>
+                        <livewire:pages::minutas.suscripciones.suscriptores.index :minuta="null" :fecha="$this->fecha_vto"/>
                     </div>
                 </flux:card>
                 {{-- 5ª fila --}}

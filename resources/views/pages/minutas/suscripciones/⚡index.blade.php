@@ -20,17 +20,19 @@
         public                      $importe       = 1;
         public                      $nuevoimporte  = 1;
 
+
         public function mount(\App\Models\Producto $producto): void
         {
             $this->producto     = $producto;
             $this->producto_id  = $producto->id;
-            $this->fecha        = now();
+            $this->fecha        = now()->format('Y-m-d');
             $this->fecha_inicio = now()->subMonths(6);
 
             $this->valor = \App\Models\configuracion::where('nombre', 'valor_suscripcion')->first();
 
             $this->importe      = $this->valor->valor_importe;
             $this->nuevoimporte = $this->valor->valor_importe;
+
             // dd($this->valor->valor_importe);
             /*
             $this->minutasProducto = Minuta::where('producto_id', $producto->id)
