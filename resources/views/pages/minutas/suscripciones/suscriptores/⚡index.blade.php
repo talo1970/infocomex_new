@@ -62,13 +62,6 @@ new class extends Component
     <livewire:pages::minutas.suscripciones.suscriptores.crear />
 
     <div class="my-2 mx-2 flex justify-end items-center flex-wrap gap-2">
-
-        <!-- modal-->
-        <flux:modal.trigger name="crear-suscriptor-modal">
-            <flux:button
-                wire:click="$dispatch('crear-suscriptor', { minuta: '{{$this->id}}', vencimiento:'{{$this->vencimiento}}'})"
-                size="sm" icon="plus-circle" class="cursor-pointer" variant="primary" color="red">Suscriptor</flux:button>
-        </flux:modal.trigger>
     </div>
 
     <flux:table class="max-w-9/10" >

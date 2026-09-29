@@ -21,9 +21,17 @@
         public $fecha_vto;
         public $valor;
 
-        public $cantidaSuscriptor;
-        public array $atributos = [];
+        public $observacion;
+        public $vendedorid;
+        public $tipocambio;
+        public $comisiondolares;
+        public $totalcomisiondolares;
+        public $totalminuta;
 
+        public $cantidaSuscriptor;
+        public array $suscritores = [];
+
+        protected $listeners = ['refreshComponent' => 'grabarsuscriptor'];
 
         #[On('minutaCrear')]
         public function minutaCrear($producto, $valor)
@@ -35,9 +43,9 @@
             $this->productoNombre = $this->selectProducto->nombre;
             $this->productoId     = $this->selectProducto->id;
             $this->valor = $valor;
-            $this->cantidaSuscriptor = 0;
+            $this->cantidaSuscriptor = 1;
             $this->fecha_vto = \Carbon\Carbon::now()->addMonth()->format('Y-m-d');
-
+            $this->comisiondolares = $valor;
             //dd($this->productoId, $valor);
 
 /*
@@ -49,6 +57,13 @@
             ];
             */
         }
+
+        public function grabarsuscriptor($datos)
+        {
+            $suscritores[] = $datos;
+            dd($suscritores);
+        }
+
 
         private function esVendedor(): bool
         {
@@ -105,16 +120,17 @@
 
         public function updatedPlazo()
         {
-            $this->validate(['plazo' => ['required', 'numeric', 'min:1']
+            $this->validate(['plazo' => ['required', 'numeric', 'min:1'],
                             ]);
 
                 $this->fecha_vto = \Carbon\Carbon::parse($this->fechaboleto)->addMonths($this->plazo)->format('Y-m-d');
+                $this->procesarperiodo();
 
         }
 
         public function updatedEntidadid(): void
         {
-            $this->comisiondolares = 0;
+           // $this->comisiondolares = 0;
             $comprador             = \App\Models\Entidad::select('porcentaje_comision', 'cuit', 'tipo_entidad_id')
                                                         ->find($this->entidadid);
 
@@ -126,80 +142,36 @@
 
             $this->vendedorid = $vendedor_select[ 0 ][ 'vendedor_id' ];
             //dd($this->vendedorid);
-            $comisinoentidad = \App\Models\EntidadHonorarioProducto::where('entidad_id', $this->entidadid)
-                                                                   ->whereHas('honorario_producto', function($query) {
-                                                                       $query->where('producto_id', $this->productoId);
-                                                                   })->with('honorario_producto')->first();
-            //dd($comisinoentidad);
+           // $comisinoentidad = \App\Models\EntidadHonorarioProducto::where('entidad_id', $this->entidadid)
+           //                                                        ->whereHas('honorario_producto', function($query) {
+           //                                                            $query->where('producto_id', $this->productoId);
+           //                                                        })->with('honorario_producto')->first();
 
-            $this->comisiondolares = $comisinoentidad != null ? $comisinoentidad->honorario_producto->importe: 0;
-            //dd($this->comisiondolares);
+           // $this->comisiondolares = $comisinoentidad != null ? $comisinoentidad->honorario_producto->importe: 0;
             //$this->procesarperiodo();
         }
-/*
+
+        public function updatedTipocambio()
+        {
+            if ($this->tipocambio > 0 )
+            {
+                $this->procesarperiodo();
+            } else {
+                $this->totalminuta = 0;
+            }
+        }
         public function procesarperiodo()
         {
-            if ($this->plazo > 0){
-
-            }
-
-                          $this->validate([
-                                    'anioDesde' => [
-                                        'required',
-                                        'numeric',
-                                        'min:2000',
-                                        'max:2040'
-                                    ],
-                                    'anioHasta' => [
-                                        'required',
-                                        'numeric',
-                                        'min:2000',
-                                        'max:2040'
-                                    ],
-                                ], [
-                                    'anioDesde'         => 'Solo números',
-                                    'anioDesde.numeric' => 'Solo números',
-                                    'anioDesde.min'     => 'mayos 2000',
-                                    'anioDesde.max'     => 'menor 2040',
-
-                                    'anioHasta'         => 'Solo números',
-                                    'anioHasta.numeric' => 'Solo números',
-                                    'anioHasta.min'     => 'mayos 2000',
-                                    'anioHasta.max'     => 'menor 2040',
-                                ]);
-
-                if ($this->anioDesde > $this->anioHasta) {
-                    $this->validate([
-                                        'anioDesde' => 'required|numeric',
-                                        'anioHAsta' => 'required|numeric|gt:anioDesde',
-                                    ], [
-                                        'anioHasta' => 'Año hasta, tiene que se mayor',
-                                    ]);
-                }
-
-                if ($this->anioDesde <= $this->anioHasta) {
-
-                    if ($this->anioDesde == $this->anioHasta) {
-                        $this->periodocantidad = 1;
-                        // dd($this->anioDesde .' = '. $this->anioHasta);
-                    }
-                    else if ($this->anioDesde < $this->anioHasta) {
-                        for ($i = $this->anioDesde - 1; $i < $this->anioHasta; $i++) {
-                            $this->periodocantidad++;
-                        }
-                    }
-                }
-
-                if ($this->periodocantidad > 0 && $this->comisiondolares > 0) {
-                    $this->totalcomisiondolares = $this->periodocantidad * $this->comisiondolares;
-                    if ($this->tipocambio > 0) {
-                        $this->totalminutaaux = $this->tipocambio * $this->totalcomisiondolares;
-                        $this->totalminuta    = round($this->totalminutaaux, 2);
-                    }
+            if ($this->plazo > 0 && $this->comisiondolares > 0){
+                $this->totalcomisiondolares = round($this->plazo * $this->comisiondolares, 2);
+                if ($this->tipocambio > 0) {
+                    $totalminutaaux = $this->tipocambio * $this->totalcomisiondolares;
+                    $this->totalminuta    = round($totalminutaaux, 2);
                 }
             }
         }
-*/
+
+
         public function cancel(): void
         {
             $this->reset();
@@ -317,13 +289,18 @@ cuando graba la suscripcion
                         <flux:textarea rows="1" wire:model.enter.live="observacion" label="Observación" />
                     </div>
                 </div>
-                {{-- Suscriptores--}}
+                {{-- Suscriptores
                 @if (!empty($this->plazo))
-                        {{$this->fecha_vto}}
+                        {{$this->fecha_vto.' - ' .$this->fechaboleto }}
                 @endif
-
+--}}
                 <flux:card class="mt-2">
-                    <div class="-mt-6 h-48 overflow-auto">
+                    <div class="-mt-4 h-48 overflow-auto text-right">
+                        <flux:modal.trigger name="crear-suscriptor-modal">
+                            <flux:button
+                                wire:click="$dispatch('crear-suscriptor', { minuta: 'null', inicial: '{{$this->fechaboleto}}', vencimiento:'{{$this->fecha_vto}}', valor: '{{$this->valor}}'})"
+                                size="sm" icon="plus-circle" class="cursor-pointer" variant="primary" color="red">Suscriptor</flux:button>
+                        </flux:modal.trigger>
                         <livewire:pages::minutas.suscripciones.suscriptores.index :minuta="null" :fecha="$this->fecha_vto"/>
                     </div>
                 </flux:card>
@@ -354,10 +331,13 @@ cuando graba la suscripcion
                     <hr class="ml-78 my-4" style="border: none; height: 2px; background-color: #333; width: 65%;">
                     {{-- 5ª fila --}}
                     <div class="mt-4 flex w-full flex-row items-start space-x-4 text-left">
+                        {{-- Cantidad de suscriptores --}}
+                        <div class="w-1/3">
+                            <flux:input :disabled="true" wire:model.model="cantidaSuscriptor" label="Cantidad total de suscriptores" />
+                        </div>
                         {{-- Tipo de cambio --}}
-                        <div class="ml-78 w-1/3">
-                            <flux:input wire:model.model.live="tipocambio"
-                                        label="Tipo de Cambio" />
+                        <div class=w-1/3">
+                            <flux:input wire:model.model.live="tipocambio" label="Tipo de Cambio" />
                         </div>
                         {{-- total minuta --}}
                         <div class="w-1/3">

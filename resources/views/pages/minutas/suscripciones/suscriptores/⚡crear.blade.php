@@ -5,43 +5,88 @@
 
     new class extends Component {
         public $dias = 0;
+        public $minuta_id;
 
-        public $inicio;
         public $fin;
 
+        public $nombre;
+        public $inicio;
+        public $periodo;
+        public $peridoinicial;
+        public $cantidadDias = 0;
+        public $cantidadDiasInicial = 0;
+
+        public $importexdia;
+        public $importe;
+        public $archivoAttributes =[];
+
         #[On('crear-suscriptor')]
-        public function crearSuscriptorr($minuta, $vencimiento): void
+        public function crearSuscriptorr($minuta, $inicial, $vencimiento, $valor): void
         {
-            $this->entidad_id = $minuta;
-            //$this->fin =$vto;
+            $this->minuta_id = $minuta;
+            $this->inicio = new DateTime($inicial);
+            $this->peridoinicial = $this->inicio;
+            $this->fin  = new Datetime($vencimiento);
 
-            $this->fin  = \Carbon\Carbon::parse($vencimiento)->format('Y-m-d');
+            $intervalo = $this->inicio->diff($this->fin);
+            $this->cantidadDias =  $intervalo->days;
+            $this->cantidadDiasInicial = $this->cantidadDias;
 
-           dd($this->entidad_id.' - '.$this->fin);
+            $this->importexdia = $valor / 30;
+            $this->importe = round($this->importexdia *$this->cantidadDias, 2);
+
 
 
         }
 
-        /*
-        public salvarSuscriptor()
+        public function updatedInicio()
+        {
+            //dd($this->inicio);
+            $this->periodo = 0;
+            $fechaInicio = \Carbon\Carbon::parse($this->inicio);
+            $fechaFin = \Carbon\Carbon::parse($this->fin);
+
+            $this->cantidadDias = $fechaInicio->diffInDays($this->fin);
+            //$this->importe = round($this->importexdia *$this->cantidadDias, 2);
+            $this->actualizarImporte();
+        }
+
+        public function updatedPeriodo()
+        {
+            $this->cantidadDias = $this->cantidadDiasInicial;
+            $this->inicio = $this->peridoinicial;
+            $this->actualizarImporte();
+        }
+
+        public function actualizarImporte()
+        {
+            $this->importe = round($this->importexdia *$this->cantidadDias, 2);
+
+         }
+
+
+        public function grabarContacto()
         {
             // tener idea de grabar suscriptor sin tener la minuta
 
             $archivoAttributes = [
-            'id'        => null,
-            'nombre'    => $this->archivo->getClientOriginalName(),
-            'inicio'      => $this->archivo->store('mensajes-archivos', 'public'),
-            'vencimiento' => $this->archivo->getClientOriginalExtension(),
-            'dias'    => $this->archivo->getClientOriginalName(),
-            'importe'    => $this->archivo->getClientOriginalName(),
-            'periodo'    => $this->archivo->getClientOriginalName(),
+                'id'          => null,
+                'nombre'      => $this->nombre,
+                'inicio'      => $this->inicio,
+                'vencimiento' => $this->fin,
+                'dias'        => $this->cantidadDias,
+                'importe'     => $this->importe,
+                'periodo'     => $this->periodo,
             ];
+               // dd($archivoAttributes);
+//            una ves que lo quiere grabar va a index de suscriptores para actualizar la tabla
+//                    $this->dispatch('uploadedArchivo', archivo: $archivoAttributes)->to(CrearMensaje::class);
 
-            una ves que lo quiere grabar va a index de suscriptores para actualizar la tabla
-                    $this->dispatch('uploadedArchivo', archivo: $archivoAttributes)->to(CrearMensaje::class);
-
+            //$this->reset();
+            Flux::modal('crear-suscriptor-modal')->close();
+            $this->dispatch('refreshComponent', datos: $archivoAttributes)->to('pages::minutas.suscripciones.create');
         }
-        */
+
 
 
     };
@@ -63,7 +108,7 @@
                     </div>
                     {{-- fecha inicion --}}
                     <div>
-                        <flux:date-picker type="input" label="Fecha inicio" wire:model="inicio" />
+                        <flux:date-picker type="input" label="Fecha inicio" wire:model.live="inicio" />
                     </div>
                     <div>
                         <flux:date-picker :disabled="true" type="input" wire:model="fin" label="Vencimiento"/>
@@ -75,18 +120,20 @@
                     <div>
                         <Flux:field variant="inline">
                             <flux:label class="mr-4">Período completo</flux:label>
-                            <flux:switch wire:model.liv="peridod" />
+                            <flux:switch wire:model.live="periodo" />
                         </Flux:field>
                     </div>
-                    <div>
-                        <Flux:field variant="inline">
-                            <flux:label class="mr-4 bg-red-100">Días de suscripción:</flux:label>
-                            <flux:label>{{$this->dias}} </flux:label>
-                        </Flux:field>
+                    <div class="flex justify-start">
+                        <div class="w-42">
+                            <flux:label>Días de suscripción:</flux:label>
+                        </div>
+                        <div class="w-16">
+                        <flux:input :disabled="true" maxlength="4" wire:model="cantidadDias" />
+                        </div>
                     </div>
                     <div class="flex justify-between">
                         <div class="w-42">
-                            <flux:label class="mr-4">Comisión suscriptor:</flux:label>
+                            <flux:label class="mr-4" wire:model="importe">Comisión suscriptor:</flux:label>
                         </div>
                         {{-- importe--}}
                         <div>
