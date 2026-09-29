@@ -15,10 +15,8 @@ new class extends Component
     public $vencimiento;
 
 
-    protected $listeners = [
-        'subirDocumento',
-        'uploadedArchivo',
-    ];
+    protected $listeners = [ 'refreshComponent' => '$refresh',
+                             'refreshSuscriptor' => 'cargarTabla'];
 
     public function mount( $minuta , $fecha)
 {
@@ -30,13 +28,13 @@ new class extends Component
 
            foreach ($subcritores_minuta as $suscritor)
                 $this->suscritores = [
-                    'id' => $suscritor->id,
-                    'nombre' => $suscritor->nombre,
-                    'inicio' => $suscritor->inicio,
-                    'fin' => $suscritor->fin,
-                    'dias' => $suscritor->dias,
-                    'importe_comision' => $suscritor->importe_comision,
-                    'completo' => $suscritor->completo,
+                    'id'          => null,
+                    'nombre'      => $this->nombre,
+                    'inicio'      => $this->inicio,
+                    'vencimiento' => $this->fin,
+                    'dias'        => $this->cantidadDias,
+                    'importe'     => $this->importe,
+                    'periodo'     => $this->periodo,
                 ];
        } else {
            $this->suscritores = [];
@@ -47,12 +45,13 @@ new class extends Component
         //$this->id = $minuta->id;
     }
 
-    public function uploadedArchivo($archivo)
+    public function cargarTabla($datos)
     {
-        $this->archivos_tmp[] = $archivo;
-        $this->CantArchivos   = count($this->archivos_tmp);
-    }
+        $this->suscritores[] = $datos;
+        $this->dispatch('refreshSuscriptor', datos: $datos)->to('pages::minutas.suscripciones.create');
 
+        //dd($this->suscritores);
+    }
 
 
 };
@@ -68,57 +67,56 @@ new class extends Component
         <flux:table.columns class="h-4 bg-indigo-100 dark:bg-blue-400 text-blue-600">
             <flux:table.column>Suscritor</flux:table.column>
             <flux:table.column>Inicial</flux:table.column>
-            <flux:table.column>Vencimiento</flux:table.column>
             <flux:table.column>Dias</flux:table.column>
+            <flux:table.column>Importe</flux:table.column>
             <flux:table.column align="center">Acción</flux:table.column>
         </flux:table.columns>
 
-        <flux:table.rows>
+            <flux:table.rows>
+                @forelse($this->suscritores as $key => $suscripto)
+                    <flux:table.row>
+                        <flux:table.cell class="text-left">
+                            {{ $suscripto['nombre'] }}
+                        </flux:table.cell>
 
-            @foreach ($this->suscritores as $suscripto)
+                        <flux:table.cell class="text-left">
+                            {{ date('d/m/Y', strtotime($suscripto['inicio'])) }}
+                        </flux:table.cell>
 
-                <flux:table.row :key="$suscripto->id">
-                    <flux:table.cell>
-                        {{ $suscripto->contacto }}
-                    </flux:table.cell>
+                        <flux:table.cell class="text-left">
+                            {{ $suscripto['dias'] }}
+                        </flux:table.cell>
 
-                    <flux:table.cell>
-                        {{ $suscripto->mail }}
-                    </flux:table.cell>
+                        <flux:table.cell>
+                            {{ $suscripto['importe'] }}
+                        </flux:table.cell>
 
-                    <flux:table.cell>
-                        {{ $suscripto->telefono }}
-                    </flux:table.cell>
+                        <flux:table.cell>
+                            <flux:modal.trigger name="contacto-show-modal">
+                                <flux:tooltip content="Consulta Contacto">
+                                    <flux:badge color="sky" as="button"
+                                                wire:click="$dispatch('show-contacto-modal', { modo: 'show', contacto: {{$key}}})"
+                                                icon="eye" class="cursor-pointer" >
+                                    </flux:badge>
+                                </flux:tooltip>
+                            </flux:modal.trigger>
 
-                    <flux:table.cell>
-                        {{ $suscripto->provincia->nombre }}
-                    </flux:table.cell>
-
-                    <flux:table.cell>
-                        <flux:modal.trigger name="contacto-show-modal">
-                            <flux:tooltip content="Consulta Contacto">
-                                <flux:badge color="sky" as="button"
-                                            wire:click="$dispatch('show-contacto-modal', { modo: 'show', contacto: {{$suscripto}}})"
-                                            icon="eye" class="cursor-pointer" >
-                                </flux:badge>
-                            </flux:tooltip>
-                        </flux:modal.trigger>
-
-                        <flux:modal.trigger name="contacto-edit-modal">
-                            <flux:tooltip content="Editar Contacto">
-                                <flux:badge color="indigo" as="button"
-                                            wire:click="$dispatch('edit-contacto-modal', { modo: 'edit', contacto: {{$suscripto}}})"
-                                            icon="pencil" class="cursor-pointer" >
-                                </flux:badge>
-                            </flux:tooltip>
-                        </flux:modal.trigger>
+                            <flux:modal.trigger name="contacto-edit-modal">
+                                <flux:tooltip content="Editar Contacto">
+                                    <flux:badge color="indigo" as="button"
+                                                wire:click="$dispatch('edit-contacto-modal', { modo: 'edit', contacto: {{$key}}})"
+                                                icon="pencil" class="cursor-pointer" >
+                                    </flux:badge>
+                                </flux:tooltip>
+                            </flux:modal.trigger>
 
 
-                    </flux:table.cell>
+                        </flux:table.cell>
 
-                </flux:table.row>
-            @endforeach
-
-        </flux:table.rows>
+                    </flux:table.row>
+                    @empty
+                    <flux:table.row><flux:table.cell colspan="5" class="text-center text-zinc-500">Sin suscriptor</flux:table.cell></flux:table.row>
+                @endforelse
+            </flux:table.rows>
     </flux:table>
 </div>

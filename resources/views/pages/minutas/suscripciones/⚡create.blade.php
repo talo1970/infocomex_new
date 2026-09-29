@@ -29,9 +29,10 @@
         public $totalminuta;
 
         public $cantidaSuscriptor;
-        public array $suscritores = [];
+        public array $suscritoresd = [];
 
-        protected $listeners = ['refreshComponent' => 'grabarsuscriptor'];
+        protected $listeners = [ 'refreshComponent' => '$refresh',
+                                 'refreshSuscriptor' => 'grabarsuscriptor'];
 
         #[On('minutaCrear')]
         public function minutaCrear($producto, $valor)
@@ -60,8 +61,9 @@
 
         public function grabarsuscriptor($datos)
         {
-            $suscritores[] = $datos;
-            dd($suscritores);
+            $this->suscritoresd[] = $datos;
+            //dump($this->suscritores);
+            //dd('si aca llego');
         }
 
 
@@ -179,7 +181,10 @@
             $this->dispatch('refreshComponent')->to('pages::minutas.suscripciones.index');
         }
 
-
+        public function grabarSuscripcion()
+        {
+                   dd( $this->suscritoresd);
+        }
 
 
 

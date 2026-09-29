@@ -72,19 +72,22 @@
             $archivoAttributes = [
                 'id'          => null,
                 'nombre'      => $this->nombre,
-                'inicio'      => $this->inicio,
-                'vencimiento' => $this->fin,
+                'inicio'      => $this->inicio->format('Y-m-d'),
+                'vencimiento' => $this->fin->format('Y-m-d'),
                 'dias'        => $this->cantidadDias,
                 'importe'     => $this->importe,
                 'periodo'     => $this->periodo,
+
             ];
                // dd($archivoAttributes);
 //            una ves que lo quiere grabar va a index de suscriptores para actualizar la tabla
 //                    $this->dispatch('uploadedArchivo', archivo: $archivoAttributes)->to(CrearMensaje::class);
 
             //$this->reset();
+            $this->dispatch('refreshSuscriptor', datos: $archivoAttributes)->to('pages::minutas.suscripciones.suscriptores.index');
+
             Flux::modal('crear-suscriptor-modal')->close();
-            $this->dispatch('refreshComponent', datos: $archivoAttributes)->to('pages::minutas.suscripciones.create');
+
         }
 
 
