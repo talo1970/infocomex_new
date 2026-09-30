@@ -16,7 +16,9 @@
         public $fechaboleto;
 
         public $entidadid;
-        public int $plazo;
+        public $plazo;
+        public $tipodocid;
+        public $referenciaid;
         public $inicio;
         public $fecha_vto;
         public $valor;
@@ -28,8 +30,10 @@
         public $totalcomisiondolares;
         public $totalminuta;
 
-        public $cantidaSuscriptor;
+        public $cantidaSuscriptor = 0;
         public array $suscritoresd = [];
+
+        public $maximo;
 
         protected $listeners = [ 'refreshComponent' => '$refresh',
                                  'refreshSuscriptor' => 'grabarsuscriptor'];
@@ -44,7 +48,7 @@
             $this->productoNombre = $this->selectProducto->nombre;
             $this->productoId     = $this->selectProducto->id;
             $this->valor = $valor;
-            $this->cantidaSuscriptor = 1;
+            //$this->cantidaSuscriptor = 1;
             $this->fecha_vto = \Carbon\Carbon::now()->addMonth()->format('Y-m-d');
             $this->comisiondolares = $valor;
             //dd($this->productoId, $valor);
@@ -62,8 +66,7 @@
         public function grabarsuscriptor($datos)
         {
             $this->suscritoresd[] = $datos;
-            //dump($this->suscritores);
-            //dd('si aca llego');
+            $this->cantidaSuscriptor = count( $this->suscritoresd) +  1;
         }
 
 
@@ -84,7 +87,7 @@
             if ($this->isVendedor) {
                 $clientes = \App\Models\Entidad::query()->whereHas('productosVendedores', function($query) {
                     $query->where('producto_id', $this->productoId)->where('vendedor_id', auth()->id());
-                })->orderBy('razon_social')->toSql(); //toSql();
+                })->orderBy('razon_social')->get(); //toSql();
                 // return $this->clientes;
             }
             else {
@@ -122,13 +125,22 @@
 
         public function updatedPlazo()
         {
-            $this->validate(['plazo' => ['required', 'numeric', 'min:1'],
+            $this->validate([
+                                'plazo' => ['required', 'numeric', 'min:1'],
+                            ],
+                            [
+                                'plazo.required' => 'campo requerido',
+                                'plazo.numeric' => 'campo numérico',
+                                'plazo.min' => 'mínimo 1',
+
                             ]);
 
-                $this->fecha_vto = \Carbon\Carbon::parse($this->fechaboleto)->addMonths($this->plazo)->format('Y-m-d');
+            $this->plazo = (int) $this->plazo;
+            $this->fecha_vto = \Carbon\Carbon::parse($this->fechaboleto)->addMonths($this->plazo)->format('Y-m-d');
                 $this->procesarperiodo();
-
         }
+
+
 
         public function updatedEntidadid(): void
         {
@@ -151,6 +163,7 @@
 
            // $this->comisiondolares = $comisinoentidad != null ? $comisinoentidad->honorario_producto->importe: 0;
             //$this->procesarperiodo();
+            $this->cantidaSuscriptor = 1;
         }
 
         public function updatedTipocambio()
@@ -183,7 +196,75 @@
 
         public function grabarSuscripcion()
         {
-                   dd( $this->suscritoresd);
+
+            $this->validate([
+                                'estadoid' => ['required'],
+                                'fechaboleto' => ['required'],
+                                'entidadid' => ['required'],
+                                'tipodocid' => ['required'],
+                                'plazo' => ['required', 'numeric', 'min:1'],
+                                'vendedorid' => ['required'],
+                                'referenciaid' =>
+                                'comisiondolares' => ['required'],
+                                'totalcomisiondolares' => ['nullable'],
+                                'cantidaSuscriptor' => ['nullable'],
+                                'tipocambio' => ['nullable'],
+                                'totalminuta' => ['nullable'],
+                            ],
+                            [
+                                'estadoid' => 'es requerido',
+                                'fechaboleto' => 'es requerido',
+                                'entidadid' => 'es requerido',
+                                'tipodocid' => 'es requerido',
+                                'vendedorid' => 'es requerido',
+                                'plazo.required' => 'campo requerido',
+                                'plazo.numeric' => 'campo numérico',
+                                'plazo.min' => 'mínimo 1',
+                            ]);
+            $this->maximo = \App\Models\Minuta::maxMinuta($this->productoId)->max('numero') + 1;
+
+            DB::transaction(function() {
+                try {
+                    $minuta = \App\Models\Minuta::create([
+                                                            'numero'                   => $this->maximo,
+                                                            'estado_id'                => $this->estadoid,
+                                                            'producto_id'              => $this->productoId,
+                                                            'fecha'                    => $this->fechaboleto,
+                                                            'entidad_cliente_id'       => $this->entidadid,
+                                                            'observacion'              => $this->observacion,
+                                                            'tipo_cambio'              => $this->tipocambio,
+                                                            'importe_comision_unidad'  => $this->comisiondolares,
+                                                            'importe_comision_dolares' => $this->totalcomisiondolares,
+                                                            'importe_comision'         => $this->totalminuta,
+                                                            'cantidad'                 => $this->cantidaSuscriptor,
+                                                            'plazo'                    => $this->plazo,
+                                                            'fecha_vencimiento'        => $this->fecha_vto,
+                                                            'tipo_documento_id'        => $this->tipodocid,
+                                                            'usuario_vendedor_id'      => $this->vendedorid,
+                                                        ]);
+                    foreach ($this->suscritoresd as $suscripto) {
+                        $minuta->suscriptores()->create([
+                                                            'nombre'      => $newArchivo[ 'nombre' ],
+                                                            'inicio'      => $newArchivo[ 'inicio' ],
+                                                            'vencimiento' => $newArchivo[ 'vencimiento' ],
+                                                            'dias'        => $newArchivo[ 'dias' ],
+                                                            'importe'     => $newArchivo[ 'importe' ],
+                                                            'periodo'     => $newArchivo[ 'periodo' ],
+                                                     ]);
+
+                    }
+
+                }
+                catch (\Exception $e) {
+                    Log::error($e->getMessage());
+                }
+            });
+
+            $this->reset();
+            Flux::modal('suscripcion-crear-modal')->close();
+            $this->dispatch('refreshComponent')->to('pages::minutas.suscripciones.index');
+
+                  // dd( $this->suscritoresd);
         }
 
 
@@ -256,7 +337,7 @@ cuando graba la suscripcion
                     </div>
                     {{-- Tipo documento --}}
                     <div class="w-1/4">
-                        <flux:select variant="listbox" searchable wire:model.live="tipodocid" label="Tipo Documento"
+                        <flux:select variant="listbox" wire:model="tipodocid" label="Tipo Documento"
                                      placeholder="Seleccione un Cliente">
                             @foreach ($this->tipoDocumentos as $tipo)
                                 <flux:select.option value="{{ $tipo->id }}"
@@ -270,7 +351,7 @@ cuando graba la suscripcion
                 <div class="mt-2 flex w-full flex-row items-start space-x-2 text-left">
                     {{-- plazo--}}
                     <div class="w-16">
-                        <flux:input wire:model.live="plazo" maxlength="4" label="Plazo"/>
+                        <flux:input type="numeric" wire:model.live="plazo" maxlength="4" label="Plazo"/>
                     </div>
                     {{-- fecha vto --}}
                     <div class="w-42">
@@ -301,11 +382,13 @@ cuando graba la suscripcion
 --}}
                 <flux:card class="mt-2">
                     <div class="-mt-4 h-48 overflow-auto text-right">
+                        @if(!empty($this->plazo) && is_int($this->plazo) )
                         <flux:modal.trigger name="crear-suscriptor-modal">
                             <flux:button
                                 wire:click="$dispatch('crear-suscriptor', { minuta: 'null', inicial: '{{$this->fechaboleto}}', vencimiento:'{{$this->fecha_vto}}', valor: '{{$this->valor}}'})"
                                 size="sm" icon="plus-circle" class="cursor-pointer" variant="primary" color="red">Suscriptor</flux:button>
                         </flux:modal.trigger>
+                        @endif
                         <livewire:pages::minutas.suscripciones.suscriptores.index :minuta="null" :fecha="$this->fecha_vto"/>
                     </div>
                 </flux:card>

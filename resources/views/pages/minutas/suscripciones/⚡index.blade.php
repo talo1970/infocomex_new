@@ -20,6 +20,8 @@
         public                      $importe       = 1;
         public                      $nuevoimporte  = 1;
 
+        protected $listeners = ['refreshComponent' => '$refresh'];
+
 
         public function mount(\App\Models\Producto $producto): void
         {

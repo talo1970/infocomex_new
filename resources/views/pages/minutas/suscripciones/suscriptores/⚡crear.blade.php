@@ -29,7 +29,7 @@
             $this->fin  = new Datetime($vencimiento);
 
             $intervalo = $this->inicio->diff($this->fin);
-            $this->cantidadDias =  $intervalo->days;
+            $this->cantidadDias =  $intervalo->days - 1;
             $this->cantidadDiasInicial = $this->cantidadDias;
 
             $this->importexdia = $valor / 30;
@@ -46,7 +46,7 @@
             $fechaInicio = \Carbon\Carbon::parse($this->inicio);
             $fechaFin = \Carbon\Carbon::parse($this->fin);
 
-            $this->cantidadDias = $fechaInicio->diffInDays($this->fin);
+            $this->cantidadDias = $fechaInicio->diffInDays($this->fin) - 1;
             //$this->importe = round($this->importexdia *$this->cantidadDias, 2);
             $this->actualizarImporte();
         }
@@ -77,7 +77,6 @@
                 'dias'        => $this->cantidadDias,
                 'importe'     => $this->importe,
                 'periodo'     => $this->periodo,
-
             ];
                // dd($archivoAttributes);
 //            una ves que lo quiere grabar va a index de suscriptores para actualizar la tabla

@@ -256,6 +256,11 @@ class Minuta extends Model
         return $this->hasMany(Minuta::class, 'hijo_id');
     }
 
+    public function suscriptores(): HasMany
+    {
+        return $this->hasMany(suscriptores::class, 'minuta_id');
+    }
+
     #[Scope]
     protected function boletos(Builder $query): void
     {
