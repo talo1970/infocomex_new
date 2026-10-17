@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('suscriptores', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('minuta_id')->constrained('minutas');
+            $table->foreignUuid('minuta_id')->constrained();
             // $table->foreignId('tipo_comprobante_id')->references('id')->on('tipo_comprobantes');
             $table->string('nombre', 100)->nullable();
-            $table->date('inicio');
-            $table->date('fin');
+            $table->date('inicio')->nullable();
+            $table->date('vencimiento')->nullable();
             $table->integer('dias')->nullable();
-            $table->float('importe_comision', 10, 2)->default(0.0)->nullable();
+            $table->float('importe_comision', 10, 2)->nullable();
             $table->boolean('completo')->default(false);
 
             $table->timestamps();
