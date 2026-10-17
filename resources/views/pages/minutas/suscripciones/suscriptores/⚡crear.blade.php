@@ -35,8 +35,6 @@
             $this->importexdia = $valor / 30;
             $this->importe = round($this->importexdia *$this->cantidadDias, 2);
 
-
-
         }
 
         public function updatedInicio()

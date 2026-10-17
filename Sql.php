@@ -24,4 +24,13 @@ UPDATE minutas
 UPDATE minutas
 	join entidads on entidads.id_old = minutas.vendedor_id
 	SET minutas.vendedor_id = entidads.id;
+
+UPDATE entidad_honorario_productos
+	join entidads on entidads.id_old = entidad_honorario_productos.entidad_id
+	SET entidad_honorario_productos.entidad_id = entidads.id;
+
+UPDATE entidad_producto_vendedors
+	join entidads on entidads.id_old = entidad_producto_vendedors.entidad_id
+	SET entidad_producto_vendedors.entidad_id = entidads.id;
+
 */

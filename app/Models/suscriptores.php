@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class suscriptores extends Model
 {
-    protected $fillable = ['nombre', 'inicio', 'fin', 'dias', 'cantidad', 'importe_comision', 'completo'];
+    protected $fillable = ['nombre', 'inicio', 'vencimiento', 'dias', 'cantidad', 'importe_comision', 'completo'];
 
     /**
      * @return BelongsTo<Producto, $this>

@@ -1,21 +1,354 @@
 <?php
 
-use Livewire\Component;
+    use Livewire\Attributes\Computed;
+    use Livewire\Attributes\On;
+    use Livewire\Component;
 
-new class extends Component
-{
+    new class extends Component {
+
+        public $minuta;
+
+        public $isVendedor = 0;
+        public $selectProducto;
+        public $productoNombre;
+
+        public $productoId;
+        public $numerosuscripcion;
+        public $estadoid;
+        public $fechaboleto;
+
+        public $entidadid;
+        public $plazo;
+        public $tipodocid;
+        public $referenciaid;
+        public $inicio;
+        public $fecha_vto;
+        public $valor;
+
+        public $observacion;
+        public $vendedorid;
+        public $tipocambio;
+        public $comisiondolares;
+        public $totalcomisiondolares;
+        public $totalminuta;
+
+        public $cantidaSuscriptor = 0;
+        public array $suscritoresd = [];
+
+        public $maximo;
+
+        private function esVendedor(): bool
+        {
+            return auth()->user()->hasRole('vendedor');
+        }
 
 
-    private function esVendedor(): bool
-    {
-        return auth()->user()->hasRole('vendedor');
-    }
+        #[On('minutaEdit')]
+        public function minutaEdit(\App\Models\Minuta $minuta): void
+        {
+           $this->minuta = $minuta;
+            if ($this->esVendedor()) {
+                $this->isVendedor = 1;
+            }
 
+            $this->productoId           = $this->minuta->producto_id;
+            $this->numerosuscripcion    = $this->minuta->numero;
+            $this->fechaboleto          = $this->minuta->fecha;
+            $this->estadoid             = $this->minuta->estado_id;
+            $this->entidadid            = $this->minuta->entidad_cliente_id;
+            $this->observacion          = $this->minuta->observacion;
+            $this->tipocambio           = $this->minuta->tipo_cambio;
+            $this->comisiondolares      = $this->minuta->importe_comision_unidad;
+            $this->totalcomisiondolares = $this->minuta->importe_comision_dolares;
+            $this->totalminuta          = $this->minuta->importe_comision;
+            $this->cantidaSuscriptor    = $this->minuta->cantidad;
+            $this->plazo                = $this->minuta->plazo;
+            $this->fecha_vto            = $this->minuta->fecha_vencimiento;
+            $this->tipodocid            = $this->minuta->tipo_documento_id;
+            $this->vendedorid           = $this->minuta->usuario_vendedor_id;
 
+        }
 
-};
+        #[Computed]
+        public function estados()
+        {
+            return \App\Models\Estado::select('id', 'nombre')->get();
+        }
+
+        #[Computed]
+        public function clientes()
+        {
+            if ($this->isVendedor) {
+                $clientes = \App\Models\Entidad::query()->whereHas('productosVendedores', function($query) {
+                    $query->where('producto_id', $this->productoId)->where('vendedor_id', auth()->id());
+                })->orderBy('razon_social')->get(); //toSql();
+                // return $this->clientes;
+            }
+            else {
+                $clientes = \App\Models\Entidad::query()->whereHas('productosVendedores', function($query) {
+                    $query->where('producto_id', $this->productoId);
+                })->orderBy('razon_social')->get();
+                //dd($clientes);
+            }
+
+            return $clientes;
+        }
+
+        #[Computed]
+        public function tipoDocumentos()
+        {
+            return \App\Models\TipoDocumento::select('id', 'nombre')->get();
+        }
+
+        #[Computed]
+        public function referencias()
+        {
+            return \App\Models\Referencia::select('id', 'nombre')->get();
+        }
+
+        #[Computed]
+        public function vendedores()
+        {
+            return \App\Models\User::select('id', 'name')->get();
+        }
+
+        public function dehydrate()
+        {
+            $this->fechaboleto = date('Y-m-d');;
+        }
+
+        public function updatedPlazo()
+        {
+            $this->validate([
+                                'plazo' => ['required', 'numeric', 'min:1'],
+                            ],
+                            [
+                                'plazo.required' => 'campo requerido',
+                                'plazo.numeric' => 'campo numérico',
+                                'plazo.min' => 'mínimo 1',
+
+                            ]);
+
+            $this->plazo = (int) $this->plazo;
+            $this->fecha_vto = \Carbon\Carbon::parse($this->fechaboleto)->addMonths($this->plazo)->format('Y-m-d');
+            $this->procesarperiodo();
+        }
+
+        public function updatedEntidadid(): void
+        {
+            $comprador             = \App\Models\Entidad::select('porcentaje_comision', 'cuit', 'tipo_entidad_id')
+                                                        ->find($this->entidadid);
+
+            $this->observacion = $comprador->tipo_entidad_id == 1 ? 'CUIT: ' . $comprador->cuit : $this->observacion;
+            $vendedor_select   = \App\Models\EntidadProductoVendedor::where('producto_id', $this->productoId)
+                                                                    ->where('entidad_id', $this->entidadid)->get()
+                                                                    ->toArray();
+
+            $this->vendedorid = $vendedor_select[ 0 ][ 'vendedor_id' ];
+            $this->cantidaSuscriptor = 1;
+        }
+
+        public function updatedTipocambio()
+        {
+            if ($this->tipocambio > 0 )
+            {
+                $this->procesarperiodo();
+            } else {
+                $this->totalminuta = 0;
+            }
+        }
+        public function procesarperiodo()
+        {
+            if ($this->plazo > 0 && $this->comisiondolares > 0){
+                $this->totalcomisiondolares = round($this->plazo * $this->comisiondolares, 2);
+                if ($this->tipocambio > 0) {
+                    $totalminutaaux = $this->tipocambio * $this->totalcomisiondolares;
+                    $this->totalminuta    = round($totalminutaaux, 2);
+                }
+            }
+        }
+
+        public function cancel(): void
+        {
+            $this->reset();
+            Flux::modal('suscripcion-editar-modal')->close();
+            $this->dispatch('refreshComponent')->to('pages::minutas.suscripciones.index');
+        }
+
+    };
 ?>
 
 <div>
-    {{-- It is quality rather than quantity that matters. - Lucius Annaeus Seneca --}}
+    <flux:modal name="suscripcion-editar-modal" class="min-w-[64rem]">
+        <form wire:submit="grabarSuscripcion" class="space-y-6">
+            <div>
+                <flux:heading class="font-bold bg-red-100 text-center dark:bg-red-800"
+                              size="lg">Datos de la Suscripción - {{--$this->productoNombre--}}
+                </flux:heading>
+            </div>
+            <flux:card>
+                {{-- nro estado y fecha --}}
+                <div class="flex w-full flex-row items-start space-x-4 text-left">
+                    {{-- Número --}}
+                    <div class="w-1/4">
+                        <flux:input wire:model="numerosuscripcion" label="Número" />
+                    </div>
+                    {{-- Estado --}}
+                    <div class="w-1/2">
+                        <flux:select searchable wire:model="estadoid" label="Estado" placeholder="Seleccione un Estado">
+                            @foreach ($this->estados as $estado)
+                                @if ($estado->id == 1)
+                                    {{$this->estadoid = 1}}
+                                @endif
+                                <flux:select.option value="{{ $estado->id }}"
+                                                    wire:key="{{ $estado->id }}">{{ $estado->nombre }}</flux:select.option>
+                            @endforeach
+                        </flux:select>
+                    </div>
+                    {{-- Fecha --}}
+                    <div class="w-1/2">
+                        <flux:date-picker type="input" label="Fecha" wire:model="fechaboleto" />
+                    </div>
+                </div>
+                {{-- 1° fila --}}
+                <div class="mt-2 flex w-full flex-row items-start space-x-4 text-left">
+                    {{-- Cliente --}}
+                    <div class="w-3/4">
+                        <flux:select variant="listbox" searchable wire:model.live="entidadid" label="Cliente"
+                                     placeholder="Seleccione un Cliente">
+                            @foreach ($this->clientes as $cliente)
+                                <flux:select.option value="{{ $cliente->id }}"
+                                                    wire:key="{{ $cliente->id }}">{{ $cliente->razon_social }}</flux:select.option>
+                            @endforeach
+                        </flux:select>
+                    </div>
+                    {{-- Tipo documento --}}
+                    <div class="w-1/4">
+                        <flux:select variant="listbox" wire:model="tipodocid" label="Tipo Documento"
+                                     placeholder="Seleccione un Cliente">
+                            @foreach ($this->tipoDocumentos as $tipo)
+                                <flux:select.option value="{{ $tipo->id }}"
+                                                    wire:key="{{ $tipo->id }}">{{ $tipo->nombre }}</flux:select.option>
+                            @endforeach
+                        </flux:select>
+                    </div>
+                </div>
+                <flux:separator class="my-4" />
+                {{-- 2° fila --}}
+                <div class="mt-2 flex w-full flex-row items-start space-x-2 text-left">
+                    {{-- plazo--}}
+                    <div class="w-16">
+                        <flux:input type="numeric" wire:model.live="plazo" maxlength="4" label="Plazo" />
+                    </div>
+                    {{-- fecha vto --}}
+                    <div class="w-42">
+                        <flux:date-picker :disabled="true" type="input" wire:model="fecha_vto" label="Vencimiento" />
+                    </div>
+                    {{-- referencia --}}
+                    <div class="w-3/4">
+                        <flux:select variant="listbox" searchable wire:model.live="referenciaid" label="Referencia"
+                                     placeholder="Seleccione una Referencia">
+                            @foreach ($this->referencias as $referencia)
+                                <flux:select.option value="{{ $referencia->id }}"
+                                                    wire:key="{{ $referencia->id }}">{{ $referencia->nombre }}</flux:select.option>
+                            @endforeach
+                        </flux:select>
+                    </div>
+                </div>
+                {{-- 3° fila --}}
+                <div class="mt-2 flex w-full flex-row items-start space-x-4 text-left">
+                    {{-- observación --}}
+                    <div class="w-full">
+                        <flux:textarea rows="1" wire:model.enter.live="observacion" label="Observación" />
+                    </div>
+                </div>
+                {{-- Suscriptores
+                @if (!empty($this->plazo))
+                        {{$this->fecha_vto.' - ' .$this->fechaboleto }}
+                @endif
+--}}
+                <flux:card class="mt-2">
+                    <div class="-mt-4 h-48 overflow-auto text-right">
+                        @if(!empty($this->plazo) && is_int($this->plazo) )
+                            <flux:modal.trigger name="crear-suscriptor-modal">
+                                <flux:button
+                                    wire:click="$dispatch('crear-suscriptor', { minuta: 'null', inicial: '{{$this->fechaboleto}}', vencimiento:'{{$this->fecha_vto}}', valor: '{{$this->valor}}'})"
+                                    size="sm" icon="plus-circle" class="cursor-pointer" variant="primary"
+                                    color="red">Suscriptor
+                                </flux:button>
+                            </flux:modal.trigger>
+                        @endif
+                        <livewire:pages::minutas.suscripciones.suscriptores.index :minuta="null"
+                                                                                  :fecha="$this->fecha_vto" />
+                    </div>
+                </flux:card>
+                {{-- 5ª fila --}}
+                <flux:card class="mt-2">
+                    {{-- 4ª fila --}}
+                    <div class="flex w-full flex-row items-start space-x-4 text-left">
+                        {{-- Vendedor --}}
+                        <div class="w-1/3">
+                            <flux:select :disabled="true" wire:model="vendedorid" label="Vendedor">
+                                <flux:select.option>-</flux:select.option>
+                                @foreach($this->vendedores as $vendedor)
+                                    <flux:select.option value="{{$vendedor->id}}"
+                                                        wire:key="{{$vendedor->id}}">{{$vendedor->name}}</flux:select.option>
+                                @endforeach
+                            </flux:select>
+                        </div>
+                        {{-- comisión dolares --}}
+                        <div class="w-1/3">
+                            <flux:input wire:model.live="comisiondolares" label="Comisión U$S" />
+                        </div>
+                        {{-- Total comisión en dolares --}}
+                        <div class="w-1/5">
+                            <flux:input :disabled="true" wire:model="totalcomisiondolares" label="Total Comisión U$S" />
+                        </div>
+                    </div>
+
+                    <hr class="ml-78 my-4" style="border: none; height: 2px; background-color: #333; width: 65%;">
+                    {{-- 5ª fila --}}
+                    <div class="mt-4 flex w-full flex-row items-start space-x-4 text-left">
+                        {{-- Cantidad de suscriptores --}}
+                        <div class="w-1/3">
+                            <flux:input :disabled="true" wire:model.model="cantidaSuscriptor"
+                                        label="Cantidad total de suscriptores" />
+                        </div>
+                        {{-- Tipo de cambio --}}
+                        <div class=w-1/3">
+                            <flux:input wire:model.model.live="tipocambio" label="Tipo de Cambio" />
+                        </div>
+                        {{-- total minuta --}}
+                        <div class="w-1/3">
+                            <flux:input :disabled="true" icon="currency-dollar" wire:model="totalminuta" readonly
+                                        label="Total Comisión $" />
+                        </div>
+                    </div>
+                </flux:card>
+            </flux:card>
+
+            {{-- buttones--}}
+            <div class="flex justify-end">
+                <flux:spacer />
+
+                <flux:modal.close>
+                    <flux:button wire:click="cancel()" variant="ghost" class="cursor-pointer">Cancelar</flux:button>
+                </flux:modal.close>
+                <flux:button type="submit" variant="primary"
+                             wireclass="cursor-pointer ms-2">Grabar Minuta
+                </flux:button>
+            </div>
+        </form>
+        {{-- validaciones--}}
+        @if($errors->any())
+            <div class="aler aler-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{$error}}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+    </flux:modal>
 </div>

@@ -140,8 +140,6 @@
                 $this->procesarperiodo();
         }
 
-
-
         public function updatedEntidadid(): void
         {
            // $this->comisiondolares = 0;
@@ -204,7 +202,7 @@
                                 'tipodocid' => ['required'],
                                 'plazo' => ['required', 'numeric', 'min:1'],
                                 'vendedorid' => ['required'],
-                                'referenciaid' =>
+                                'referenciaid' =>['required'],
                                 'comisiondolares' => ['required'],
                                 'totalcomisiondolares' => ['nullable'],
                                 'cantidaSuscriptor' => ['nullable'],
@@ -243,13 +241,14 @@
                                                             'usuario_vendedor_id'      => $this->vendedorid,
                                                         ]);
                     foreach ($this->suscritoresd as $suscripto) {
+                        //dd($suscripto);
                         $minuta->suscriptores()->create([
-                                                            'nombre'      => $newArchivo[ 'nombre' ],
-                                                            'inicio'      => $newArchivo[ 'inicio' ],
-                                                            'vencimiento' => $newArchivo[ 'vencimiento' ],
-                                                            'dias'        => $newArchivo[ 'dias' ],
-                                                            'importe'     => $newArchivo[ 'importe' ],
-                                                            'periodo'     => $newArchivo[ 'periodo' ],
+                                                            'nombre'            => $suscripto['nombre'],
+                                                            'inicio'            => $suscripto['inicio'],
+                                                            'vencimiento'       => $suscripto['vencimiento'],
+                                                            'dias'              => $suscripto['dias'],
+                                                            'importe_comision'  => $suscripto['importe'],
+                                                            'periodo'           => 1,
                                                      ]);
 
                     }
@@ -260,9 +259,9 @@
                 }
             });
 
-            $this->reset();
-            Flux::modal('suscripcion-crear-modal')->close();
-            $this->dispatch('refreshComponent')->to('pages::minutas.suscripciones.index');
+           $this->reset();
+           Flux::modal('suscripcion-crear-modal')->close();
+           $this->dispatch('refreshComponent')->to('pages::minutas.suscripciones.index');
 
                   // dd( $this->suscritoresd);
         }

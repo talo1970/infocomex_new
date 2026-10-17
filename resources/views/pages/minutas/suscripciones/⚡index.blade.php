@@ -105,9 +105,8 @@
     <div class="space-y-4">
         <div class="relative mb-4 w-full bg-gradient-to-r from-teal-50 to-teal-300 ">
 
-            <flux:heading size="xl" level="1">{{ __('Planilla de '. $this->producto->nombre) }}</flux:heading>
-            <flux:subheading size="lg"
-                             class="mb-4 flex justify-between">{{ __('Administración de '. $this->producto->nombre) }}
+            <flux:heading size="xl" level="1" class="text-black">{{ __('Planilla de '. $this->producto->nombre) }}</flux:heading>
+            <flux:subheading size="lg" class="mb-4 text-black flex justify-between">{{ __('Administración de '. $this->producto->nombre) }}
                 <!-- modal-->
                 <flux:modal.trigger name="suscripcion-crear-modal">
                     <flux:badge
@@ -138,7 +137,7 @@
             </div>
             {{-- valor de las suscripción--}}
             <div class="flex justify-center items-center">
-                <div class="bg-red-100 mr-4">
+                <div class="bg-red-100 mr-4 dark:text-black">
                     Valor Suscripción U$D:&emsp;{{$this->importe}}
                 </div>
                 <flux:modal.trigger name="delete-profile">
@@ -193,7 +192,7 @@
                         </flux:table.cell>
                         <!-- Edit-->
                         <flux:table.cell align="center" class="w-24">
-                            <flux:modal.trigger name="minuta-editar-modal">
+                            <flux:modal.trigger name="suscripcion-editar-modal">
                                 <flux:tooltip content="Editar minuta">
                                     <flux:badge color="indigo" as="button"
                                                 wire:click="$dispatch('minutaEdit', {minuta: '{{$minuta->id}}'})"

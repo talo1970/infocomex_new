@@ -40,9 +40,6 @@ new class extends Component
            $this->suscritores = [];
            $this->id = 1;
        }
-        // $this->minuta = $minuta;
-       // $this->model = \App\Models\Minuta::class;
-        //$this->id = $minuta->id;
     }
 
     public function cargarTabla($datos)
