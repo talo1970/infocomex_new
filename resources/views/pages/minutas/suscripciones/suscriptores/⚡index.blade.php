@@ -4,7 +4,6 @@ use Livewire\Component;
 
 new class extends Component
 {
-    //public $suscritores= [];
     public array $suscritores = [];
 
     public $minuta;
@@ -23,29 +22,36 @@ new class extends Component
         $this->vencimiento = $fecha;
 
         if ($minuta != null){
-           $subcritores_minuta = \App\Models\Minuta::find($minuta);
-           $this->id =  $subcritores_minuta->id;
 
-           foreach ($subcritores_minuta as $suscritor)
-                $this->suscritores = [
-                    'id'          => null,
-                    'nombre'      => $this->nombre,
-                    'inicio'      => $this->inicio,
-                    'vencimiento' => $this->fin,
-                    'dias'        => $this->cantidadDias,
-                    'importe'     => $this->importe,
-                    'periodo'     => $this->periodo,
+            $this->minuta = $minuta;
+
+           //$subcritores_minuta = \App\Models\Minuta::find($minuta);
+           //$this->id =  $subcritores_minuta->id;
+
+           foreach ($this->minuta->suscriptores as $suscritor)
+           {
+                $this->suscritores[] = [
+                    'id'          => $suscritor->id,
+                    'nombre'      => $suscritor->nombre,
+                    'inicio'      => $suscritor->inicio,
+                    'vencimiento' => $suscritor->vencimiento,
+                    'dias'        => $suscritor->dias,
+                    'importe'     => $suscritor->importe_comision,
+                    'periodo'     => $suscritor->completo,
                 ];
-       } else {
+              }
+        } else {
            $this->suscritores = [];
            $this->id = 1;
        }
+
     }
 
     public function cargarTabla($datos)
     {
         $this->suscritores[] = $datos;
         $this->dispatch('refreshSuscriptor', datos: $datos)->to('pages::minutas.suscripciones.create');
+        $this->dispatch('refreshSuscriptor', datos: $datos)->to('pages::minutas.suscripciones.edit');
 
         //dd($this->suscritores);
     }

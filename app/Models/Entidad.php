@@ -51,6 +51,7 @@ class Entidad extends Model
         'facturacion_fija',
         'tipo_operacion',
         'vendedor_id',
+        'comision_limite',
     ];
 
     protected function porcentajeComision(): Attribute

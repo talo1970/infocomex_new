@@ -37,6 +37,8 @@
 
         public $maximo;
 
+        protected $listeners = ['refreshSuscriptor' => 'grabarsuscriptor'];
+
         private function esVendedor(): bool
         {
             return auth()->user()->hasRole('vendedor');
@@ -44,9 +46,11 @@
 
 
         #[On('minutaEdit')]
-        public function minutaEdit(\App\Models\Minuta $minuta): void
+        public function minutaEdit(\App\Models\Minuta $minuta, $valor): void
         {
            $this->minuta = $minuta;
+           $this->valor = $valor;
+
             if ($this->esVendedor()) {
                 $this->isVendedor = 1;
             }
@@ -168,6 +172,107 @@
             }
         }
 
+        public function grabarsuscriptor($datos)
+        {
+            $this->suscritoresd[] = $datos;
+            $this->cantidaSuscriptor = count( $this->suscritoresd) +  1;
+        }
+
+
+        public function grabarSuscripcion()
+        {
+
+            $this->validate([
+                                'estadoid' => ['required'],
+                                'fechaboleto' => ['required'],
+                                'entidadid' => ['required'],
+                                'tipodocid' => ['required'],
+                                'plazo' => ['required', 'numeric', 'min:1'],
+                                'vendedorid' => ['required'],
+                                'referenciaid' =>['required'],
+                                'comisiondolares' => ['required'],
+                                'totalcomisiondolares' => ['nullable'],
+                                'cantidaSuscriptor' => ['nullable'],
+                                'tipocambio' => ['nullable'],
+                                'totalminuta' => ['nullable'],
+                            ],
+                            [
+                                'estadoid' => 'es requerido',
+                                'fechaboleto' => 'es requerido',
+                                'entidadid' => 'es requerido',
+                                'tipodocid' => 'es requerido',
+                                'vendedorid' => 'es requerido',
+                                'plazo.required' => 'campo requerido',
+                                'plazo.numeric' => 'campo numérico',
+                                'plazo.min' => 'mínimo 1',
+                            ]);
+
+            DB::transaction(function() {
+                try {
+
+                    $this->minuta->  this->entidad->tipo_entidad_id = $this->tipoentidadid;
+                    $this->minuta->estado_id = $this->estadoid;
+                    //$this->minuta->producto_id = $this->productoId;
+                    $this->minuta->fecha = $this->fechaboleto;
+                    $this->minuta->entidad_cliente_id = $this->entidadid;
+                    $this->minuta->observacion = $this->observacion;
+                    $this->minuta->tipo_cambio = $this->tipocambio;
+                    $this->minuta->importe_comision_unidad = $this->comisiondolares;
+                    $this->minuta->importe_comision_dolares = $this->totalcomisiondolares;
+                    $this->minuta->importe_comision = $this->totalminuta;
+
+                    $this->minuta->cantidad = $this->cantidaSuscriptor;
+                    $this->minuta->plazo = $this->plazo;
+                    $this->minuta->fecha_vencimiento = $this->fecha_vto;
+                    $this->minuta->tipo_documento_id = $this->tipodocid;
+                    $this->minuta->usuario_vendedor_id = $this->vendedorid;
+
+
+
+                    $minuta = \App\Models\Minuta::create([
+                                                             'numero'                   => $this->maximo,
+                                                             'estado_id'                => $this->estadoid,
+                                                             'producto_id'              => $this->productoId,
+                                                             'fecha'                    => $this->fechaboleto,
+                                                             'entidad_cliente_id'       => $this->entidadid,
+                                                             'observacion'              => $this->observacion,
+                                                             'tipo_cambio'              => $this->tipocambio,
+                                                             'importe_comision_unidad'  => $this->comisiondolares,
+                                                             'importe_comision_dolares' => $this->totalcomisiondolares,
+                                                             'importe_comision'         => $this->totalminuta,
+                                                             'cantidad'                 => $this->cantidaSuscriptor,
+                                                             'plazo'                    => $this->plazo,
+                                                             'fecha_vencimiento'        => $this->fecha_vto,
+                                                             'tipo_documento_id'        => $this->tipodocid,
+                                                             'usuario_vendedor_id'      => $this->vendedorid,
+                                                         ]);
+                    foreach ($this->suscritoresd as $suscripto) {
+                        //dd($suscripto);
+                        $minuta->suscriptores()->create([
+                                                            'nombre'            => $suscripto['nombre'],
+                                                            'inicio'            => $suscripto['inicio'],
+                                                            'vencimiento'       => $suscripto['vencimiento'],
+                                                            'dias'              => $suscripto['dias'],
+                                                            'importe_comision'  => $suscripto['importe'],
+                                                            'completo'          => $suscripto['periodo'],
+                                                        ]);
+
+                    }
+
+                }
+                catch (\Exception $e) {
+                    Log::error($e->getMessage());
+                }
+            });
+
+            $this->reset();
+            Flux::modal('suscripcion-crear-modal')->close();
+            $this->dispatch('refreshComponent')->to('pages::minutas.suscripciones.index');
+
+
+        }
+
+
         public function cancel(): void
         {
             $this->reset();
@@ -272,14 +377,15 @@
                         @if(!empty($this->plazo) && is_int($this->plazo) )
                             <flux:modal.trigger name="crear-suscriptor-modal">
                                 <flux:button
-                                    wire:click="$dispatch('crear-suscriptor', { minuta: 'null', inicial: '{{$this->fechaboleto}}', vencimiento:'{{$this->fecha_vto}}', valor: '{{$this->valor}}'})"
+                                    wire:click="$dispatch('crear-suscriptor', { minuta: '{{$minuta}}', inicial: '{{$this->fechaboleto}}', vencimiento:'{{$this->fecha_vto}}', valor: '{{$this->valor}}'})"
                                     size="sm" icon="plus-circle" class="cursor-pointer" variant="primary"
                                     color="red">Suscriptor
                                 </flux:button>
                             </flux:modal.trigger>
                         @endif
-                        <livewire:pages::minutas.suscripciones.suscriptores.index :minuta="null"
+                        <livewire:pages::minutas.suscripciones.suscriptores.index :minuta="$minuta"
                                                                                   :fecha="$this->fecha_vto" />
+
                     </div>
                 </flux:card>
                 {{-- 5ª fila --}}

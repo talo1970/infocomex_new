@@ -195,7 +195,7 @@
                             <flux:modal.trigger name="suscripcion-editar-modal">
                                 <flux:tooltip content="Editar minuta">
                                     <flux:badge color="indigo" as="button"
-                                                wire:click="$dispatch('minutaEdit', {minuta: '{{$minuta->id}}'})"
+                                                wire:click="$dispatch('minutaEdit', {minuta: '{{$minuta->id}}', valor: '{{$this->importe}}'})"
                                                 icon="pencil" class="cursor-pointer">
                                     </flux:badge>
                                 </flux:tooltip>

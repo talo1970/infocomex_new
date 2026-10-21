@@ -248,7 +248,7 @@
                                                             'vencimiento'       => $suscripto['vencimiento'],
                                                             'dias'              => $suscripto['dias'],
                                                             'importe_comision'  => $suscripto['importe'],
-                                                            'periodo'           => 1,
+                                                            'completo'          => $suscripto['periodo'],
                                                      ]);
 
                     }

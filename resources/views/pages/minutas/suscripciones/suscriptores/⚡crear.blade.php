@@ -11,7 +11,7 @@
 
         public $nombre;
         public $inicio;
-        public $periodo;
+        public $periodo = 0;
         public $peridoinicial;
         public $cantidadDias = 0;
         public $cantidadDiasInicial = 0;

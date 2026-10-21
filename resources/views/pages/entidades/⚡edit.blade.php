@@ -116,6 +116,7 @@ new #[Title('Edición de la Entidad')] class extends Component
     {
         return \App\Models\Producto::select('id', 'nombre')->get();
     }
+
     #[Computed]
     public function productosHonorarios()
     {
